@@ -680,7 +680,7 @@
         "values": [
           {
             "label": "Install link",
-            "value": "https://app.pagerduty.com/oauth_apps/[app_id]"
+            "value": "https://<subdomain>.pagerduty.com/oauth-apps/<APP_ID>"
           }
         ],
         "wait": null,

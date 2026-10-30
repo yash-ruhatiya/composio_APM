@@ -107,7 +107,7 @@
    - Give each admin the install link.
    - Users can authorize only after the install.
    - Explained at: PagerDuty → OAuth Apps install page (https://docs.pagerduty.com/developer/publish-an-app)
-   - Install link: `https://app.pagerduty.com/oauth_apps/[app_id]`
+   - Install link: `https://<subdomain>.pagerduty.com/oauth-apps/<APP_ID>`
    - ⚠ Watch out: **Customer admin hasn't installed the app** (common). Send the install link to an account admin before users try to connect. [e4 sourced]
 
 ✓ **Ready for real users:** 6 h 15 min–19 h hands-on, 5 d–1 wk waiting

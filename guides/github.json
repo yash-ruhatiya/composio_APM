@@ -252,7 +252,7 @@
       },
       {
         "appliesWhen": null,
-        "detail": "Up to 10 callback URLs per app. A single registered URL has wildcard matching on by default, so turn it off if you don't need it.",
+        "detail": "Up to 10 callback URLs per app. Wildcard matching is a per-URL setting, on only for apps that had a single callback URL before August 3, 2026. If yours has it, turn it off unless you need it; with it off, the redirect URL must match the callback URL exactly.",
         "evidence": [
           "e1",
           "e6"

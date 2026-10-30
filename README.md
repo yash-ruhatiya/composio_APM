@@ -160,7 +160,9 @@ against the provider's own docs or a setup attempt. Results live in the page's
 
 The bundled guides for these 5 apps were regenerated after round 2, later the same
 day. Round 2 scored the earlier versions (each result records `guideSavedAt`), so
-its numbers describe those versions, not the bundled ones.
+its numbers describe those versions, not the bundled ones. The two errors above
+were then corrected by hand in the bundled PagerDuty and GitHub guides, from the
+provider docs cited in the round 2 results; the results themselves are unchanged.
 
 ## Testing the page locally
 

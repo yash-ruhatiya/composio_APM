@@ -43,7 +43,7 @@
    - Fill name, homepage URL and the authorization callback URL.
    - Optionally enable Device Flow.
    - Leave 'Expire user access tokens' on if your agent supports refresh.
-   - Rule: **Callback URL rules**. Up to 10 callback URLs per app. A single registered URL has wildcard matching on by default, so turn it off if you don't need it. [e1 sourced] [e6 sourced]
+   - Rule: **Callback URL rules**. Up to 10 callback URLs per app. Wildcard matching is a per-URL setting, on only for apps that had a single callback URL before August 3, 2026. If yours has it, turn it off unless you need it; with it off, the redirect URL must match the callback URL exactly. [e1 sourced] [e6 sourced]
    - Where you do it: Developer settings → OAuth apps → New OAuth App (https://github.com/settings/applications/new)
    - Authorization callback URL: `your app's OAuth callback URL (HTTPS, up to 10)`
    - Homepage URL: `your app's public website`
