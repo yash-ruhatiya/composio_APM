@@ -1,0 +1,1100 @@
+{
+  "confidence": "medium",
+  "guide": {
+    "access": {
+      "alternative": null,
+      "oauthForThirdParties": "yes",
+      "reason": "DocuSign supports OAuth 2.0 Authorization Code Grant for third-party integrations. You register an integration key in a developer account.",
+      "registration": "manual"
+    },
+    "app": {
+      "developerPortal": "https://developers.docusign.com",
+      "name": "DocuSign",
+      "slug": "docusign",
+      "website": "https://www.docusign.com"
+    },
+    "attemptNote": null,
+    "attemptPick": "Stage 2 picked the 4 weakest claims it can check by opening a page (1 inferred, 3 sourced); claims already tested were skipped.",
+    "attempts": [
+      {
+        "change": "Added tested evidence a1 (probe p3)",
+        "claim": "The authorize URL account-d.docusign.com/oauth/auth is live and takes the documented scopes (signature, extended)",
+        "expected": "A live endpoint that rejects the made-up client and raises no scope error",
+        "n": 1,
+        "probeId": "p3",
+        "result": "Rejected the made-up client without objecting to the scopes",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": "s3",
+        "tried": "Opened it with a made-up client and those scopes",
+        "weak": "Inferred"
+      },
+      {
+        "change": "No change",
+        "claim": "Step 2: you register the app at developers.docusign.com/platform/go-live",
+        "expected": "A partner application or contact page (the guide says access is partner-gated)",
+        "n": 2,
+        "probeId": "p4",
+        "result": "Loaded \"Docusign Go-Live | Docusign\", but no registration form, sign-in or gate was visible",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s2",
+        "tried": "Opened the registration page without signing in",
+        "weak": "Sourced"
+      },
+      {
+        "change": "No change: only a real token request would show whether the URL is right",
+        "claim": "The token endpoint is account-d.docusign.com/oauth/token",
+        "expected": "A live OAuth endpoint (it answers a plain request with an error)",
+        "n": 3,
+        "probeId": "p5",
+        "result": "A plain page request was sent to the site's home page; endpoints that only take POST often do this",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s3",
+        "tried": "Loaded it with a plain page request (no token request was sent)",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Added tested evidence a2 (probe p6)",
+        "claim": "Step 1 link goes to developers.docusign.com",
+        "expected": "Where you do \"Docusign Developer Center\": a sign-in, sign-up, form or a page about it",
+        "n": 4,
+        "probeId": "p6",
+        "result": "Loads \"Docusign Developer Center | eSignature APIs & Resources | Docusign\"",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": "s1",
+        "tried": "Opened the link and checked where it lands",
+        "weak": "Sourced"
+      },
+      {
+        "change": "You do step 1; an agent can pick up after it",
+        "claim": "Where the agent stopped",
+        "n": 5,
+        "result": "A step only you can do (account, legal terms, payment, verification or a decision)",
+        "status": "You take over",
+        "stepId": "s1",
+        "stop": true,
+        "tried": "Step 1: Create a Docusign developer account"
+      }
+    ],
+    "blockers": [
+      {
+        "evidence": [
+          "e5"
+        ],
+        "likelihood": "common",
+        "stepId": "s6",
+        "title": "Partner Program required for public integrations",
+        "whatToDo": "Apply to the Docusign Partner Program early."
+      },
+      {
+        "evidence": [
+          "e6"
+        ],
+        "likelihood": "common",
+        "stepId": "s6",
+        "title": "Paid production account needed",
+        "whatToDo": "Get a paid plan, or a free partner management account."
+      },
+      {
+        "evidence": [
+          "e7"
+        ],
+        "likelihood": "possible",
+        "stepId": "s7",
+        "title": "Go-Live declined",
+        "whatToDo": "Fix the issues flagged, then resubmit. Manual review takes about 24–48 hours."
+      }
+    ],
+    "evidence": [
+      {
+        "claim": "Authorize endpoint for demo is live and rejects unknown clients",
+        "id": "e1",
+        "note": "Returned 'client id provided is not registered'",
+        "probeId": "p2",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "Discovery lists authorize and token endpoints, no registration endpoint",
+        "id": "e2",
+        "note": null,
+        "probeId": "p1",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "Token endpoint is /oauth/token",
+        "id": "e3",
+        "note": null,
+        "probeId": null,
+        "quote": "The POST /oauth/token endpoint returns tokens based on your supplied parameters.",
+        "sourceUrl": "https://developers.docusign.com/platform/auth/reference/obtain-access-token/",
+        "status": "sourced"
+      },
+      {
+        "claim": "Developer Console creates integration apps for demo client IDs and secrets",
+        "id": "e4",
+        "note": null,
+        "probeId": null,
+        "quote": "you can now create integration apps to get demo client IDs and secrets for development and testing",
+        "sourceUrl": "https://developers.docusign.com/platform/go-live/",
+        "status": "sourced"
+      },
+      {
+        "claim": "Public integration requires the Partner Program",
+        "id": "e5",
+        "note": null,
+        "probeId": null,
+        "quote": "To launch a public integration, you must join the Docusign Partner Program.",
+        "sourceUrl": "https://developers.docusign.com/platform/go-live/",
+        "status": "sourced"
+      },
+      {
+        "claim": "Paid production account required",
+        "id": "e6",
+        "note": null,
+        "probeId": null,
+        "quote": "You have a paid production account to manage the integration in production.",
+        "sourceUrl": "https://developers.docusign.com/platform/go-live/",
+        "status": "sourced"
+      },
+      {
+        "claim": "Manual reviews typically take 24–48 hours",
+        "id": "e7",
+        "note": null,
+        "probeId": null,
+        "quote": "Manual reviews are typically completed within 24–48 hours.",
+        "sourceUrl": "https://developers.docusign.com/platform/go-live/",
+        "status": "sourced"
+      },
+      {
+        "claim": "Token endpoint client auth is Basic with integration key and secret",
+        "id": "e8",
+        "note": null,
+        "probeId": null,
+        "quote": "The Authorization header contains your integration key and secret key, concatenated by a colon character",
+        "sourceUrl": "https://developers.docusign.com/platform/auth/reference/obtain-access-token/",
+        "status": "sourced"
+      },
+      {
+        "claim": "Access token lifetime is 8 hours by default",
+        "id": "e9",
+        "note": null,
+        "probeId": null,
+        "quote": "Provides an access token with a lifetime of 8 hours, by default.",
+        "sourceUrl": "https://developers.docusign.com/platform/auth/authcode/",
+        "status": "sourced"
+      },
+      {
+        "claim": "Refresh returns a new refresh token; lifetime about 30 days, extended with the extended scope",
+        "id": "e10",
+        "note": null,
+        "probeId": null,
+        "quote": "If you have obtained the extended scope, a new refresh token is issued with a full lifetime (typically 30 days).",
+        "sourceUrl": "https://developers.docusign.com/platform/auth/reference/obtain-access-token/",
+        "status": "sourced"
+      },
+      {
+        "claim": "PKCE is supported using S256",
+        "id": "e11",
+        "note": null,
+        "probeId": null,
+        "quote": "You can optionally include a Proof Key for Code Exchange (PKCE) challenge to add an additional layer of security.",
+        "sourceUrl": "https://developers.docusign.com/platform/auth/authcode/",
+        "status": "sourced"
+      },
+      {
+        "claim": "Secrets and redirect URIs are not copied at Go-Live",
+        "id": "e12",
+        "note": null,
+        "probeId": null,
+        "quote": "Configuration settings such as secrets and redirect URIs are not copied automatically.",
+        "sourceUrl": "https://developers.docusign.com/platform/go-live/",
+        "status": "sourced"
+      },
+      {
+        "claim": "Production token host is account.docusign.com",
+        "id": "e13",
+        "note": "Provider blog",
+        "probeId": null,
+        "quote": "Production environment: https://account.docusign.com/oauth/token",
+        "sourceUrl": "https://www.docusign.com/blog/developers/authorization-code-grant-refresh-tokens",
+        "status": "sourced"
+      },
+      {
+        "claim": "signature is the eSignature scope",
+        "id": "e14",
+        "note": "General knowledge of the DocuSign eSignature API, plus the scope used in the authorize probe.",
+        "probeId": null,
+        "quote": null,
+        "sourceUrl": null,
+        "status": "inferred"
+      },
+      {
+        "claim": "The authorize URL account-d.docusign.com/oauth/auth is live and rejects an unknown client",
+        "id": "a1",
+        "note": "Stage 2 attempt",
+        "probeId": "p3",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "developers.docusign.com loads (Docusign Developer Center | eSignature APIs & Resources | Do)",
+        "id": "a2",
+        "note": "Stage 2 attempt",
+        "probeId": "p6",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      }
+    ],
+    "followUp": null,
+    "mandatoryPages": {
+      "review": {
+        "checked": true,
+        "evidence": [
+          "e5",
+          "e6",
+          "e7"
+        ],
+        "note": null,
+        "status": "read",
+        "unreadable": null,
+        "url": "https://developers.docusign.com/platform/go-live/"
+      },
+      "token": {
+        "checked": true,
+        "evidence": [
+          "e8",
+          "e10"
+        ],
+        "note": null,
+        "status": "read",
+        "unreadable": null,
+        "url": "https://developers.docusign.com/platform/auth/reference/obtain-access-token/"
+      }
+    },
+    "oauth": {
+      "authorizeUrl": "https://account-d.docusign.com/oauth/auth",
+      "evidence": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "tokenUrl": "https://account-d.docusign.com/oauth/token"
+    },
+    "prodNeedsCheck": false,
+    "requirements": [
+      {
+        "appliesWhen": null,
+        "detail": "A free sandbox account is needed to create the integration key.",
+        "evidence": [
+          "e4"
+        ],
+        "kind": "prerequisite",
+        "label": "Docusign developer (demo) account",
+        "stepId": "s1"
+      },
+      {
+        "appliesWhen": "Public multi-customer integration",
+        "detail": "Required to launch a public integration used by many Docusign customers.",
+        "evidence": [
+          "e5"
+        ],
+        "kind": "prerequisite",
+        "label": "Partner Program membership",
+        "stepId": null
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Needed to promote the integration key; you need admin or developer access to it.",
+        "evidence": [
+          "e6"
+        ],
+        "kind": "prerequisite",
+        "label": "Paid production account",
+        "stepId": null
+      },
+      {
+        "appliesWhen": "Confidential flow",
+        "detail": "The token endpoint takes a Basic auth header: base64 of integration key and secret, with a form-encoded body.",
+        "evidence": [
+          "e8"
+        ],
+        "kind": "technical",
+        "label": "Client authentication",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Access tokens last 8 hours by default for Authorization Code Grant.",
+        "evidence": [
+          "e9"
+        ],
+        "kind": "technical",
+        "label": "Access token lifetime 8 hours",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Refresh tokens last about 30 days. A refresh returns a new refresh token. Without the extended scope it keeps the original expiry. With the extended scope it gets a full new lifetime.",
+        "evidence": [
+          "e10"
+        ],
+        "kind": "technical",
+        "label": "Refresh token lifetime and rotation",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": "No secret stored securely",
+        "detail": "Public Authorization Code Grant uses code_challenge with S256 and the code_verifier.",
+        "evidence": [
+          "e11"
+        ],
+        "kind": "technical",
+        "label": "PKCE for public clients",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Production uses account.docusign.com. Secrets and redirect URIs are not copied at Go-Live, so set them again.",
+        "evidence": [
+          "e12",
+          "e13"
+        ],
+        "kind": "technical",
+        "label": "Separate production host and config",
+        "stepId": "s7"
+      }
+    ],
+    "scopes": [
+      {
+        "evidence": [
+          "e14"
+        ],
+        "note": "Core eSignature scope.",
+        "scope": "signature",
+        "sensitivity": "standard"
+      },
+      {
+        "evidence": [
+          "e10"
+        ],
+        "note": "Keeps refresh tokens renewing, so users stay connected without logging in again.",
+        "scope": "extended",
+        "sensitivity": "standard"
+      }
+    ],
+    "steps": [
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e4",
+          "a2"
+        ],
+        "id": "s1",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "prepare",
+        "points": [
+          "Sign up for a free developer (demo) account",
+          "Accept the terms"
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Create a Docusign developer account",
+        "type": "account",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "Docusign Developer Center",
+          "url": "https://developers.docusign.com"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.5,
+          "min": 0.25
+        },
+        "evidence": [
+          "e4"
+        ],
+        "id": "s2",
+        "items": [],
+        "output": "Integration key (client ID) and secret",
+        "owner": "agent",
+        "phase": "register",
+        "points": [
+          "Create an app to get a demo integration key",
+          "Generate a secret key",
+          "Choose the integration type (public integration for multi-customer use)"
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Create an integration app in the Developer Console",
+        "type": "register_form",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Developer Console (or Admin → Apps and Keys)",
+          "url": "https://developers.docusign.com/platform/go-live/"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e1",
+          "e2",
+          "e10",
+          "a1"
+        ],
+        "id": "s3",
+        "items": [],
+        "output": null,
+        "owner": "agent",
+        "phase": "configure",
+        "points": [
+          "Add your app's OAuth callback URL as a redirect URI on the integration key",
+          "Request signature, plus extended for long-lived refresh"
+        ],
+        "scopes": [
+          "signature",
+          "extended"
+        ],
+        "stage": "dev",
+        "title": "Set your app's OAuth callback URL and scopes",
+        "type": "configure",
+        "values": [
+          {
+            "label": "Redirect URI",
+            "value": "your app's OAuth callback URL"
+          },
+          {
+            "label": "Authorize URL (demo)",
+            "value": "https://account-d.docusign.com/oauth/auth"
+          },
+          {
+            "label": "Token URL (demo)",
+            "value": "https://account-d.docusign.com/oauth/token"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "Developer Console → app → redirect URIs",
+          "url": null
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 3.5,
+          "min": 1.5
+        },
+        "evidence": [
+          "e8",
+          "e9",
+          "e10",
+          "e11"
+        ],
+        "id": "s4",
+        "items": [],
+        "output": "Access token and refresh token",
+        "owner": "agent",
+        "phase": "test",
+        "points": [
+          "Send the user to the authorize URL with response_type=code",
+          "Exchange the code at the token URL with Basic auth",
+          "Store the refresh token and rotate it on every refresh"
+        ],
+        "scopes": [
+          "signature"
+        ],
+        "stage": "dev",
+        "title": "Run the authorization code flow with your demo account",
+        "type": "token_flow_pkce",
+        "values": [
+          {
+            "label": "Token auth header",
+            "value": "Authorization: Basic base64(integrationKey:secret)"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Authorization Code Grant guide",
+          "url": "https://developers.docusign.com/platform/auth/authcode/"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 1,
+          "min": 0.5
+        },
+        "evidence": [
+          "e9"
+        ],
+        "id": "s5",
+        "items": [],
+        "output": null,
+        "owner": "agent",
+        "phase": "test",
+        "points": [
+          "Call GET https://account-d.docusign.com/oauth/userinfo with the Bearer token",
+          "Success is a 200 with the user's name, email and accounts list"
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Test with a read-only call",
+        "type": "test",
+        "values": [
+          {
+            "label": "Header",
+            "value": "Authorization: Bearer <access_token>"
+          }
+        ],
+        "wait": null,
+        "where": null
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.5,
+          "min": 0.25
+        },
+        "evidence": [
+          "e5",
+          "e6"
+        ],
+        "id": "s6",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "review",
+        "points": [
+          "Join the Partner Program for a public integration",
+          "Have a paid production account with admin or developer access",
+          "Pick the integration classification",
+          "Submit Go-Live from the Developer Console"
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Join the Partner Program, get a paid production account, and submit Go-Live",
+        "type": "submit",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Docusign Go-Live",
+          "url": "https://developers.docusign.com/platform/go-live/"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0,
+          "min": 0
+        },
+        "evidence": [
+          "e7"
+        ],
+        "id": "s7",
+        "items": [],
+        "output": null,
+        "owner": "provider",
+        "phase": "review",
+        "points": [
+          "Manual reviews usually take 24–48 hours",
+          "Verified apps may be promoted automatically after identity verification"
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Docusign reviews and promotes the key",
+        "type": "provider",
+        "values": [],
+        "wait": {
+          "max": 2,
+          "min": 1
+        },
+        "where": null
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e12",
+          "e13"
+        ],
+        "id": "s8",
+        "items": [],
+        "output": null,
+        "owner": "agent_ok",
+        "phase": "launch",
+        "points": [
+          "Re-create the secret and redirect URIs in production",
+          "Switch to https://account.docusign.com for authorize and token calls"
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Configure production values",
+        "type": "configure",
+        "values": [
+          {
+            "label": "Production token URL",
+            "value": "https://account.docusign.com/oauth/token"
+          }
+        ],
+        "wait": null,
+        "where": null
+      }
+    ],
+    "time": {
+      "breakdown": [
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "0",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "1",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.5,
+          "min": 0.25,
+          "note": null,
+          "step": "2",
+          "type": "App registration form",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "3",
+          "type": "Redirect URI and scopes",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 3.5,
+          "min": 1.5,
+          "note": null,
+          "step": "4",
+          "type": "Authorize and token exchange with PKCE",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 1,
+          "min": 0.5,
+          "note": null,
+          "step": "5",
+          "type": "Test with your own account",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [],
+          "max": 0.5,
+          "min": 0.25,
+          "note": null,
+          "step": "6",
+          "type": "Submit for review",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [
+            "e7"
+          ],
+          "max": 0,
+          "min": 0,
+          "note": null,
+          "step": "7",
+          "type": "The provider does it (you wait)",
+          "wait": {
+            "max": 2,
+            "min": 1
+          },
+          "waitSource": "provider-stated"
+        },
+        {
+          "clock": "production",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "8",
+          "type": "Redirect URI and scopes",
+          "wait": null,
+          "waitSource": null
+        }
+      ],
+      "devReady": {
+        "computed": true,
+        "effort": {
+          "max": 5.75,
+          "min": 3
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "none"
+      },
+      "production": {
+        "computed": true,
+        "effort": {
+          "max": 6.5,
+          "min": 3.5
+        },
+        "evidence": [
+          "e7"
+        ],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 2,
+          "min": 1
+        },
+        "waitKind": "range"
+      }
+    },
+    "uncertainties": [
+      {
+        "stepId": "s4",
+        "text": "Authorization code lifetime was not stated on pages read."
+      },
+      {
+        "stepId": "s3",
+        "text": "Redirect URI matching rules (exact match, HTTPS, localhost) were not stated on pages read."
+      },
+      {
+        "stepId": null,
+        "text": "Rate limits were not stated on pages read."
+      },
+      {
+        "stepId": null,
+        "text": "Region-specific hosts (e.g. EU base URIs) were not covered. API base URIs come from userinfo."
+      },
+      {
+        "stepId": "s6",
+        "text": "Whether the Partner Program has its own approval wait, and its cost, is unknown."
+      },
+      {
+        "stepId": "s6",
+        "text": "Developer Console Go-Live is in open beta; the legacy flow may apply to your account."
+      },
+      {
+        "stepId": null,
+        "text": "The support FAQ page returned only navigation. The 'paid plan' point relies on the developer Go-Live page."
+      }
+    ],
+    "verdict": {
+      "confidence": "medium",
+      "points": [
+        {
+          "evidence": [
+            "e4"
+          ],
+          "text": "Demo works immediately with a developer sandbox integration key",
+          "why": "The Developer Console gives demo client IDs and secrets for development and testing."
+        },
+        {
+          "evidence": [
+            "e5"
+          ],
+          "text": "Public integrations must join the Docusign Partner Program",
+          "why": "The Go-Live page says launching a public integration requires Partner Program membership."
+        },
+        {
+          "evidence": [
+            "e6"
+          ],
+          "text": "Go-Live needs a paid production account",
+          "why": "Promotion needs a paid production account. ISV partners may qualify for a free management account."
+        },
+        {
+          "evidence": [
+            "e7"
+          ],
+          "text": "Manual Go-Live reviews usually take 24–48 hours",
+          "why": "Declined apps get manual review, typically 24–48 hours. Some apps are promoted automatically after identity verification."
+        }
+      ],
+      "summary": "DocuSign offers OAuth to third-party apps, but a public integration needs Partner Program membership and a Go-Live promotion to a paid production account.",
+      "tier": "partner_gated",
+      "unconfirmed": false
+    }
+  },
+  "meta": {
+    "at": "2026-10-29T20:04:08.471Z",
+    "downgraded": 0,
+    "notes": [],
+    "pipelineVersion": "v2"
+  },
+  "name": "DocuSign",
+  "pipelineVersion": "v2",
+  "query": "DocuSign",
+  "run": {
+    "failedSearches": 0,
+    "okPages": 5,
+    "okSearches": 3,
+    "probes": [
+      {
+        "at": "2026-10-29T20:02:15.066Z",
+        "data": {
+          "authorization_endpoint": "https://account-d.docusign.com/oauth/auth",
+          "issuer": "https://account-d.docusign.com/",
+          "path": "/.well-known/openid-configuration",
+          "registration_endpoint": null,
+          "scopes_supported": [
+            "ns_notary_write",
+            "data_deletion_gds",
+            "connect_ticket_event_write",
+            "esign_reports_backfill",
+            "docgen_read",
+            "account_product_read",
+            "fast_pag_write",
+            "dtl_esign_write",
+            "ai_jobs_engine_read",
+            "notary_write",
+            "ie_sf_read",
+            "manage_app_keys",
+            "user_write",
+            "cortex_admin",
+            "adm_dot_write",
+            "all_organizations_read",
+            "domain_write",
+            "participant_token_create",
+            "data_deletion_dps",
+            "me_profile",
+            "connect_manage_configs",
+            "ssa_admin",
+            "devconsole_apps_manage",
+            "asset_group_asset_read",
+            "data_feeds_raq_read",
+            "permission_read",
+            "click.send",
+            "asset_group_account_read",
+            "ca_technical_read",
+            "clm_ai_batch_write"
+          ],
+          "token_endpoint": "https://account-d.docusign.com/oauth/token"
+        },
+        "id": "p1",
+        "kind": "oauth_discovery",
+        "outcome": "positive",
+        "summary": "Metadata found at /.well-known/openid-configuration. No registration_endpoint (no DCR advertised).",
+        "target": "https://account-d.docusign.com/.well-known/openid-configuration"
+      },
+      {
+        "at": "2026-10-29T20:02:31.500Z",
+        "data": {
+          "landedOn": "https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature&client_id=setup-guide-probe-invalid-client&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&state=probe",
+          "snippet": "Something went wrong The client id provided is not registered with Docusign. Back to login",
+          "title": "Docusign"
+        },
+        "id": "p2",
+        "kind": "authorize_endpoint",
+        "outcome": "positive",
+        "summary": "Endpoint answered, landing on account-d.docusign.com/oauth/auth: it is live and handles an unknown client.",
+        "target": "https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature&client_id=invalid&redirect_uri=https://example.com/callback"
+      },
+      {
+        "at": "2026-10-29T20:03:50.955Z",
+        "data": {
+          "fields": null,
+          "kind": "client_rejected",
+          "landedOn": "https://account-d.docusign.com/oauth/auth?client_id=setup-guide-probe-invalid-client&response_type=code&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&state=probe&scope=signature+extended",
+          "signal": null,
+          "snippet": "Something went wrong The client id provided is not registered with Docusign. Back to login",
+          "title": "Docusign"
+        },
+        "id": "p3",
+        "kind": "attempt_authorize",
+        "outcome": "positive",
+        "summary": "Opened it with a made-up client and those scopes: client rejected",
+        "target": "https://account-d.docusign.com/oauth/auth"
+      },
+      {
+        "at": "2026-10-29T20:03:56.515Z",
+        "data": {
+          "fields": null,
+          "kind": "page",
+          "landedOn": "https://developers.docusign.com/platform/go-live/",
+          "signal": null,
+          "snippet": null,
+          "title": "Docusign Go-Live | Docusign"
+        },
+        "id": "p4",
+        "kind": "attempt_portal",
+        "outcome": "positive",
+        "summary": "Opened the registration page without signing in: page",
+        "target": "https://developers.docusign.com/platform/go-live/"
+      },
+      {
+        "at": "2026-10-29T20:04:02.779Z",
+        "data": {
+          "fields": null,
+          "kind": "homepage",
+          "landedOn": "https://account-d.docusign.com/",
+          "signal": null,
+          "snippet": "Log in to Docusign Enter your email to log in. Email* Next Sign Up for Free",
+          "title": "Docusign Login - Enter email to start sign in"
+        },
+        "id": "p5",
+        "kind": "attempt_token",
+        "outcome": "negative",
+        "summary": "Loaded it with a plain page request (no token request was sent): homepage",
+        "target": "https://account-d.docusign.com/oauth/token"
+      },
+      {
+        "at": "2026-10-29T20:04:08.466Z",
+        "data": {
+          "fields": null,
+          "kind": "page",
+          "landedOn": "https://developers.docusign.com/",
+          "signal": null,
+          "snippet": "Docusign for Developers Build smarter. Agree faster. Frustrated by disconnected systems and outdated processes? Our scalable Intelligent Agreement Management (IAM) platform streamlines end-to-end agre",
+          "title": "Docusign Developer Center | eSignature APIs & Resources | Docusign"
+        },
+        "id": "p6",
+        "kind": "attempt_action",
+        "outcome": "positive",
+        "summary": "Opened the link and checked where it lands: page",
+        "target": "https://developers.docusign.com"
+      }
+    ],
+    "queries": 3,
+    "readLog": [
+      {
+        "chars": 5338,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Docusign Go-Live | Docusign",
+        "url": "https://developers.docusign.com/platform/go-live/",
+        "via": null
+      },
+      {
+        "chars": 6837,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Authorization Code Grant authentication | Docusign",
+        "url": "https://developers.docusign.com/platform/auth/authcode/",
+        "via": null
+      },
+      {
+        "chars": 4907,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Obtain access token endpoint | Docusign",
+        "url": "https://developers.docusign.com/platform/auth/reference/obtain-access-token/",
+        "via": null
+      },
+      {
+        "chars": 544,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "shell",
+        "title": "Article Detail",
+        "url": "https://support.docusign.com/s/articles/DocuSign-Developer-FAQs-Integration-Keys-and-Go-Live?language=en_US",
+        "via": null
+      },
+      {
+        "chars": 6696,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Authorization Code Grant refresh tokens",
+        "url": "https://www.docusign.com/blog/developers/authorization-code-grant-refresh-tokens",
+        "via": null
+      }
+    ],
+    "searchLog": [
+      {
+        "ok": true,
+        "query": "DocuSign developer authorization code grant OAuth"
+      },
+      {
+        "ok": true,
+        "query": "DocuSign go-live app review integration key promote"
+      },
+      {
+        "ok": true,
+        "query": "DocuSign OAuth refresh token lifetime access token"
+      }
+    ]
+  },
+  "savedAt": "2026-10-29T20:04:08.471Z",
+  "slug": "docusign",
+  "summary": "DocuSign offers OAuth to third-party apps, but a public integration needs Partner Program membership and a Go-Live promotion to a paid production account.",
+  "tier": "partner_gated",
+  "tierLabel": "Partner-gated"
+}

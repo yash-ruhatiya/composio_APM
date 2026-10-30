@@ -1,0 +1,859 @@
+{
+  "confidence": "medium",
+  "guide": {
+    "access": {
+      "alternative": null,
+      "oauthForThirdParties": "yes",
+      "reason": "Linear documents OAuth 2.0 for third-party apps. You create an OAuth2 application in workspace settings (Settings → API).",
+      "registration": "manual"
+    },
+    "app": {
+      "developerPortal": "https://linear.app/settings/api",
+      "name": "Linear",
+      "slug": "linear",
+      "website": "https://linear.app"
+    },
+    "attemptNote": null,
+    "attemptPick": "Stage 2 picked the 5 weakest claims it can check by opening a page (5 sourced); claims already tested were skipped.",
+    "attempts": [
+      {
+        "change": "No change",
+        "claim": "Step 2: you register the app at linear.app/settings/api/applications/new",
+        "expected": "A sign-in, sign-up or app registration form; form asks for redirect",
+        "n": 1,
+        "probeId": "p3",
+        "result": "Only site navigation loaded (\"Linear\")",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s2",
+        "tried": "Opened the registration page without signing in",
+        "weak": "Sourced"
+      },
+      {
+        "change": "No change",
+        "claim": "The authorize URL linear.app/oauth/authorize is live and takes the documented scopes (read, write, admin)",
+        "expected": "A live endpoint that rejects the made-up client and raises no scope error",
+        "n": 2,
+        "probeId": "p4",
+        "result": "Loaded, but the response didn't say how it treats the client or scopes",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s3",
+        "tried": "Opened it with a made-up client and those scopes",
+        "weak": "Sourced"
+      },
+      {
+        "change": "No change",
+        "claim": "The token endpoint is api.linear.app/oauth/token",
+        "expected": "A live OAuth endpoint (it answers a plain request with an error)",
+        "n": 3,
+        "probeId": "p5",
+        "result": "Loaded, but didn't look like a token endpoint's reply",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s4",
+        "tried": "Loaded it with a plain page request (no token request was sent)",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Added an open question",
+        "claim": "Step 1 link goes to linear.app",
+        "expected": "Where you do \"Linear sign-up\": a sign-in, sign-up, form or a page about it",
+        "n": 4,
+        "probeId": "p6",
+        "result": "Landed on \"Linear – The system for product development\", which doesn't obviously match \"Linear sign-up\"",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s1",
+        "tried": "Opened the link and checked where it lands",
+        "weak": "Sourced"
+      },
+      {
+        "change": "No change",
+        "claim": "Step 3 link at linear.app/developers/oauth-2-0-authentication",
+        "expected": "—",
+        "n": 5,
+        "result": "Couldn't open: The page changed; retry.",
+        "status": "Unverified",
+        "stepId": "s3",
+        "tried": "Opened it",
+        "weak": "Sourced"
+      },
+      {
+        "change": "You do step 1; an agent can pick up after it",
+        "claim": "Where the agent stopped",
+        "n": 6,
+        "result": "A step only you can do (account, legal terms, payment, verification or a decision)",
+        "status": "You take over",
+        "stepId": "s1",
+        "stop": true,
+        "tried": "Step 1: Get a Linear workspace with admin access"
+      }
+    ],
+    "blockers": [
+      {
+        "evidence": [
+          "e4"
+        ],
+        "likelihood": "possible",
+        "stepId": "s4",
+        "title": "Refresh token rotation breaks reconnects",
+        "whatToDo": "Persist the newest refresh token on every refresh. If it is lost or expired, have the user re-authorize."
+      },
+      {
+        "evidence": [
+          "e1"
+        ],
+        "likelihood": "possible",
+        "stepId": "s1",
+        "title": "Admin-only app visibility",
+        "whatToDo": "Own the app in a dedicated workspace so admin changes don't affect it."
+      }
+    ],
+    "evidence": [
+      {
+        "claim": "Create an OAuth2 application and set redirect callback URLs. A dedicated workspace is recommended.",
+        "id": "e1",
+        "note": null,
+        "probeId": null,
+        "quote": "Create a new OAuth2 Application and configure the redirect callback URLs to your application.",
+        "sourceUrl": "https://linear.app/developers/oauth-2-0-authentication",
+        "status": "sourced"
+      },
+      {
+        "claim": "Authorize URL and scopes read, write, admin",
+        "id": "e2",
+        "note": null,
+        "probeId": null,
+        "quote": "GET https://linear.app/oauth/authorize HTTP/1.1",
+        "sourceUrl": "https://linear.app/developers/oauth-2-0-authentication",
+        "status": "sourced"
+      },
+      {
+        "claim": "Access token valid 24 hours",
+        "id": "e3",
+        "note": null,
+        "probeId": null,
+        "quote": "The access token is valid for 24 hours and will need to be refreshed when it expires.",
+        "sourceUrl": "https://linear.app/developers/oauth-2-0-authentication",
+        "status": "sourced"
+      },
+      {
+        "claim": "Refresh returns a new refresh token, with a 30-minute grace period",
+        "id": "e4",
+        "note": null,
+        "probeId": null,
+        "quote": "a new valid access token and a new refresh token will be returned in the response",
+        "sourceUrl": "https://linear.app/developers/oauth-2-0-authentication",
+        "status": "sourced"
+      },
+      {
+        "claim": "PKCE supported; the token request is form-encoded",
+        "id": "e5",
+        "note": null,
+        "probeId": null,
+        "quote": "Linear supports the PKCE flow.",
+        "sourceUrl": "https://linear.app/developers/oauth-2-0-authentication",
+        "status": "sourced"
+      },
+      {
+        "claim": "Create OAuth app page can be pre-populated via URL or manifest",
+        "id": "e6",
+        "note": null,
+        "probeId": null,
+        "quote": "OAuth app manifests let developers define a Linear OAuth app as structured data instead of filling the form manually.",
+        "sourceUrl": "https://linear.app/developers/oauth-app-manifests",
+        "status": "sourced"
+      },
+      {
+        "claim": "Token endpoint is POST https://api.linear.app/oauth/token. The authorize endpoint is live and handles unknown clients.",
+        "id": "e7",
+        "note": "The authorize probe landed on the Linear login page. The token URL is from the docs page.",
+        "probeId": "p2",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "No review step or page was found in the docs read",
+        "id": "e8",
+        "note": "Based on absence in the OAuth and manifest pages and search results. Not proof.",
+        "probeId": null,
+        "quote": null,
+        "sourceUrl": null,
+        "status": "inferred"
+      },
+      {
+        "claim": "The docs example uses a localhost redirect URI",
+        "id": "e9",
+        "note": null,
+        "probeId": null,
+        "quote": "redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth%2Fcallback",
+        "sourceUrl": "https://linear.app/developers/oauth-2-0-authentication",
+        "status": "sourced"
+      },
+      {
+        "claim": "Rate limits for API-key requests, plus dynamic limits for workspace-level OAuth apps",
+        "id": "e10",
+        "note": null,
+        "probeId": null,
+        "quote": "When authenticated using an API key you can make up to 2,500 requests per hour.",
+        "sourceUrl": "https://linear.app/developers/rate-limiting",
+        "status": "sourced"
+      }
+    ],
+    "followUp": null,
+    "mandatoryPages": {
+      "review": {
+        "checked": true,
+        "evidence": [
+          "e8"
+        ],
+        "note": "Searched 'Linear OAuth app publish public application review'. Found no dedicated review or marketplace page. The OAuth and manifest pages mention no review.",
+        "status": "not_found",
+        "unreadable": null,
+        "url": null
+      },
+      "token": {
+        "checked": true,
+        "evidence": [
+          "e3",
+          "e4",
+          "e5"
+        ],
+        "note": "Covers the token endpoint, 24-hour access tokens, refresh and PKCE.",
+        "status": "read",
+        "unreadable": null,
+        "url": "https://linear.app/developers/oauth-2-0-authentication"
+      }
+    },
+    "oauth": {
+      "authorizeUrl": "https://linear.app/oauth/authorize",
+      "evidence": [
+        "e1",
+        "e2",
+        "e7"
+      ],
+      "tokenUrl": "https://api.linear.app/oauth/token"
+    },
+    "prodNeedsCheck": false,
+    "requirements": [
+      {
+        "appliesWhen": null,
+        "detail": "Docs recommend a dedicated workspace to manage the OAuth app, because every admin there can access it.",
+        "evidence": [
+          "e1"
+        ],
+        "kind": "prerequisite",
+        "label": "Linear workspace with admin access",
+        "stepId": "s1"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Register your callback URLs on the app, and send the same redirect_uri in both the authorize and token requests.",
+        "evidence": [
+          "e1",
+          "e9"
+        ],
+        "kind": "technical",
+        "label": "Exact HTTPS/localhost callback URLs registered",
+        "stepId": "s2"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "The page says: \"The access token is valid for 24 hours and will need to be refreshed when it expires.\"",
+        "evidence": [
+          "e3"
+        ],
+        "kind": "technical",
+        "label": "Access token lifetime 24 hours",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Store the new refresh token each time. A 30-minute grace period lets you replay the request if the response was lost.",
+        "evidence": [
+          "e4"
+        ],
+        "kind": "technical",
+        "label": "Refresh returns a new refresh token",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "POST form-encoded to the token URL. Send the client secret in the body or with HTTP basic auth. With PKCE, send client_id and the code_verifier instead.",
+        "evidence": [
+          "e5"
+        ],
+        "kind": "technical",
+        "label": "Token request format",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "OAuth app limits are not stated on the page I read. API-key requests get 2,500 per hour. Workspace-level OAuth apps using Actor Authorization get dynamic limits based on paid users.",
+        "evidence": [
+          "e10"
+        ],
+        "kind": "technical",
+        "label": "Rate limits",
+        "stepId": "s5"
+      }
+    ],
+    "scopes": [
+      {
+        "evidence": [
+          "e2"
+        ],
+        "note": "Default, always present.",
+        "scope": "read",
+        "sensitivity": "standard"
+      },
+      {
+        "evidence": [
+          "e2"
+        ],
+        "note": "Write access. Prefer narrower scopes if enough.",
+        "scope": "write",
+        "sensitivity": "standard"
+      },
+      {
+        "evidence": [
+          "e2"
+        ],
+        "note": "Docs say never ask unless absolutely needed.",
+        "scope": "admin",
+        "sensitivity": "sensitive"
+      }
+    ],
+    "steps": [
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e1"
+        ],
+        "id": "s1",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "prepare",
+        "points": [
+          "Create or use a dedicated workspace to own the OAuth app.",
+          "Every admin in it can see the app."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Get a Linear workspace with admin access",
+        "type": "account",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "Linear sign-up",
+          "url": "https://linear.app"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.5,
+          "min": 0.25
+        },
+        "evidence": [
+          "e1",
+          "e6"
+        ],
+        "id": "s2",
+        "items": [],
+        "output": "Client ID and client secret",
+        "owner": "agent",
+        "phase": "register",
+        "points": [
+          "Open Settings → API → OAuth applications → New.",
+          "Fill in name, description, icon and developer name.",
+          "Add your app's OAuth callback URL.",
+          "Choose the public distribution if other workspaces will connect."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Create the OAuth2 application",
+        "type": "register_form",
+        "values": [
+          {
+            "label": "Redirect URI",
+            "value": "your app's OAuth callback URL"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "Linear → Settings → API → Applications → New",
+          "url": "https://linear.app/settings/api/applications/new"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e2"
+        ],
+        "id": "s3",
+        "items": [],
+        "output": null,
+        "owner": "agent_ok",
+        "phase": "configure",
+        "points": [
+          "Request the minimum scopes, comma separated.",
+          "Paste the client ID and secret into your agent's config after the developer approves."
+        ],
+        "scopes": [
+          "read",
+          "write"
+        ],
+        "stage": "dev",
+        "title": "Choose scopes and store credentials",
+        "type": "configure",
+        "values": [
+          {
+            "label": "Authorize URL",
+            "value": "https://linear.app/oauth/authorize"
+          },
+          {
+            "label": "scope",
+            "value": "read,write"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Linear OAuth 2.0 docs",
+          "url": "https://linear.app/developers/oauth-2-0-authentication"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 3.5,
+          "min": 1.5
+        },
+        "evidence": [
+          "e2",
+          "e3",
+          "e4",
+          "e5"
+        ],
+        "id": "s4",
+        "items": [],
+        "output": "access_token and refresh_token",
+        "owner": "agent",
+        "phase": "configure",
+        "points": [
+          "Redirect to the authorize URL with a state value. Use PKCE (S256) for public clients.",
+          "POST the code to the token URL, form-encoded.",
+          "Refresh before the 24-hour expiry and save the new refresh token."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Implement authorize, code exchange and refresh",
+        "type": "token_flow_pkce",
+        "values": [
+          {
+            "label": "Token URL",
+            "value": "https://api.linear.app/oauth/token"
+          },
+          {
+            "label": "Content-Type",
+            "value": "application/x-www-form-urlencoded"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Linear OAuth 2.0 docs",
+          "url": "https://linear.app/developers/oauth-2-0-authentication"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 1,
+          "min": 0.5
+        },
+        "evidence": [
+          "e3",
+          "e7"
+        ],
+        "id": "s5",
+        "items": [],
+        "output": null,
+        "owner": "agent",
+        "phase": "test",
+        "points": [
+          "Complete the consent flow with a test workspace.",
+          "Call the GraphQL API with Authorization: Bearer <token>, query { viewer { id name email } }.",
+          "Success: the response returns your user."
+        ],
+        "scopes": [
+          "read"
+        ],
+        "stage": "dev",
+        "title": "Test with your own account",
+        "type": "test",
+        "values": [
+          {
+            "label": "Endpoint",
+            "value": "POST https://api.linear.app/graphql"
+          },
+          {
+            "label": "Header",
+            "value": "Authorization: Bearer <ACCESS_TOKEN>"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Linear GraphQL API",
+          "url": "https://linear.app/developers"
+        }
+      }
+    ],
+    "time": {
+      "breakdown": [
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "1",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.5,
+          "min": 0.25,
+          "note": null,
+          "step": "2",
+          "type": "App registration form",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "3",
+          "type": "Redirect URI and scopes",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 3.5,
+          "min": 1.5,
+          "note": null,
+          "step": "4",
+          "type": "Authorize and token exchange with PKCE",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 1,
+          "min": 0.5,
+          "note": null,
+          "step": "5",
+          "type": "Test with your own account",
+          "wait": null,
+          "waitSource": null
+        }
+      ],
+      "devReady": {
+        "computed": true,
+        "effort": {
+          "max": 5.5,
+          "min": 2.75
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "none"
+      },
+      "production": {
+        "computed": true,
+        "effort": {
+          "max": 5.5,
+          "min": 2.75
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "none"
+      }
+    },
+    "uncertainties": [
+      {
+        "stepId": null,
+        "text": "No dedicated app review or go-live page found (searched 'Linear OAuth app publish review'). Whether any review exists is unconfirmed."
+      },
+      {
+        "stepId": "s4",
+        "text": "Authorization code lifetime is not stated on the pages read."
+      },
+      {
+        "stepId": "s4",
+        "text": "Refresh token lifetime or inactivity expiry is not confirmed in Linear's docs (a third-party blog mentions inactivity expiry)."
+      },
+      {
+        "stepId": "s2",
+        "text": "Redirect URI rules (exact match, HTTPS, localhost, count limits) are not stated explicitly. Examples include localhost."
+      },
+      {
+        "stepId": "s5",
+        "text": "Per-OAuth-app rate limits are not stated. Region-specific hosts are not mentioned. The production host appears to be the same as the test host."
+      },
+      {
+        "stepId": "s4",
+        "text": "The client authentication method is only partly stated (secret in body or HTTP basic). The preferred method is unconfirmed."
+      },
+      {
+        "stepId": null,
+        "text": "The discovery probe on linear.app found no metadata, so dynamic registration is not confirmed."
+      },
+      {
+        "stepId": null,
+        "text": "Review page not read; review time and requirements unconfirmed. (Searched 'Linear OAuth app publish public application review'. Found no dedicated review or marketplace page. The OAuth and manifest pages mention no review.)"
+      },
+      {
+        "stepId": "s1",
+        "text": "Step 1's link linear.app opens \"Linear – The system for product development\", not obviously \"Linear sign-up\"; check it's the right page."
+      }
+    ],
+    "verdict": {
+      "confidence": "medium",
+      "points": [
+        {
+          "evidence": [
+            "e1",
+            "e6"
+          ],
+          "text": "Register the OAuth2 app yourself in Linear's API settings.",
+          "why": "The docs say to create a new OAuth2 Application and set its redirect callback URLs. A pre-filled form URL also exists."
+        },
+        {
+          "evidence": [
+            "e8"
+          ],
+          "text": "No review or approval step appears in the docs I read.",
+          "why": "The OAuth and manifest pages mention no review, verification or marketplace listing. I found no dedicated review page."
+        },
+        {
+          "evidence": [
+            "e3",
+            "e4",
+            "e5"
+          ],
+          "text": "Access tokens last 24 hours, and refresh rotates the refresh token.",
+          "why": "Your agent must store the new refresh token on every refresh. PKCE is supported."
+        }
+      ],
+      "summary": "Linear lets you register an OAuth2 app yourself in workspace settings. The docs I read describe no review step before real users connect.",
+      "tier": "self_serve",
+      "unconfirmed": false
+    }
+  },
+  "meta": {
+    "at": "2026-10-29T20:10:50.230Z",
+    "downgraded": 0,
+    "notes": [],
+    "pipelineVersion": "v2"
+  },
+  "name": "Linear",
+  "pipelineVersion": "v2",
+  "query": "Linear",
+  "run": {
+    "failedSearches": 0,
+    "okPages": 3,
+    "okSearches": 3,
+    "probes": [
+      {
+        "at": "2026-10-29T20:09:49.659Z",
+        "data": {
+          "attempts": [
+            {
+              "note": "no JSON metadata",
+              "path": "/.well-known/oauth-authorization-server",
+              "title": "Not found – Linear"
+            },
+            {
+              "note": "no JSON metadata",
+              "path": "/.well-known/openid-configuration",
+              "title": "Not found – Linear"
+            }
+          ]
+        },
+        "id": "p1",
+        "kind": "oauth_discovery",
+        "outcome": "negative",
+        "summary": "No OAuth/OIDC discovery metadata on linear.app. Not conclusive: many providers don't publish it.",
+        "target": "linear.app"
+      },
+      {
+        "at": "2026-10-29T20:10:01.542Z",
+        "data": {
+          "landedOn": "https://linear.app/oauth/authorize?client_id=setup-guide-probe-invalid-client&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&response_type=code&scope=read&state=probe",
+          "snippet": "Log in to Linear Continue with Google Continue with email Continue with SAML SSO Log in with passkey Don’t have an account? Sign up or learn more",
+          "title": "Linear"
+        },
+        "id": "p2",
+        "kind": "authorize_endpoint",
+        "outcome": "positive",
+        "summary": "Endpoint answered, landing on linear.app/oauth/authorize: it is live and handles an unknown client.",
+        "target": "https://linear.app/oauth/authorize?client_id=invalid&redirect_uri=https://example.com/cb&response_type=code&scope=read"
+      },
+      {
+        "at": "2026-10-29T20:10:35.852Z",
+        "data": {
+          "fields": null,
+          "kind": "navigation",
+          "landedOn": "https://linear.app/settings/api/applications/new?noRedirect=1",
+          "signal": null,
+          "snippet": null,
+          "title": "Linear"
+        },
+        "id": "p3",
+        "kind": "attempt_portal",
+        "outcome": "positive",
+        "summary": "Opened the registration page without signing in: navigation",
+        "target": "https://linear.app/settings/api/applications/new"
+      },
+      {
+        "at": "2026-10-29T20:10:40.228Z",
+        "data": {
+          "fields": null,
+          "kind": "loaded",
+          "landedOn": "https://linear.app/oauth/authorize?client_id=setup-guide-probe-invalid-client&response_type=code&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&state=probe&scope=read+write+admin",
+          "signal": null,
+          "snippet": "Log in to Linear Continue with Google Continue with email Continue with SAML SSO Log in with passkey Don’t have an account? Sign up or learn more",
+          "title": "Linear"
+        },
+        "id": "p4",
+        "kind": "attempt_authorize",
+        "outcome": "positive",
+        "summary": "Opened it with a made-up client and those scopes: loaded",
+        "target": "https://linear.app/oauth/authorize"
+      },
+      {
+        "at": "2026-10-29T20:10:45.839Z",
+        "data": {
+          "fields": null,
+          "kind": "loaded",
+          "landedOn": "https://api.linear.app/oauth/token",
+          "signal": null,
+          "snippet": "Cannot GET /oauth/token",
+          "title": "Error"
+        },
+        "id": "p5",
+        "kind": "attempt_token",
+        "outcome": "positive",
+        "summary": "Loaded it with a plain page request (no token request was sent): loaded",
+        "target": "https://api.linear.app/oauth/token"
+      },
+      {
+        "at": "2026-10-29T20:10:48.718Z",
+        "data": {
+          "fields": null,
+          "kind": "page",
+          "landedOn": "https://linear.app/",
+          "signal": null,
+          "snippet": "The product development system for teams and agents The product development system for teams and agents Purpose-built for planning and building products. Designed for the AI era. New Loops → Linear Pu",
+          "title": "Linear – The system for product development"
+        },
+        "id": "p6",
+        "kind": "attempt_action",
+        "outcome": "positive",
+        "summary": "Opened the link and checked where it lands: page",
+        "target": "https://linear.app"
+      }
+    ],
+    "queries": 3,
+    "readLog": [
+      {
+        "chars": 12545,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "OAuth 2.0 authentication – Linear Developers",
+        "url": "https://linear.app/developers/oauth-2-0-authentication",
+        "via": null
+      },
+      {
+        "chars": 7960,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "OAuth application manifests – Linear Developers",
+        "url": "https://linear.app/developers/oauth-app-manifests",
+        "via": null
+      },
+      {
+        "chars": 7496,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Rate limiting – Linear Developers",
+        "url": "https://linear.app/developers/rate-limiting",
+        "via": null
+      }
+    ],
+    "searchLog": [
+      {
+        "ok": true,
+        "query": "Linear developers OAuth 2.0 authentication create application"
+      },
+      {
+        "ok": true,
+        "query": "Linear API OAuth app publish public application review"
+      },
+      {
+        "ok": true,
+        "query": "Linear OAuth token refresh expiry"
+      }
+    ]
+  },
+  "savedAt": "2026-10-29T20:10:50.230Z",
+  "slug": "linear",
+  "summary": "Linear lets you register an OAuth2 app yourself in workspace settings. The docs I read describe no review step before real users connect.",
+  "tier": "self_serve",
+  "tierLabel": "Self-serve"
+}

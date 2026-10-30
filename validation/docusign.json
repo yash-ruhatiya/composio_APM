@@ -1,0 +1,105 @@
+{
+  "app": "DocuSign",
+  "checkedAt": "2026-10-28",
+  "note": "12 claims: 4 confirmed, 7 corrected, 1 unverified. Headline: Go-Live needs a paid production account, manual review typically takes 24-48 hours, and secrets and redirect URIs are not copied to production, so they must be re-added there.",
+  "pipelineVersion": "v1",
+  "round": 1,
+  "rows": [
+    {
+      "claim": "Where to register the app",
+      "composio": "Admin > Integrations > Apps and Keys > Add App and Integration Key.",
+      "ours": "Developer account, Settings > Apps and Keys > Add App and Integration Key.",
+      "provider": "Apps and Keys still works; the Developer Console (open beta) is now 'the single location where you can manage (IKs) across both the demo and production environments.'",
+      "source": "https://developers.docusign.com/platform/create-ik-developer-console/",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "Redirect URI rules",
+      "composio": "Add URI under Additional Settings; must match character-for-character.",
+      "ours": "Exact match normally required; count, localhost and HTTPS limits unknown.",
+      "provider": "'You must define at least one redirect URI... You may set more than one redirect URI per app'; redirect URIs cannot contain fragments. Exact-match wording not found.",
+      "source": "https://developers.docusign.com/platform/configure-app/",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "PKCE support",
+      "composio": "Optional 'Require PKCE' setting on a confidential app; can be left off.",
+      "ours": "Public ACG uses PKCE (inferred from a blog title).",
+      "provider": "Public ACG 'uses Proof Key for Code Exchange (PKCE) to authenticate securely without requiring a client secret'; confidential ACG may add PKCE; method s256.",
+      "source": "https://developers.docusign.com/platform/auth/public-authcode-get-token/",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "Refresh tokens and the extended scope",
+      "composio": "Not mentioned",
+      "ours": "extended is commonly paired with signature for refresh tokens; unconfirmed.",
+      "provider": "Refresh tokens last 'typically around 30 days'; with extended each refresh issues a full-lifetime token, without it the original expiry stays.",
+      "source": "https://developers.docusign.com/platform/auth/reference/scopes/",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Access token lifetime",
+      "composio": "Not mentioned",
+      "ours": "Not mentioned",
+      "provider": "Token responses show expires_in 28800 (8 hours); Docusign recommends refreshing when close to expiry, e.g. within 30 minutes.",
+      "source": "https://developers.docusign.com/platform/auth/confidential-authcode-get-token/",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Authorization code lifetime",
+      "composio": "Not mentioned",
+      "ours": "Not mentioned",
+      "provider": "'The authorization code is only viable for two minutes.'",
+      "source": "https://developers.docusign.com/platform/auth/confidential-authcode-get-token/",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Demo vs production OAuth hosts",
+      "composio": "Developer uses account-d.docusign.com; production uses account.docusign.com.",
+      "ours": "Demo account-d.docusign.com/oauth/auth and /oauth/token; production account.docusign.com.",
+      "provider": "Developer base URI https://account-d.docusign.com/oauth/auth; production https://account.docusign.com/oauth/auth; token at /oauth/token on each.",
+      "source": "https://developers.docusign.com/platform/auth/confidential-authcode-get-token/",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "Account needed for Go-Live",
+      "composio": "Not mentioned",
+      "ours": "May need a paid or production account; unknown.",
+      "provider": "'You have a paid production account to manage the integration in production'; ISV partners may qualify for a free management account; admin access required.",
+      "source": "https://developers.docusign.com/platform/go-live/",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Go-Live review time",
+      "composio": "Not mentioned",
+      "ours": "Review wait is not published; unknown.",
+      "provider": "'Manual reviews are typically completed within 24–48 hours'; some apps get automatic promotion after one-time identity verification.",
+      "source": "https://developers.docusign.com/platform/go-live/",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "20 successful API call requirement removed",
+      "composio": "Not mentioned",
+      "ours": "Dropped in 2025 per a third-party blog; unconfirmed.",
+      "provider": "Current Go-Live page lists account and integration requirements and 'take integrations live with a single click'; it does not mention an API-call count either way.",
+      "source": "https://developers.docusign.com/platform/go-live/",
+      "verdict": "unverified"
+    },
+    {
+      "claim": "What carries over to production after Go-Live",
+      "composio": "Create a separate config pointing to account.docusign.com with the production key.",
+      "ours": "Promote the key, then switch to account.docusign.com and per-user base URIs.",
+      "provider": "Key is copied with the same value, but 'secrets and redirect URIs are not copied automatically'; configure them separately in production.",
+      "source": "https://developers.docusign.com/platform/go-live/",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Userinfo call returns the base URI",
+      "composio": "Not mentioned",
+      "ours": "GET /oauth/userinfo with Bearer token returns accounts with base_uri (assumed).",
+      "provider": "GET https://account-d.docusign.com/oauth/userinfo (account.docusign.com in production) returns account_id and base_uri; hourly rate limits apply.",
+      "source": "https://developers.docusign.com/platform/auth/reference/user-info/",
+      "verdict": "confirmed"
+    }
+  ]
+}

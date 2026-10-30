@@ -1,0 +1,1027 @@
+{
+  "confidence": "medium",
+  "guide": {
+    "access": {
+      "alternative": null,
+      "oauthForThirdParties": "yes",
+      "reason": "Dropbox documents OAuth 2.0 for third-party apps. You register an app in the App Console and get an app key and secret.",
+      "registration": "manual"
+    },
+    "app": {
+      "developerPortal": "https://www.dropbox.com/developers/apps",
+      "name": "Dropbox",
+      "slug": "dropbox",
+      "website": "https://www.dropbox.com"
+    },
+    "attemptNote": null,
+    "attemptPick": "Stage 2 picked the 5 weakest claims it can check by opening a page (2 inferred, 3 sourced); claims already tested were skipped.",
+    "attempts": [
+      {
+        "change": "Added tested evidence a1 (probe p3)",
+        "claim": "The authorize URL www.dropbox.com/oauth2/authorize is live and takes the documented scopes (account_info.read)",
+        "expected": "A live endpoint that rejects the made-up client and raises no scope error",
+        "n": 1,
+        "probeId": "p3",
+        "result": "Rejected the made-up client without objecting to the scopes",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": null,
+        "tried": "Opened it with a made-up client and those scopes",
+        "weak": "Inferred"
+      },
+      {
+        "change": "No change",
+        "claim": "Step 1 link goes to www.dropbox.com/developers/apps",
+        "expected": "Where you do \"Dropbox → App Console\": a sign-in, sign-up, form or a page about it",
+        "n": 2,
+        "probeId": "p4",
+        "result": "Behind a sign-in, so whether the page exists couldn't be seen",
+        "signIn": true,
+        "status": "Unverified",
+        "stepId": "s1",
+        "tried": "Opened the link and checked where it lands",
+        "weak": "Inferred"
+      },
+      {
+        "change": "Added tested evidence a2 (probe p5)",
+        "claim": "Step 2: you register the app at www.dropbox.com/developers/apps/create",
+        "expected": "A sign-in, sign-up or app registration form",
+        "n": 3,
+        "probeId": "p5",
+        "result": "A sign-in page: you sign in before this step",
+        "signIn": true,
+        "status": "Confirmed",
+        "stepId": "s2",
+        "tried": "Opened the registration page without signing in",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Added tested evidence a3 (probe p6)",
+        "claim": "Review page goes to docs.dropboxapi.com/dropbox-api/docs/developer-resources/developer-guide",
+        "expected": "The provider's app review / go-live page",
+        "n": 4,
+        "probeId": "p6",
+        "result": "Loads \"DBX Platform developer guide | Dropbox API Documentation\" and covers review or going live",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": null,
+        "tried": "Opened the link and checked where it lands",
+        "weak": "Sourced"
+      },
+      {
+        "change": "No change: a not-found here doesn't prove the URL is wrong",
+        "claim": "The token endpoint is api.dropboxapi.com/oauth2/token",
+        "expected": "A live OAuth endpoint (it answers a plain request with an error)",
+        "n": 5,
+        "probeId": "p7",
+        "result": "Not found for a plain page request; endpoints that only take POST often answer this way",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s5",
+        "tried": "Loaded it with a plain page request (no token request was sent)",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Sign in at www.dropbox.com/developers/apps, then an agent can continue",
+        "claim": "Where the agent stopped",
+        "n": 6,
+        "result": "A sign-in page",
+        "status": "You take over",
+        "stepId": "s1",
+        "stop": true,
+        "tried": "Step 1: Sign in to Dropbox and open the App Console"
+      }
+    ],
+    "blockers": [
+      {
+        "evidence": [
+          "e3"
+        ],
+        "likelihood": "common",
+        "stepId": "s8",
+        "title": "App frozen after 50 users without approval",
+        "whatToDo": "Apply for production status before the 50th user, or right after it."
+      },
+      {
+        "evidence": [
+          "e6"
+        ],
+        "likelihood": "possible",
+        "stepId": "s7",
+        "title": "Production review rejects overly broad scopes",
+        "whatToDo": "Request minimal scopes or App folder access, and explain planned broader needs in the application."
+      },
+      {
+        "evidence": [
+          "e5"
+        ],
+        "likelihood": "common",
+        "stepId": "s3",
+        "title": "Redirect URI mismatch",
+        "whatToDo": "Register the exact callback URL in the App Console."
+      }
+    ],
+    "evidence": [
+      {
+        "claim": "Apps are registered in the App Console, which gives an app key and secret.",
+        "id": "e1",
+        "note": null,
+        "probeId": null,
+        "quote": "obtaining an app key and secret (a.k.a. client_id and client_secret) and inputting redirect URIs",
+        "sourceUrl": "https://docs.dropboxapi.com/dropbox-api/docs/oauth",
+        "status": "sourced"
+      },
+      {
+        "claim": "The authorize URL is www.dropbox.com/oauth2/authorize.",
+        "id": "e2",
+        "note": "The authorize endpoint is also live: a probe with an invalid client_id returned unknown_client_id (p2).",
+        "probeId": null,
+        "quote": "https://www.dropbox.com/oauth2/authorize?client_id=MY_CLIENT_ID&redirect_uri=MY_REDIRECT_URI&response_type=code",
+        "sourceUrl": "https://docs.dropboxapi.com/dropbox-api/docs/oauth",
+        "status": "sourced"
+      },
+      {
+        "claim": "Dev-status apps are capped at 500 users and freeze 2 weeks after the 50th linked user.",
+        "id": "e3",
+        "note": null,
+        "probeId": null,
+        "quote": "once your app links 50 Dropbox users, you will have two weeks to apply for and receive production status approval",
+        "sourceUrl": "https://docs.dropboxapi.com/dropbox-api/docs/developer-resources/developer-guide",
+        "status": "sourced"
+      },
+      {
+        "claim": "Production review is submitted from the app's info page and is not reviewed until 50 users are linked.",
+        "id": "e4",
+        "note": null,
+        "probeId": null,
+        "quote": "it will not be reviewed until your app has linked with at least 50 Dropbox users",
+        "sourceUrl": "https://docs.dropboxapi.com/dropbox-api/docs/developer-resources/developer-guide",
+        "status": "sourced"
+      },
+      {
+        "claim": "Redirect URIs must be registered and are checked at authorization time.",
+        "id": "e5",
+        "note": null,
+        "probeId": null,
+        "quote": "You’ll need to register the exact redirect URI(s) your app may use in the App Console",
+        "sourceUrl": "https://docs.dropboxapi.com/dropbox-api/docs/oauth",
+        "status": "sourced"
+      },
+      {
+        "claim": "The review checks for overly broad permissions.",
+        "id": "e6",
+        "note": null,
+        "probeId": null,
+        "quote": "we’ll review that your app doesn’t request an unnecessarily broad permission",
+        "sourceUrl": "https://docs.dropboxapi.com/dropbox-api/docs/developer-resources/developer-guide",
+        "status": "sourced"
+      },
+      {
+        "claim": "The code exchange at /oauth2/token uses the client secret.",
+        "id": "e7",
+        "note": null,
+        "probeId": null,
+        "quote": "Call the /oauth2/token endpoint with your app’s client_secret to exchange the code for an access token",
+        "sourceUrl": "https://docs.dropboxapi.com/dropbox-api/docs/oauth",
+        "status": "sourced"
+      },
+      {
+        "claim": "The test call, the account_info.read scope and the sign-in requirement come from general knowledge.",
+        "id": "e8",
+        "note": "General knowledge of the Dropbox API.",
+        "probeId": null,
+        "quote": null,
+        "sourceUrl": null,
+        "status": "inferred"
+      },
+      {
+        "claim": "Refresh tokens and token_access_type=offline.",
+        "id": "e9",
+        "note": "Search snippets from docs.dropboxapi.com say a refresh_token grant returns a new short-lived access token.",
+        "probeId": null,
+        "quote": null,
+        "sourceUrl": null,
+        "status": "inferred"
+      },
+      {
+        "claim": "The authorize URL www.dropbox.com/oauth2/authorize is live and rejects an unknown client",
+        "id": "a1",
+        "note": "Stage 2 attempt",
+        "probeId": "p3",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "www.dropbox.com/developers/apps/create asks the developer to sign in first",
+        "id": "a2",
+        "note": "Stage 2 attempt",
+        "probeId": "p5",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "docs.dropboxapi.com/dropbox-api/docs/developer-resources/developer-guide is the provider's review / go-live page",
+        "id": "a3",
+        "note": "Stage 2 attempt",
+        "probeId": "p6",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      }
+    ],
+    "followUp": null,
+    "mandatoryPages": {
+      "review": {
+        "checked": true,
+        "evidence": [
+          "e3",
+          "e4"
+        ],
+        "note": "Covers production approval, the 500-user cap and the 50-user trigger.",
+        "status": "read",
+        "unreadable": null,
+        "url": "https://docs.dropboxapi.com/dropbox-api/docs/developer-resources/developer-guide"
+      },
+      "token": {
+        "checked": true,
+        "evidence": [
+          "e2",
+          "e5",
+          "e7"
+        ],
+        "note": "The page was read, but its excerpt lacked token lifetimes and refresh details.",
+        "status": "read",
+        "unreadable": null,
+        "url": "https://docs.dropboxapi.com/dropbox-api/docs/oauth"
+      }
+    },
+    "oauth": {
+      "authorizeUrl": "https://www.dropbox.com/oauth2/authorize",
+      "evidence": [
+        "e1",
+        "e2",
+        "e7"
+      ],
+      "tokenUrl": "https://api.dropboxapi.com/oauth2/token"
+    },
+    "prodNeedsCheck": false,
+    "requirements": [
+      {
+        "appliesWhen": null,
+        "detail": "A Dropbox account is needed to sign in to the App Console and create the app.",
+        "evidence": [
+          "e8"
+        ],
+        "kind": "prerequisite",
+        "label": "Dropbox account",
+        "stepId": null
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Register every redirect URI in the App Console. Dropbox checks redirect_uri against the registered values.",
+        "evidence": [
+          "e5"
+        ],
+        "kind": "technical",
+        "label": "Exact redirect URI match",
+        "stepId": "s3"
+      },
+      {
+        "appliesWhen": "Applying for production",
+        "detail": "The review checks that the app doesn't request an unnecessarily broad permission.",
+        "evidence": [
+          "e6"
+        ],
+        "kind": "technical",
+        "label": "Least-privilege scopes",
+        "stepId": "s3"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "The code exchange calls /oauth2/token with the app's client_secret.",
+        "evidence": [
+          "e7"
+        ],
+        "kind": "technical",
+        "label": "Client secret at the token endpoint",
+        "stepId": "s5"
+      },
+      {
+        "appliesWhen": "Production",
+        "detail": "The app must follow the developer branding guidelines and terms. The app name can't be changed after production approval.",
+        "evidence": [
+          "e4"
+        ],
+        "kind": "technical",
+        "label": "Branding guidelines and terms",
+        "stepId": "s7"
+      }
+    ],
+    "scopes": [
+      {
+        "evidence": [
+          "e8"
+        ],
+        "note": "Needed for the read-only test call to /users/get_current_account. The scope name comes from general knowledge, not from a page read in this run.",
+        "scope": "account_info.read",
+        "sensitivity": "standard"
+      },
+      {
+        "evidence": [
+          "e6"
+        ],
+        "note": "The review checks whether the access requested is broader than the app needs.",
+        "scope": "files.content.read / files.content.write",
+        "sensitivity": "unknown"
+      }
+    ],
+    "steps": [
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e8"
+        ],
+        "id": "s1",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "prepare",
+        "points": [
+          "Use a Dropbox account you control.",
+          "Decide on App folder or Full Dropbox access."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Sign in to Dropbox and open the App Console",
+        "type": "account",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "Dropbox → App Console",
+          "url": "https://www.dropbox.com/developers/apps"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.5,
+          "min": 0.25
+        },
+        "evidence": [
+          "e1",
+          "e6",
+          "a2"
+        ],
+        "id": "s2",
+        "items": [],
+        "output": "App key (client_id) and app secret",
+        "owner": "agent",
+        "phase": "register",
+        "points": [
+          "Click Create app and choose Scoped access.",
+          "Choose App folder or Full Dropbox; prefer App folder.",
+          "Note the app key and secret on the Settings tab."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Create the app in the App Console",
+        "type": "register_form",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "App Console → Create app",
+          "url": "https://www.dropbox.com/developers/apps/create"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e1",
+          "e5",
+          "e6"
+        ],
+        "id": "s3",
+        "items": [],
+        "output": null,
+        "owner": "agent",
+        "phase": "configure",
+        "points": [
+          "Add your app's OAuth callback URL under Redirect URIs.",
+          "Tick the minimal scopes in the Permissions tab.",
+          "Click Submit on the Permissions tab so the scopes take effect."
+        ],
+        "scopes": [
+          "account_info.read"
+        ],
+        "stage": "dev",
+        "title": "Set the redirect URI and permissions",
+        "type": "configure",
+        "values": [
+          {
+            "label": "Redirect URI",
+            "value": "Your app's OAuth callback URL"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "App Console → app → Settings / Permissions",
+          "url": "https://www.dropbox.com/developers/apps"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 1,
+          "min": 0.25
+        },
+        "evidence": [
+          "e7"
+        ],
+        "id": "s4",
+        "items": [],
+        "output": null,
+        "owner": "agent_ok",
+        "phase": "configure",
+        "points": [
+          "Ask the developer before pasting the secret."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Store the app key and secret in your agent's config",
+        "type": "other",
+        "values": [],
+        "wait": null,
+        "where": null
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 3,
+          "min": 1
+        },
+        "evidence": [
+          "e2",
+          "e7",
+          "e9"
+        ],
+        "id": "s5",
+        "items": [],
+        "output": "Access token and refresh token",
+        "owner": "agent",
+        "phase": "test",
+        "points": [
+          "Send the user to the authorize URL with response_type=code.",
+          "Add token_access_type=offline to get a refresh token (general knowledge).",
+          "Exchange the code at the token URL with the client secret."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Run the authorization code flow",
+        "type": "token_flow",
+        "values": [
+          {
+            "label": "Authorize URL",
+            "value": "https://www.dropbox.com/oauth2/authorize?client_id=APP_KEY&redirect_uri=CALLBACK&response_type=code"
+          },
+          {
+            "label": "Token URL",
+            "value": "https://api.dropboxapi.com/oauth2/token"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Dropbox OAuth guide",
+          "url": "https://docs.dropboxapi.com/dropbox-api/docs/oauth"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 1,
+          "min": 0.5
+        },
+        "evidence": [
+          "e8"
+        ],
+        "id": "s6",
+        "items": [],
+        "output": null,
+        "owner": "agent",
+        "phase": "test",
+        "points": [
+          "POST https://api.dropboxapi.com/2/users/get_current_account with a Bearer token.",
+          "Success is a 200 response with the account name and email."
+        ],
+        "scopes": [
+          "account_info.read"
+        ],
+        "stage": "dev",
+        "title": "Test with a read-only call",
+        "type": "test",
+        "values": [],
+        "wait": null,
+        "where": null
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 12,
+          "min": 3
+        },
+        "evidence": [
+          "e4"
+        ],
+        "id": "s7",
+        "items": [
+          "Detailed description of API use",
+          "App icon",
+          "Scope justification"
+        ],
+        "output": null,
+        "owner": "agent",
+        "phase": "review",
+        "points": [
+          "Describe how the app uses the API in detail.",
+          "Upload an app icon.",
+          "Check the app against the branding guidelines and terms."
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Prepare the production application",
+        "type": "review_materials",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "App Console → app → Apply for production",
+          "url": "https://www.dropbox.com/developers/apps"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.5,
+          "min": 0.25
+        },
+        "evidence": [
+          "e3",
+          "e4"
+        ],
+        "id": "s8",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "review",
+        "points": [
+          "Submit before linking 50 users, or within 2 weeks of the 50th.",
+          "Use the early review field if there is a good reason."
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Submit the production status application",
+        "type": "submit",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "App Console → app → Apply for Production",
+          "url": "https://www.dropbox.com/developers/apps"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0,
+          "min": 0
+        },
+        "evidence": [
+          "e4"
+        ],
+        "id": "s9",
+        "items": [],
+        "output": null,
+        "owner": "provider",
+        "phase": "review",
+        "points": [
+          "Review starts once the app has 50 linked users.",
+          "No review time is stated in the pages read."
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Dropbox reviews the app",
+        "type": "provider",
+        "values": [],
+        "wait": null,
+        "where": null
+      }
+    ],
+    "time": {
+      "breakdown": [
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "0",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "1",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.5,
+          "min": 0.25,
+          "note": null,
+          "step": "2",
+          "type": "App registration form",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "3",
+          "type": "Redirect URI and scopes",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 1,
+          "min": 0.25,
+          "note": null,
+          "step": "4",
+          "type": "Any other step",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 3,
+          "min": 1,
+          "note": null,
+          "step": "5",
+          "type": "Authorize and token exchange",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 1,
+          "min": 0.5,
+          "note": null,
+          "step": "6",
+          "type": "Test with your own account",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [],
+          "max": 12,
+          "min": 3,
+          "note": "3 items",
+          "step": "7",
+          "type": "Review materials (per item)",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [],
+          "max": 0.5,
+          "min": 0.25,
+          "note": null,
+          "step": "8",
+          "type": "Submit for review",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [
+            "e4"
+          ],
+          "max": 0,
+          "min": 0,
+          "note": null,
+          "step": "9",
+          "type": "The provider does it (you wait)",
+          "wait": null,
+          "waitSource": null
+        }
+      ],
+      "devReady": {
+        "computed": true,
+        "effort": {
+          "max": 6.25,
+          "min": 2.75
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "none"
+      },
+      "production": {
+        "computed": true,
+        "effort": {
+          "max": 18.75,
+          "min": 6
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "unknown"
+      }
+    },
+    "uncertainties": [
+      {
+        "stepId": "s9",
+        "text": "Production review duration is not stated on the pages read."
+      },
+      {
+        "stepId": "s5",
+        "text": "Authorization code lifetime was not found on the pages read."
+      },
+      {
+        "stepId": "s5",
+        "text": "Access token lifetime (about 4 hours) comes only from search snippets. Refresh token expiry and whether a refresh returns a new refresh token are not confirmed."
+      },
+      {
+        "stepId": null,
+        "text": "Rate limits and region-specific hosts were not found on the pages read."
+      },
+      {
+        "stepId": "s3",
+        "text": "PKCE support, localhost and HTTPS redirect rules were not confirmed. The app-console page failed to load."
+      },
+      {
+        "stepId": null,
+        "text": "Discovery probe on www.dropbox.com errored, so it neither confirmed nor ruled out dynamic registration."
+      },
+      {
+        "stepId": null,
+        "text": "Whether a paid Dropbox plan is needed for production is unknown."
+      },
+      {
+        "stepId": "s5",
+        "text": "The token URL host api.dropboxapi.com was not seen in the page text. It comes from general knowledge."
+      }
+    ],
+    "verdict": {
+      "confidence": "medium",
+      "points": [
+        {
+          "evidence": [
+            "e3"
+          ],
+          "text": "Dev-status apps work like production apps, capped at 500 linked users.",
+          "why": "The developer guide says a development-status app can link up to 500 Dropbox users in total."
+        },
+        {
+          "evidence": [
+            "e3"
+          ],
+          "text": "The app freezes 2 weeks after its 50th linked user unless approved.",
+          "why": "Without production approval, the app can't link more users after that point. Approval lifts the cap."
+        },
+        {
+          "evidence": [
+            "e4"
+          ],
+          "text": "Production review starts only after 50 users are linked.",
+          "why": "Early review is possible if you justify it in the 'Request early review' field. No review time is stated."
+        }
+      ],
+      "summary": "Anyone can register a Dropbox app and test at once, but production approval is needed beyond 50 linked users.",
+      "tier": "review_gated",
+      "unconfirmed": false
+    }
+  },
+  "meta": {
+    "at": "2026-10-29T19:37:20.840Z",
+    "downgraded": 0,
+    "notes": [],
+    "pipelineVersion": "v2"
+  },
+  "name": "Dropbox",
+  "pipelineVersion": "v2",
+  "query": "Dropbox",
+  "run": {
+    "failedSearches": 0,
+    "okPages": 2,
+    "okSearches": 3,
+    "probes": [
+      {
+        "at": "2026-10-29T19:36:14.757Z",
+        "data": {
+          "attempts": [
+            {
+              "error": "preview_start could not run on this page. Use read_page to check the pane, then retry.",
+              "path": "/.well-known/oauth-authorization-server"
+            },
+            {
+              "error": "preview_start could not run on this page. Use read_page to check the pane, then retry.",
+              "path": "/.well-known/openid-configuration"
+            }
+          ]
+        },
+        "id": "p1",
+        "kind": "oauth_discovery",
+        "outcome": "error",
+        "summary": "No OAuth/OIDC discovery metadata on www.dropbox.com. Not conclusive: many providers don't publish it.",
+        "target": "www.dropbox.com"
+      },
+      {
+        "at": "2026-10-29T19:36:28.417Z",
+        "data": {
+          "landedOn": "https://www.dropbox.com/oauth2/authorize_error?client_id=setup-guide-probe-invalid-client&error_detail=Invalid+client_id%3A+%22setup-guide-probe-invalid-client%22.&error_name=unknown_client_id",
+          "snippet": "It seems the app you're using submitted a bad request. If you'd like to report this error to the app's developer, include the information below. More details for developers Invalid client_id: \"setup-guide-probe-invalid-client\". Privacy & terms Cookie policy Cookies & CCPA preferences AI Principles E",
+          "title": "API Request Authorization - Dropbox"
+        },
+        "id": "p2",
+        "kind": "authorize_endpoint",
+        "outcome": "positive",
+        "summary": "Endpoint answered, landing on www.dropbox.com/oauth2/authorize_error: it is live and handles an unknown client.",
+        "target": "https://www.dropbox.com/oauth2/authorize?client_id=invalid&response_type=code&redirect_uri=https://example.com/cb"
+      },
+      {
+        "at": "2026-10-29T19:37:05.599Z",
+        "data": {
+          "fields": null,
+          "kind": "client_rejected",
+          "landedOn": "https://www.dropbox.com/oauth2/authorize_error?client_id=setup-guide-probe-invalid-client&error_detail=Invalid+client_id%3A+%22setup-guide-probe-invalid-client%22.&error_name=unknown_client_id",
+          "signal": null,
+          "snippet": "It seems the app you're using submitted a bad request. If you'd like to report this error to the app's developer, include the information below. More details for developers Invalid client_id: \"setup-g",
+          "title": "API Request Authorization - Dropbox"
+        },
+        "id": "p3",
+        "kind": "attempt_authorize",
+        "outcome": "positive",
+        "summary": "Opened it with a made-up client and those scopes: client rejected",
+        "target": "https://www.dropbox.com/oauth2/authorize"
+      },
+      {
+        "at": "2026-10-29T19:37:10.023Z",
+        "data": {
+          "fields": null,
+          "kind": "login",
+          "landedOn": "https://www.dropbox.com/login?cont=https%3A%2F%2Fwww.dropbox.com%2Fdevelopers%2Fapps",
+          "signal": null,
+          "snippet": "Log in or sign up for free Continue with Apple Continue with Microsoft or Email Continue Dropbox Desktop app Mobile app Integrations Features Solutions Security Early access Templates Free tools Produ",
+          "title": "Login or Sign Up for a Dropbox Account"
+        },
+        "id": "p4",
+        "kind": "attempt_action",
+        "outcome": "positive",
+        "summary": "Opened the link and checked where it lands: login",
+        "target": "https://www.dropbox.com/developers/apps"
+      },
+      {
+        "at": "2026-10-29T19:37:13.320Z",
+        "data": {
+          "fields": null,
+          "kind": "login",
+          "landedOn": "https://www.dropbox.com/login?cont=https%3A%2F%2Fwww.dropbox.com%2Fdevelopers%2Fapps%2Fcreate",
+          "signal": null,
+          "snippet": null,
+          "title": "Login or Sign Up for a Dropbox Account"
+        },
+        "id": "p5",
+        "kind": "attempt_portal",
+        "outcome": "positive",
+        "summary": "Opened the registration page without signing in: login",
+        "target": "https://www.dropbox.com/developers/apps/create"
+      },
+      {
+        "at": "2026-10-29T19:37:15.304Z",
+        "data": {
+          "fields": null,
+          "kind": "docs",
+          "landedOn": "https://docs.dropboxapi.com/dropbox-api/docs/developer-resources/developer-guide",
+          "signal": "application form",
+          "snippet": "App permissions Developer Resources DBX Platform developer guide Ask a question | Copy page | View as Markdown | More actions This is your goto reference for building great apps on the DBX Platform an",
+          "title": "DBX Platform developer guide | Dropbox API Documentation"
+        },
+        "id": "p6",
+        "kind": "attempt_review",
+        "outcome": "positive",
+        "summary": "Opened the link and checked where it lands: docs (\"application form\")",
+        "target": "https://docs.dropboxapi.com/dropbox-api/docs/developer-resources/developer-guide"
+      },
+      {
+        "at": "2026-10-29T19:37:20.834Z",
+        "data": {
+          "fields": null,
+          "kind": "missing",
+          "landedOn": "https://api.dropboxapi.com/oauth2/token",
+          "signal": null,
+          "snippet": "Error (404) We can't find the page you're looking for. Here are a few links that may be helpful: Home Help center Sign in Get a free account Dropbox Plus Dropbox Business",
+          "title": "Dropbox - 404"
+        },
+        "id": "p7",
+        "kind": "attempt_token",
+        "outcome": "negative",
+        "summary": "Loaded it with a plain page request (no token request was sent): missing",
+        "target": "https://api.dropboxapi.com/oauth2/token"
+      }
+    ],
+    "queries": 3,
+    "readLog": [
+      {
+        "chars": 14219,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "OAuth | Dropbox API Documentation",
+        "url": "https://docs.dropboxapi.com/dropbox-api/docs/oauth",
+        "via": null
+      },
+      {
+        "chars": 10788,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "DBX Platform developer guide | Dropbox API Documentation",
+        "url": "https://docs.dropboxapi.com/dropbox-api/docs/developer-resources/developer-guide",
+        "via": null
+      },
+      {
+        "error": "The page changed; retry.",
+        "ok": false,
+        "url": "https://docs.dropboxapi.com/dropbox-api/docs/get-started/tutorial/app-console"
+      }
+    ],
+    "searchLog": [
+      {
+        "ok": true,
+        "query": "Dropbox OAuth guide developers"
+      },
+      {
+        "ok": true,
+        "query": "Dropbox app production approval apply for production developer"
+      },
+      {
+        "ok": true,
+        "query": "Dropbox OAuth token refresh access token expiration"
+      }
+    ]
+  },
+  "savedAt": "2026-10-29T19:37:20.840Z",
+  "slug": "dropbox",
+  "summary": "Anyone can register a Dropbox app and test at once, but production approval is needed beyond 50 linked users.",
+  "tier": "review_gated",
+  "tierLabel": "Review-gated"
+}

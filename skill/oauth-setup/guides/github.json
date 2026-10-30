@@ -1,0 +1,925 @@
+{
+  "confidence": "medium",
+  "guide": {
+    "access": {
+      "alternative": null,
+      "oauthForThirdParties": "yes",
+      "reason": "Anyone can register an OAuth app under Settings → Developer settings → OAuth apps. No review is described in the pages read.",
+      "registration": "manual"
+    },
+    "app": {
+      "developerPortal": "https://github.com/settings/developers",
+      "name": "GitHub",
+      "slug": "github",
+      "website": "https://github.com"
+    },
+    "attemptNote": null,
+    "attemptPick": "Stage 2 picked the 5 weakest claims it can check by opening a page (5 sourced); claims already tested were skipped.",
+    "attempts": [
+      {
+        "change": "Added tested evidence a1 (probe p3)",
+        "claim": "Step 2: you register the app at github.com/settings/applications/new",
+        "expected": "A sign-in, sign-up or app registration form; form asks for redirect, website",
+        "n": 1,
+        "probeId": "p3",
+        "result": "A sign-in page: you sign in before this step",
+        "signIn": true,
+        "status": "Confirmed",
+        "stepId": "s2",
+        "tried": "Opened the registration page without signing in",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Added tested evidence a2 (probe p4)",
+        "claim": "The authorize URL github.com/login/oauth/authorize is live and takes the documented scopes (offline_access, read:user, repo)",
+        "expected": "A live endpoint that rejects the made-up client and raises no scope error",
+        "n": 2,
+        "probeId": "p4",
+        "result": "Live; it asks the user to sign in before showing consent, so the scopes weren't visible",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": "s3",
+        "tried": "Opened it with a made-up client and those scopes",
+        "weak": "Sourced"
+      },
+      {
+        "change": "No change: a not-found here doesn't prove the URL is wrong",
+        "claim": "The token endpoint is github.com/login/oauth/access_token",
+        "expected": "A live OAuth endpoint (it answers a plain request with an error)",
+        "n": 3,
+        "probeId": "p5",
+        "result": "Not found for a plain page request; endpoints that only take POST often answer this way",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s3",
+        "tried": "Loaded it with a plain page request (no token request was sent)",
+        "weak": "Sourced"
+      },
+      {
+        "change": "No change",
+        "claim": "Step 1 link goes to github.com/settings/developers",
+        "expected": "Where you do \"GitHub → Settings → Developer settings\": a sign-in, sign-up, form or a page about it",
+        "n": 4,
+        "probeId": "p6",
+        "result": "Behind a sign-in, so whether the page exists couldn't be seen",
+        "signIn": true,
+        "status": "Unverified",
+        "stepId": "s1",
+        "tried": "Opened the link and checked where it lands",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Added tested evidence a3 (probe p7)",
+        "claim": "Step 5 link goes to docs.github.com/en/organizations/managing-oauth-access-to-your-organizations-data/approving-oauth-apps-for-your-organization",
+        "expected": "A docs page about \"GitHub Docs → Approving OAuth apps for your organization\"",
+        "n": 5,
+        "probeId": "p7",
+        "result": "Loads \"Approving OAuth apps for your organization - GitHub Docs\"",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": "s5",
+        "tried": "Opened the link and checked where it lands",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Sign in at github.com/settings/developers, then an agent can continue",
+        "claim": "Where the agent stopped",
+        "n": 6,
+        "result": "A sign-in page",
+        "status": "You take over",
+        "stepId": "s1",
+        "stop": true,
+        "tried": "Step 1: Sign in and decide the owner"
+      }
+    ],
+    "blockers": [
+      {
+        "evidence": [
+          "e4"
+        ],
+        "likelihood": "common",
+        "stepId": "s5",
+        "title": "Organization OAuth app access restrictions",
+        "whatToDo": "Ask an org owner to approve your app. Or have the user authorize only their personal resources."
+      },
+      {
+        "evidence": [
+          "e1",
+          "e6"
+        ],
+        "likelihood": "possible",
+        "stepId": "s2",
+        "title": "SDK doesn't support refresh tokens",
+        "whatToDo": "Add refresh handling. Or temporarily uncheck 'Expire user access tokens'."
+      }
+    ],
+    "evidence": [
+      {
+        "claim": "Register OAuth apps in Developer settings, up to 10 callback URLs, no review mentioned",
+        "id": "e1",
+        "note": null,
+        "probeId": null,
+        "quote": "You can enter up to 10 callback URLs.",
+        "sourceUrl": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+        "status": "sourced"
+      },
+      {
+        "claim": "Expiring tokens: 8-hour access token, 6-month refresh token, new pair on refresh",
+        "id": "e2",
+        "note": null,
+        "probeId": null,
+        "quote": "The access token expires after eight hours, and the refresh token expires after six months without use.",
+        "sourceUrl": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps",
+        "status": "sourced"
+      },
+      {
+        "claim": "Authorization code lifetime is 10 minutes",
+        "id": "e3",
+        "note": null,
+        "probeId": null,
+        "quote": "The temporary code will expire after 10 minutes.",
+        "sourceUrl": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps",
+        "status": "sourced"
+      },
+      {
+        "claim": "Orgs with OAuth app access restrictions require owner approval",
+        "id": "e4",
+        "note": null,
+        "probeId": null,
+        "quote": "When you create a new organization, OAuth app access restrictions are enabled by default.",
+        "sourceUrl": "https://docs.github.com/en/organizations/managing-oauth-access-to-your-organizations-data/about-oauth-app-access-restrictions",
+        "status": "sourced"
+      },
+      {
+        "claim": "Authorize endpoint is live and handles unknown clients by redirecting to login",
+        "id": "e5",
+        "note": null,
+        "probeId": "p2",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "New apps get short-lived tokens by default; wildcard redirect matching on single-URI apps",
+        "id": "e6",
+        "note": null,
+        "probeId": null,
+        "quote": "Short-lived tokens are enabled by default for all new applications.",
+        "sourceUrl": "https://github.blog/changelog/2026-08-14-multiple-redirect-uris-and-token-refresh-for-oauth-apps/",
+        "status": "sourced"
+      },
+      {
+        "claim": "Client secret required for token generation unless device flow; PKCE recommended",
+        "id": "e7",
+        "note": null,
+        "probeId": null,
+        "quote": "Client secrets are required to generate access tokens for your app, unless your app uses the device flow.",
+        "sourceUrl": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/best-practices-for-creating-an-oauth-app",
+        "status": "sourced"
+      },
+      {
+        "claim": "github.com/settings/applications/new asks the developer to sign in first",
+        "id": "a1",
+        "note": "Stage 2 attempt",
+        "probeId": "p3",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "The authorize URL github.com/login/oauth/authorize is live and shows a sign-in page",
+        "id": "a2",
+        "note": "Stage 2 attempt",
+        "probeId": "p4",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "docs.github.com/en/organizations/managing-oauth-access-to-your-organizations-data/approving-oauth-apps-for-your-organization loads (Approving OAuth apps for your organization - GitHub Docs)",
+        "id": "a3",
+        "note": "Stage 2 attempt",
+        "probeId": "p7",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      }
+    ],
+    "followUp": null,
+    "mandatoryPages": {
+      "review": {
+        "checked": true,
+        "evidence": [
+          "e1",
+          "e4"
+        ],
+        "note": "Searched 'GitHub creating an OAuth app' and 'OAuth app organization approval'. Found no OAuth app review or go-live page. Only per-organization approval exists.",
+        "status": "not_found",
+        "unreadable": null,
+        "url": null
+      },
+      "token": {
+        "checked": true,
+        "evidence": [
+          "e2",
+          "e3"
+        ],
+        "note": null,
+        "status": "read",
+        "unreadable": null,
+        "url": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps"
+      }
+    },
+    "oauth": {
+      "authorizeUrl": "https://github.com/login/oauth/authorize",
+      "evidence": [
+        "e2",
+        "e5"
+      ],
+      "tokenUrl": "https://github.com/login/oauth/access_token"
+    },
+    "prodNeedsCheck": false,
+    "requirements": [
+      {
+        "appliesWhen": null,
+        "detail": "A personal account, or an organization you administer, to own the OAuth app.",
+        "evidence": [
+          "e1"
+        ],
+        "kind": "prerequisite",
+        "label": "GitHub account",
+        "stepId": null
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Up to 10 callback URLs per app. A single registered URL has wildcard matching on by default, so turn it off if you don't need it.",
+        "evidence": [
+          "e1",
+          "e6"
+        ],
+        "kind": "technical",
+        "label": "Callback URL rules",
+        "stepId": "s2"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "The temporary code expires after 10 minutes, so exchange it promptly.",
+        "evidence": [
+          "e3"
+        ],
+        "kind": "technical",
+        "label": "Authorization code lifetime",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": "Expire user access tokens enabled",
+        "detail": "Expiring tokens: access token 8 hours, refresh token 6 months without use. A refresh returns a new access token and a new refresh token. Check for expires_in in the response.",
+        "evidence": [
+          "e2",
+          "e7"
+        ],
+        "kind": "technical",
+        "label": "Token lifetimes and refresh",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "The client secret is needed to get tokens unless you use device flow. PKCE (code_challenge) is strongly recommended.",
+        "evidence": [
+          "e2",
+          "e7"
+        ],
+        "kind": "technical",
+        "label": "Client secret and PKCE",
+        "stepId": "s4"
+      }
+    ],
+    "scopes": [
+      {
+        "evidence": [
+          "e2"
+        ],
+        "note": "Opts a sign-in into an expiring access token plus a refresh token.",
+        "scope": "offline_access",
+        "sensitivity": "standard"
+      },
+      {
+        "evidence": [
+          "e7"
+        ],
+        "note": "Broad scope. Request only the minimum your agent needs.",
+        "scope": "repo",
+        "sensitivity": "unknown"
+      },
+      {
+        "evidence": [],
+        "note": "Needed to read the user's profile. Scope detail page not read.",
+        "scope": "read:user",
+        "sensitivity": "unknown"
+      }
+    ],
+    "steps": [
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e1",
+          "e4"
+        ],
+        "id": "s1",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "prepare",
+        "points": [
+          "Choose a personal account or an organization you administer as the app owner.",
+          "An organization-owned app is automatically trusted by that organization."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Sign in and decide the owner",
+        "type": "account",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "GitHub → Settings → Developer settings",
+          "url": "https://github.com/settings/developers"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.5,
+          "min": 0.25
+        },
+        "evidence": [
+          "e1",
+          "a1"
+        ],
+        "id": "s2",
+        "items": [],
+        "output": "Client ID",
+        "owner": "agent",
+        "phase": "register",
+        "points": [
+          "Click New OAuth App.",
+          "Fill name, homepage URL and the authorization callback URL.",
+          "Optionally enable Device Flow.",
+          "Leave 'Expire user access tokens' on if your agent supports refresh."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Register the OAuth app",
+        "type": "register_form",
+        "values": [
+          {
+            "label": "Authorization callback URL",
+            "value": "your app's OAuth callback URL (HTTPS, up to 10)"
+          },
+          {
+            "label": "Homepage URL",
+            "value": "your app's public website"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "Developer settings → OAuth apps → New OAuth App",
+          "url": "https://github.com/settings/applications/new"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e2",
+          "e7",
+          "a2"
+        ],
+        "id": "s3",
+        "items": [],
+        "output": "Client secret stored",
+        "owner": "agent_ok",
+        "phase": "configure",
+        "points": [
+          "Generate a client secret on the app's settings page.",
+          "Paste the client ID and secret into your agent's config. This needs your OK.",
+          "Request scopes at authorize time with the scope parameter, plus offline_access."
+        ],
+        "scopes": [
+          "offline_access",
+          "read:user"
+        ],
+        "stage": "dev",
+        "title": "Generate the client secret and configure your agent",
+        "type": "configure",
+        "values": [
+          {
+            "label": "Authorize URL",
+            "value": "https://github.com/login/oauth/authorize"
+          },
+          {
+            "label": "Token URL",
+            "value": "https://github.com/login/oauth/access_token"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "Developer settings → your OAuth app",
+          "url": "https://github.com/settings/developers"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 3.5,
+          "min": 1.5
+        },
+        "evidence": [
+          "e2",
+          "e3"
+        ],
+        "id": "s4",
+        "items": [],
+        "output": "Access and refresh tokens",
+        "owner": "agent",
+        "phase": "test",
+        "points": [
+          "Redirect to the authorize URL with client_id, redirect_uri, scope, state, code_challenge.",
+          "Exchange the code within 10 minutes via POST to the token URL.",
+          "Store the refresh token and use it before the 8-hour expiry."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Run the authorization code flow with PKCE",
+        "type": "token_flow_pkce",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "GitHub Docs → Authorizing OAuth apps",
+          "url": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 1,
+          "min": 0.25
+        },
+        "evidence": [
+          "e4",
+          "a3"
+        ],
+        "id": "s5",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "launch",
+        "points": [
+          "Users in organizations with OAuth app access restrictions need an owner to approve your app.",
+          "Tell users to request approval or ask an org owner to approve it.",
+          "Check whether you need to add branding or a publisher domain, which the docs read did not cover."
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Prepare for organization approval",
+        "type": "other",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "GitHub Docs → Approving OAuth apps for your organization",
+          "url": "https://docs.github.com/en/organizations/managing-oauth-access-to-your-organizations-data/approving-oauth-apps-for-your-organization"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 1,
+          "min": 0.5
+        },
+        "evidence": [],
+        "id": "s6",
+        "items": [],
+        "output": "200 with user JSON",
+        "owner": "agent",
+        "phase": "test",
+        "points": [
+          "Call GET https://api.github.com/user with the header Authorization: Bearer <access_token>.",
+          "Success is HTTP 200 with your login and id."
+        ],
+        "scopes": [
+          "read:user"
+        ],
+        "stage": "both",
+        "title": "Verify the token with a read-only call",
+        "type": "test",
+        "values": [
+          {
+            "label": "Endpoint",
+            "value": "GET https://api.github.com/user"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "GitHub Docs → REST API users",
+          "url": "https://docs.github.com/en/rest/users/users"
+        }
+      }
+    ],
+    "time": {
+      "breakdown": [
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "0",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "1",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.5,
+          "min": 0.25,
+          "note": null,
+          "step": "2",
+          "type": "App registration form",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "3",
+          "type": "Redirect URI and scopes",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 3.5,
+          "min": 1.5,
+          "note": null,
+          "step": "4",
+          "type": "Authorize and token exchange with PKCE",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [],
+          "max": 1,
+          "min": 0.25,
+          "note": null,
+          "step": "5",
+          "type": "Any other step",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 1,
+          "min": 0.5,
+          "note": null,
+          "step": "6",
+          "type": "Test with your own account",
+          "wait": null,
+          "waitSource": null
+        }
+      ],
+      "devReady": {
+        "computed": true,
+        "effort": {
+          "max": 5.75,
+          "min": 3
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "none"
+      },
+      "production": {
+        "computed": true,
+        "effort": {
+          "max": 6.75,
+          "min": 3.25
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "none"
+      }
+    },
+    "uncertainties": [
+      {
+        "stepId": null,
+        "text": "No app review or go-live page found for OAuth apps. The docs read show no review, but this is not stated explicitly."
+      },
+      {
+        "stepId": "s4",
+        "text": "Client authentication method at the token endpoint (client_id and client_secret in the POST body) was not confirmed on the pages read."
+      },
+      {
+        "stepId": "s4",
+        "text": "Rate limits for OAuth token requests were not found on the pages read."
+      },
+      {
+        "stepId": null,
+        "text": "Region or data-center hosts: GitHub Enterprise Server and Enterprise Cloud with data residency use different hosts. Not covered by the pages read."
+      },
+      {
+        "stepId": "s3",
+        "text": "Scope sensitivity and the full scope list were not read."
+      },
+      {
+        "stepId": null,
+        "text": "User caps or unverified-app warnings were not mentioned in the pages read."
+      },
+      {
+        "stepId": null,
+        "text": "Discovery metadata was not found on github.com. This does not mean there is no OAuth."
+      },
+      {
+        "stepId": null,
+        "text": "Review page not read; review time and requirements unconfirmed. (Searched 'GitHub creating an OAuth app' and 'OAuth app organization approval'. Found no OAuth app review or go-live page. Only per-organization approval exists.)"
+      }
+    ],
+    "verdict": {
+      "confidence": "medium",
+      "points": [
+        {
+          "evidence": [
+            "e1"
+          ],
+          "text": "Register an OAuth app in Developer settings, no approval step",
+          "why": "The creating-an-app page lists only form fields and 'Register application'. It mentions no review or verification."
+        },
+        {
+          "evidence": [
+            "e4"
+          ],
+          "text": "Organizations can still block your app",
+          "why": "Org owners with OAuth app access restrictions must approve your app before members can use it on org resources. New orgs have restrictions on by default."
+        },
+        {
+          "evidence": [
+            "e2",
+            "e6"
+          ],
+          "text": "Expiring tokens are on by default for new apps",
+          "why": "Access tokens last 8 hours and refresh tokens 6 months. Your agent must handle refresh."
+        }
+      ],
+      "summary": "GitHub OAuth apps are self-serve: register in Developer settings and any user can authorize them, with no review step found in the docs read.",
+      "tier": "self_serve",
+      "unconfirmed": false
+    }
+  },
+  "meta": {
+    "at": "2026-10-29T19:10:40.919Z",
+    "downgraded": 0,
+    "notes": [],
+    "pipelineVersion": "v2"
+  },
+  "name": "GitHub",
+  "pipelineVersion": "v2",
+  "query": "GitHub",
+  "run": {
+    "failedSearches": 0,
+    "okPages": 5,
+    "okSearches": 3,
+    "probes": [
+      {
+        "at": "2026-10-29T19:09:33.201Z",
+        "data": {
+          "attempts": [
+            {
+              "note": "no JSON metadata",
+              "path": "/.well-known/oauth-authorization-server",
+              "title": "Page not found · GitHub · GitHub"
+            },
+            {
+              "note": "no JSON metadata",
+              "path": "/.well-known/openid-configuration",
+              "title": "Page not found · GitHub · GitHub"
+            }
+          ]
+        },
+        "id": "p1",
+        "kind": "oauth_discovery",
+        "outcome": "negative",
+        "summary": "No OAuth/OIDC discovery metadata on github.com. Not conclusive: many providers don't publish it.",
+        "target": "github.com"
+      },
+      {
+        "at": "2026-10-29T19:09:45.106Z",
+        "data": {
+          "landedOn": "https://github.com/login?client_id=setup-guide-probe-invalid-client&return_to=%2Flogin%2Foauth%2Fauthorize%3Fclient_id%3Dsetup-guide-probe-invalid-client%26redirect_uri%3Dhttps%253A%252F%252Fexample.com%252Fcallback%26response_type%3Dcode%26state%3Dprobe",
+          "snippet": "Sign in to GitHub Username or email address Password Forgot password? New to GitHub? Create an account",
+          "title": "Sign in to GitHub · GitHub"
+        },
+        "id": "p2",
+        "kind": "authorize_endpoint",
+        "outcome": "positive",
+        "summary": "Endpoint answered, landing on github.com/login: it is live and handles an unknown client.",
+        "target": "https://github.com/login/oauth/authorize?client_id=invalid&response_type=code"
+      },
+      {
+        "at": "2026-10-29T19:10:24.196Z",
+        "data": {
+          "fields": null,
+          "kind": "login",
+          "landedOn": "https://github.com/login?return_to=https%3A%2F%2Fgithub.com%2Fsettings%2Fapplications%2Fnew",
+          "signal": null,
+          "snippet": null,
+          "title": "Sign in to GitHub · GitHub"
+        },
+        "id": "p3",
+        "kind": "attempt_portal",
+        "outcome": "positive",
+        "summary": "Opened the registration page without signing in: login",
+        "target": "https://github.com/settings/applications/new"
+      },
+      {
+        "at": "2026-10-29T19:10:28.995Z",
+        "data": {
+          "fields": null,
+          "kind": "login",
+          "landedOn": "https://github.com/login?client_id=setup-guide-probe-invalid-client&return_to=%2Flogin%2Foauth%2Fauthorize%3Fclient_id%3Dsetup-guide-probe-invalid-client%26redirect_uri%3Dhttps%253A%252F%252Fexample.com%252Fcallback%26response_type%3Dcode%26scope%3Doffline_access%2Bread%253Auser%2Brepo%26state%3Dprobe",
+          "signal": null,
+          "snippet": "Sign in to GitHub Username or email address Password Forgot password? New to GitHub? Create an account",
+          "title": "Sign in to GitHub · GitHub"
+        },
+        "id": "p4",
+        "kind": "attempt_authorize",
+        "outcome": "positive",
+        "summary": "Opened it with a made-up client and those scopes: login",
+        "target": "https://github.com/login/oauth/authorize"
+      },
+      {
+        "at": "2026-10-29T19:10:34.028Z",
+        "data": {
+          "fields": null,
+          "kind": "missing",
+          "landedOn": "https://github.com/login/oauth/access_token",
+          "signal": null,
+          "snippet": "Find code, projects, and people on GitHub: Search Contact Support — GitHub Status — @githubstatus",
+          "title": "Page not found · GitHub · GitHub"
+        },
+        "id": "p5",
+        "kind": "attempt_token",
+        "outcome": "negative",
+        "summary": "Loaded it with a plain page request (no token request was sent): missing",
+        "target": "https://github.com/login/oauth/access_token"
+      },
+      {
+        "at": "2026-10-29T19:10:39.104Z",
+        "data": {
+          "fields": null,
+          "kind": "login",
+          "landedOn": "https://github.com/login?return_to=https%3A%2F%2Fgithub.com%2Fsettings%2Fdevelopers",
+          "signal": null,
+          "snippet": "Sign in to GitHub Username or email address Password Forgot password? New to GitHub? Create an account",
+          "title": "Sign in to GitHub · GitHub"
+        },
+        "id": "p6",
+        "kind": "attempt_action",
+        "outcome": "positive",
+        "summary": "Opened the link and checked where it lands: login",
+        "target": "https://github.com/settings/developers"
+      },
+      {
+        "at": "2026-10-29T19:10:40.912Z",
+        "data": {
+          "fields": null,
+          "kind": "docs",
+          "landedOn": "https://docs.github.com/en/organizations/managing-oauth-access-to-your-organizations-data/approving-oauth-apps-for-your-organization",
+          "signal": "request access",
+          "snippet": "Approving OAuth apps for your organization When an organization member or outside collaborator requests OAuth app access to organization resources, organization owners can approve or deny the request.",
+          "title": "Approving OAuth apps for your organization - GitHub Docs"
+        },
+        "id": "p7",
+        "kind": "attempt_docs",
+        "outcome": "positive",
+        "summary": "Opened the link and checked where it lands: docs (\"request access\")",
+        "target": "https://docs.github.com/en/organizations/managing-oauth-access-to-your-organizations-data/approving-oauth-apps-for-your-organization"
+      }
+    ],
+    "queries": 3,
+    "readLog": [
+      {
+        "chars": 2146,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Creating an OAuth app - GitHub Docs",
+        "url": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+        "via": null
+      },
+      {
+        "chars": 25222,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Authorizing OAuth apps - GitHub Docs",
+        "url": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps",
+        "via": null
+      },
+      {
+        "chars": 11108,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Best practices for creating an OAuth app - GitHub Docs",
+        "url": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/best-practices-for-creating-an-oauth-app",
+        "via": null
+      },
+      {
+        "chars": 4485,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Multiple redirect URIs and token refresh for OAuth apps - GitHub Changelog",
+        "url": "https://github.blog/changelog/2026-08-14-multiple-redirect-uris-and-token-refresh-for-oauth-apps/",
+        "via": null
+      },
+      {
+        "chars": 3957,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "About OAuth app access restrictions - GitHub Docs",
+        "url": "https://docs.github.com/en/organizations/managing-oauth-access-to-your-organizations-data/about-oauth-app-access-restrictions",
+        "via": null
+      }
+    ],
+    "searchLog": [
+      {
+        "ok": true,
+        "query": "GitHub creating an OAuth app docs"
+      },
+      {
+        "ok": true,
+        "query": "GitHub OAuth app authorizing access token refresh expiration"
+      },
+      {
+        "ok": true,
+        "query": "GitHub OAuth app organization access restrictions third-party approval"
+      }
+    ]
+  },
+  "savedAt": "2026-10-29T19:10:40.919Z",
+  "slug": "github",
+  "summary": "GitHub OAuth apps are self-serve: register in Developer settings and any user can authorize them, with no review step found in the docs read.",
+  "tier": "self_serve",
+  "tierLabel": "Self-serve"
+}

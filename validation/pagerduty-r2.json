@@ -1,0 +1,119 @@
+{
+  "app": "PagerDuty",
+  "artifactVersion": 40,
+  "checkedAt": "2026-10-29T19:00:12.180Z",
+  "guideSavedAt": "2026-10-29T17:21:09.079Z",
+  "note": "12 claims: 8 confirmed, 4 corrected, 0 unverified; review time and Scoped token lifetimes are now right, but the new guide introduced a wrong install link (app.pagerduty.com/oauth_apps/[app_id] instead of https://<subdomain>.pagerduty.com/oauth-apps/<APP_ID>).",
+  "pipelineVersion": "v2",
+  "round": 2,
+  "rows": [
+    {
+      "changed": "same",
+      "claim": "Who can register an app",
+      "composio": "Admin or Account Owner role is required to reach App Registration.",
+      "ours": "Only users with a Manager, Global Admin or Account Owner base role can open App Registration.",
+      "provider": "\"App Registration is available only to users with a base role of Manager, Global Admin or Account Owner.\"",
+      "source": "https://docs.pagerduty.com/developer/register-an-app",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "same",
+      "claim": "Classic User OAuth works on other accounts without publishing",
+      "composio": "Uses Classic User OAuth and says apps stay private and out of the directory unless published.",
+      "ours": "Classic User OAuth works across accounts with no review; legacy, only coarse read/write scopes.",
+      "provider": "Classic apps \"already work across accounts as soon as they are registered\"; publishing is only recommended and adds the app to the integrations library.",
+      "source": "https://docs.pagerduty.com/developer/publish-an-app",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "same",
+      "claim": "Scoped OAuth on other accounts needs publishing and admin install",
+      "composio": "Not mentioned.",
+      "ours": "Scoped apps work only on your own account until published; a customer admin must install the app on each account.",
+      "provider": "Publishing is required for Scoped OAuth to work on other accounts, an admin on each account must install it, and app tokens only work on the creating account (the guide omits the app-token limit, which does not affect user OAuth).",
+      "source": "https://docs.pagerduty.com/developer/publish-an-app",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "same",
+      "claim": "Scoped OAuth requires a confidential client and PKCE",
+      "composio": "Not mentioned.",
+      "ours": "Scoped OAuth requires PKCE; send client_secret and code_verifier on token request; public clients aren't supported.",
+      "provider": "\"Scoped OAuth apps must always use PKCE\"; Scoped apps must be confidential clients, non-confidential Scoped OAuth is \"Not supported\".",
+      "source": "https://docs.pagerduty.com/developer/oauth-functionality",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "same",
+      "claim": "Authorize and token endpoints",
+      "composio": "Not mentioned.",
+      "ours": "https://identity.pagerduty.com/oauth/authorize and https://identity.pagerduty.com/oauth/token.",
+      "provider": "Authorization Endpoint https://identity.pagerduty.com/oauth/authorize; Token Endpoint https://identity.pagerduty.com/oauth/token (both are on the OAuth Functionality page, although the guide says the docs didn't quote the authorize URL).",
+      "source": "https://docs.pagerduty.com/developer/oauth-functionality",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "still wrong",
+      "claim": "Redirect URI rules",
+      "composio": "PagerDuty rejects the flow if the redirect URL does not match exactly.",
+      "ours": "Register your callback URL; redirect URI rules (HTTPS, localhost, count limits) marked not found.",
+      "provider": "redirect_uri is \"Registered with the app when OAuth functionality is added\" and on the token request \"Must match the redirect_uri used on the authorization request\"; the auth code is valid for 30 seconds. No HTTPS rule is stated for redirect_uri.",
+      "source": "https://docs.pagerduty.com/developer/oauth-functionality",
+      "verdict": "corrected"
+    },
+    {
+      "changed": "same",
+      "claim": "Scope model",
+      "composio": "Classic with the Read & Write permission scope (write).",
+      "ours": "Classic has blanket read/write; Scoped uses per-resource scopes like incidents.read, documented per endpoint.",
+      "provider": "Classic scopes are read or write (case sensitive); Scoped scopes are per resource type, and an invalid scope silently yields only openid.",
+      "source": "https://docs.pagerduty.com/developer/oauth-functionality",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "now correct (Scoped); Classic figures still omitted",
+      "claim": "Token lifetimes and refresh",
+      "composio": "Not mentioned.",
+      "ours": "Scoped user tokens: access 1 day, refresh 30 days, rolling up to 1 year; Classic lifetimes not given.",
+      "provider": "Scoped: access 1 day, refresh 30 days, rolling window 1 year (Private Apps); Classic: access 30 days, refresh 210 days, rolling window 3 years (OAuth Functionality).",
+      "source": "https://docs.pagerduty.com/developer/private-apps",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "now correct",
+      "claim": "Publishing review process and time",
+      "composio": "Not mentioned.",
+      "ours": "Distribution Form, then review aimed at 5 business days (wait 1-5); app locks, email apps@pagerduty.com to reopen.",
+      "provider": "\"We aim to review your submission and approve or reply with feedback within 5 business days\"; the Distribution Form is required; after submitting you can't update the app and must email apps@pagerduty.com to return it to draft.",
+      "source": "https://docs.pagerduty.com/developer/publish-an-app",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "new error",
+      "claim": "Admin install link for customer accounts",
+      "composio": "Not mentioned.",
+      "ours": "Send the admin https://app.pagerduty.com/oauth_apps/[app_id] to install.",
+      "provider": "Installation page is at https://<your-subdomain>.pagerduty.com/oauth-apps/<APP_ID> (account subdomain, hyphen); only Admins and the Account Owner can install, and non-admins can copy the install link.",
+      "source": "https://docs.pagerduty.com/integrations/apps/scoped-oauth-apps",
+      "verdict": "corrected"
+    },
+    {
+      "changed": "still missing",
+      "claim": "US/EU service regions",
+      "composio": "Not mentioned.",
+      "ours": "Not covered",
+      "provider": "App-token requests need an as_account-{REGION}.{SUBDOMAIN} scope; \"Currently accepted service regions are us or eu.\"",
+      "source": "https://docs.pagerduty.com/developer/private-apps",
+      "verdict": "corrected"
+    },
+    {
+      "changed": "still missing",
+      "claim": "REST API rate limits for OAuth tokens",
+      "composio": "Not mentioned.",
+      "ours": "Not covered",
+      "provider": "\"Each PagerDuty App is allowed 960 requests per minute per User it is authorized to act as\" (user tokens); 960/min per account for app tokens.",
+      "source": "https://docs.pagerduty.com/developer/rest-api-rate-limits",
+      "verdict": "corrected"
+    }
+  ]
+}

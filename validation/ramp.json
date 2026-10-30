@@ -1,0 +1,105 @@
+{
+  "app": "Ramp",
+  "checkedAt": "2026-10-28",
+  "note": "12 claims, 2 confirmed, 8 corrected, 2 unverified. Headline: Ramp's docs settle the partner question, since apps acting for other businesses must use Authorization Code and go through Ramp's Partner Integrations review, and 'Approval is required before production access'.",
+  "pipelineVersion": "v1",
+  "round": 1,
+  "rows": [
+    {
+      "claim": "Who can create a developer app",
+      "composio": "Needs Owner or Admin access to the Developer section.",
+      "ours": "A Ramp admin creates the app under Company → Developer.",
+      "provider": "\"In your Ramp account, go to Company → Developer (you'll need admin access).\"",
+      "source": "https://docs.ramp.com/developer-api/v1/getting-started",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "How to register the app",
+      "composio": "Click Create new app, name it, and agree to the Developer Terms of Service.",
+      "ours": "Click Create New App, name it, and accept the Terms.",
+      "provider": "\"Click Create New App. Name your app ... and accept the Terms.\"",
+      "source": "https://docs.ramp.com/developer-api/v1/getting-started",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "Grant types must be enabled on the app",
+      "composio": "Enable Authorization code, Client credentials and Refresh token.",
+      "ours": "Add Authorization Code and Refresh Token grants (inferred from a search snippet).",
+      "provider": "To use a refresh token, \"first enable the Refresh Token grant type\"; a grant that isn't enabled returns unauthorized_client.",
+      "source": "https://docs.ramp.com/developer-api/v1/authorization",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Partner or production approval for multi-customer apps",
+      "composio": "Not mentioned",
+      "ours": "Possibly needs partner enrollment (inferred from a third-party mirror).",
+      "provider": "Authorization Code is \"required for third-party applications acting on behalf of other businesses\"; partner integrations need Ramp approval before production access.",
+      "source": "https://docs.ramp.com/developer-api/v1/build-with-ramp",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Redirect URI rules",
+      "composio": "Add URIs in the app's Redirect URIs section, and they must match exactly.",
+      "ours": "Add a callback URL if the form asks for one (field not confirmed).",
+      "provider": "redirect_uri \"must match exactly one of the URIs configured in your app\"; HTTPS is required (localhost allowed for development).",
+      "source": "https://docs.ramp.com/developer-api/v1/authorization",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Available scopes",
+      "composio": "Lists accounting, bills, cards, business, users, vendors and receipts scopes, plus offline_access.",
+      "ours": "Only transactions:read is named, and the full list was not read.",
+      "provider": "Scopes follow resource:permission (for example bills:write), plus openid and offline_access; cards:read_vault needs \"additional security review\".",
+      "source": "https://docs.ramp.com/developer-api/v1/authorization",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Access and refresh token lifetimes",
+      "composio": "Not mentioned",
+      "ours": "Not mentioned (listed as unverified).",
+      "provider": "Authorization Code tokens \"default to 1 hour\"; refreshing doesn't return a new refresh token or extend its expiry; codes last 10 minutes.",
+      "source": "https://docs.ramp.com/developer-api/v1/authorization",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Authorize URL",
+      "composio": "The Authorization URL differs between demo and production.",
+      "ours": "Unverified, and the probe of app.ramp.com/v1/authorize failed.",
+      "provider": "Uses https://demo.ramp.com/v1/authorize for sandbox and https://app.ramp.com/v1/authorize for production, with state required.",
+      "source": "https://docs.ramp.com/developer-api/v1/authorization",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Sandbox versus production apps",
+      "composio": "Demo and production accounts use different base and authorization URLs.",
+      "ours": "Sandbox access is requested from Ramp, with separate token URLs.",
+      "provider": "\"Each environment requires separate app configurations\"; tokens \"work only in the environment where they were issued\".",
+      "source": "https://docs.ramp.com/developer-api/v1/authorization",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Who can approve the consent screen",
+      "composio": "Not mentioned",
+      "ours": "Not mentioned",
+      "provider": "Authorizing is \"typically limited to Admin and Business Owner users\"; anyone else gets \"Business not authorized to use this application\".",
+      "source": "https://docs.ramp.com/developer-api/v1/authorization",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "PKCE support",
+      "composio": "Not mentioned",
+      "ours": "Unverified.",
+      "provider": "The OAuth guide doesn't mention PKCE; the changelog only adds optional code_challenge (S256) to the application OAuth handoff.",
+      "source": "https://docs.ramp.com/developer-api/v1/changelog",
+      "verdict": "unverified"
+    },
+    {
+      "claim": "Email verification when creating an app",
+      "composio": "A 6-digit email code is required, valid for 5 minutes.",
+      "ours": "Not mentioned",
+      "provider": "Not mentioned",
+      "source": "https://docs.ramp.com/developer-api/v1/getting-started",
+      "verdict": "unverified"
+    }
+  ]
+}

@@ -1,0 +1,1145 @@
+{
+  "confidence": "medium",
+  "guide": {
+    "access": {
+      "alternative": null,
+      "oauthForThirdParties": "yes",
+      "reason": "Register an app under Integrations > Developer Tools > App Registration and add OAuth (Scoped or Classic User). Scoped OAuth works on other accounts only after PagerDuty publishes the app.",
+      "registration": "manual"
+    },
+    "app": {
+      "developerPortal": "https://docs.pagerduty.com/developer/integration-developer",
+      "name": "PagerDuty",
+      "slug": "pagerduty",
+      "website": "https://www.pagerduty.com"
+    },
+    "attemptNote": null,
+    "attemptPick": "Stage 2 picked the 6 weakest claims it can check by opening a page (6 sourced); claims already tested were skipped.",
+    "attempts": [
+      {
+        "change": "Added an open question",
+        "claim": "Step 2: you register the app at docs.pagerduty.com/developer/integration-developer",
+        "expected": "A sign-in, sign-up or app registration form",
+        "n": 1,
+        "probeId": "p3",
+        "result": "Docs page, not the form (\"Integration Developer | PagerDuty Docs\")",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s2",
+        "tried": "Opened the registration page without signing in",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Added tested evidence a1 (probe p4)",
+        "claim": "Review page goes to docs.pagerduty.com/developer/publish-an-app",
+        "expected": "The provider's app review / go-live page",
+        "n": 2,
+        "probeId": "p4",
+        "result": "Loads \"Publish an App | PagerDuty Docs\" and covers review or going live",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": null,
+        "tried": "Opened the link and checked where it lands",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Added tested evidence a2 (probe p5)",
+        "claim": "The authorize URL identity.pagerduty.com/oauth/authorize is live and takes the documented scopes (incidents.read, services.read, users.read)",
+        "expected": "A live endpoint that rejects the made-up client and raises no scope error",
+        "n": 3,
+        "probeId": "p5",
+        "result": "Rejected the made-up client without objecting to the scopes",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": "s4",
+        "tried": "Opened it with a made-up client and those scopes",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Added tested evidence a3 (probe p6)",
+        "claim": "The token endpoint is identity.pagerduty.com/oauth/token",
+        "expected": "A live OAuth endpoint (it answers a plain request with an error)",
+        "n": 4,
+        "probeId": "p6",
+        "result": "Answered with an OAuth error, so the endpoint is live (only a real token request would show it works)",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": "s4",
+        "tried": "Loaded it with a plain page request (no token request was sent)",
+        "weak": "Sourced"
+      },
+      {
+        "change": "No change",
+        "claim": "Step 1 link at developer.pagerduty.com",
+        "expected": "—",
+        "n": 5,
+        "result": "Couldn't open: The result was withheld: the page left https://developer.pagerduty.com or closed, the user declined, or Claude's browser is no longer available. Use read_page to see the page before navigating again.",
+        "status": "Unverified",
+        "stepId": "s1",
+        "tried": "Opened it",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Added tested evidence a4 (probe p7)",
+        "claim": "Step 3 link goes to docs.pagerduty.com/developer/oauth-functionality",
+        "expected": "A docs page about \"PagerDuty → App Registration → Edit App → Functionality\"",
+        "n": 6,
+        "probeId": "p7",
+        "result": "Loads \"OAuth Functionality | PagerDuty Docs\"",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": "s3",
+        "tried": "Opened the link and checked where it lands",
+        "weak": "Sourced"
+      },
+      {
+        "change": "You do step 1; an agent can pick up after it",
+        "claim": "Where the agent stopped",
+        "n": 7,
+        "result": "A step only you can do (account, legal terms, payment, verification or a decision)",
+        "status": "You take over",
+        "stepId": "s1",
+        "stop": true,
+        "tried": "Step 1: Get a PagerDuty account with a suitable role"
+      }
+    ],
+    "blockers": [
+      {
+        "evidence": [
+          "e1"
+        ],
+        "likelihood": "common",
+        "stepId": "s6",
+        "title": "Unpublished Scoped OAuth app works only on your own account",
+        "whatToDo": "Submit for review. Or use Classic User OAuth, which works across accounts without review."
+      },
+      {
+        "evidence": [
+          "e4"
+        ],
+        "likelihood": "common",
+        "stepId": "s8",
+        "title": "Customer admin hasn't installed the app",
+        "whatToDo": "Send the install link to an account admin before users try to connect."
+      },
+      {
+        "evidence": [
+          "e2"
+        ],
+        "likelihood": "possible",
+        "stepId": "s7",
+        "title": "Reviewer feedback adds rounds",
+        "whatToDo": "Use the documentation template. Email apps@pagerduty.com for questions."
+      }
+    ],
+    "evidence": [
+      {
+        "claim": "Scoped OAuth apps work on other accounts only after publishing",
+        "id": "e1",
+        "note": null,
+        "probeId": null,
+        "quote": "Publishing is required for an app with Scoped OAuth functionality to work on accounts other than the one that created it.",
+        "sourceUrl": "https://docs.pagerduty.com/developer/publish-an-app",
+        "status": "sourced"
+      },
+      {
+        "claim": "Review target is 5 business days",
+        "id": "e2",
+        "note": null,
+        "probeId": null,
+        "quote": "We aim to review your submission and approve or reply with feedback within 5 business days.",
+        "sourceUrl": "https://docs.pagerduty.com/developer/publish-an-app",
+        "status": "sourced"
+      },
+      {
+        "claim": "Token endpoint is identity.pagerduty.com/oauth/token",
+        "id": "e3",
+        "note": null,
+        "probeId": null,
+        "quote": "https://identity.pagerduty.com/oauth/token",
+        "sourceUrl": "https://docs.pagerduty.com/developer/oauth-functionality",
+        "status": "sourced"
+      },
+      {
+        "claim": "An admin on each account must install the app",
+        "id": "e4",
+        "note": null,
+        "probeId": null,
+        "quote": "Before any user on another account can authorize your app, an admin on that account must install it.",
+        "sourceUrl": "https://docs.pagerduty.com/developer/publish-an-app",
+        "status": "sourced"
+      },
+      {
+        "claim": "Classic User OAuth works across accounts and has only read/write scopes",
+        "id": "e5",
+        "note": null,
+        "probeId": null,
+        "quote": "Classic User OAuth, the legacy OAuth functionality, works across accounts regardless of App Type",
+        "sourceUrl": "https://docs.pagerduty.com/developer/private-apps",
+        "status": "sourced"
+      },
+      {
+        "claim": "The authorize endpoint is live and rejects unknown clients",
+        "id": "e6",
+        "note": "Returned 400 Client is invalid or unknown.",
+        "probeId": "p2",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "App Registration is limited to Manager, Global Admin or Account Owner base roles",
+        "id": "e7",
+        "note": null,
+        "probeId": null,
+        "quote": "App Registration is available only to users with a base role of Manager, Global Admin or Account Owner.",
+        "sourceUrl": "https://github.com/PagerDuty/developer-docs/blob/main/docs/app-integration-development/04-Register-an-App.md",
+        "status": "sourced"
+      },
+      {
+        "claim": "Authorize URL path /oauth/authorize on identity.pagerduty.com",
+        "id": "e8",
+        "note": "The docs read did not print the authorize URL. The path was confirmed by the probe.",
+        "probeId": "p2",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "Scoped OAuth needs client_secret and PKCE",
+        "id": "e9",
+        "note": null,
+        "probeId": null,
+        "quote": "A Scoped OAuth app is always a confidential client: it must send its client_secret on the token request and must use PKCE.",
+        "sourceUrl": "https://docs.pagerduty.com/developer/oauth-functionality",
+        "status": "sourced"
+      },
+      {
+        "claim": "Token lifetimes",
+        "id": "e10",
+        "note": "Access token 1 day. Rolling window 1 year.",
+        "probeId": null,
+        "quote": "refresh token expiry of 30 days",
+        "sourceUrl": "https://docs.pagerduty.com/developer/private-apps",
+        "status": "sourced"
+      },
+      {
+        "claim": "App token needs an as_account scope in REGION.SUBDOMAIN format",
+        "id": "e11",
+        "note": null,
+        "probeId": null,
+        "quote": "Must contain the as_account- scope that specifies the PagerDuty Account the token is being requested for using a {REGION}.{SUBDOMAIN} format.",
+        "sourceUrl": "https://docs.pagerduty.com/developer/private-apps",
+        "status": "sourced"
+      },
+      {
+        "claim": "/users/me as the verification call",
+        "id": "e12",
+        "note": "The sample at martindstone.github.io/PDOAuth shows GET api.pagerduty.com/users/me. It was not on a provider page I read.",
+        "probeId": null,
+        "quote": null,
+        "sourceUrl": null,
+        "status": "inferred"
+      },
+      {
+        "claim": "docs.pagerduty.com/developer/publish-an-app is the provider's review / go-live page",
+        "id": "a1",
+        "note": "Stage 2 attempt",
+        "probeId": "p4",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "The authorize URL identity.pagerduty.com/oauth/authorize is live and rejects an unknown client",
+        "id": "a2",
+        "note": "Stage 2 attempt",
+        "probeId": "p5",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "The token endpoint identity.pagerduty.com/oauth/token is live",
+        "id": "a3",
+        "note": "Stage 2 attempt",
+        "probeId": "p6",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "docs.pagerduty.com/developer/oauth-functionality loads (OAuth Functionality | PagerDuty Docs)",
+        "id": "a4",
+        "note": "Stage 2 attempt",
+        "probeId": "p7",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      }
+    ],
+    "followUp": null,
+    "mandatoryPages": {
+      "review": {
+        "checked": true,
+        "evidence": [
+          "e1",
+          "e2",
+          "e4"
+        ],
+        "note": null,
+        "status": "read",
+        "unreadable": null,
+        "url": "https://docs.pagerduty.com/developer/publish-an-app"
+      },
+      "token": {
+        "checked": true,
+        "evidence": [
+          "e3",
+          "e9",
+          "e10"
+        ],
+        "note": "Token lifetimes are on the Private Apps page.",
+        "status": "read",
+        "unreadable": null,
+        "url": "https://docs.pagerduty.com/developer/oauth-functionality"
+      }
+    },
+    "oauth": {
+      "authorizeUrl": "https://identity.pagerduty.com/oauth/authorize",
+      "evidence": [
+        "e3",
+        "e6",
+        "e8"
+      ],
+      "tokenUrl": "https://identity.pagerduty.com/oauth/token"
+    },
+    "prodNeedsCheck": false,
+    "requirements": [
+      {
+        "appliesWhen": null,
+        "detail": "Needed to use App Registration. A developer account also works.",
+        "evidence": [
+          "e7"
+        ],
+        "kind": "prerequisite",
+        "label": "PagerDuty account with Manager, Global Admin or Account Owner base role",
+        "stepId": "s1"
+      },
+      {
+        "appliesWhen": "Scoped OAuth",
+        "detail": "Send code_challenge on authorize and code_verifier on the token request.",
+        "evidence": [
+          "e9"
+        ],
+        "kind": "technical",
+        "label": "PKCE required for Scoped OAuth",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": "Scoped OAuth",
+        "detail": "Scoped OAuth apps are confidential clients and send client_secret to the token endpoint.",
+        "evidence": [
+          "e9"
+        ],
+        "kind": "technical",
+        "label": "Client secret on token request",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Access token 1 day, refresh token 30 days, rolling window 1 year. Refresh only applies to user tokens.",
+        "evidence": [
+          "e10"
+        ],
+        "kind": "technical",
+        "label": "Token lifetimes and refresh",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": "App tokens",
+        "detail": "The client credentials flow needs an as_account-{REGION}.{SUBDOMAIN} scope. It works only on the creating account.",
+        "evidence": [
+          "e11"
+        ],
+        "kind": "technical",
+        "label": "Region in as_account scope for app tokens",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": "Published Scoped OAuth app",
+        "detail": "An account admin must install the app before its users can authorize.",
+        "evidence": [
+          "e4"
+        ],
+        "kind": "prerequisite",
+        "label": "Admin install on each customer account",
+        "stepId": "s7"
+      }
+    ],
+    "scopes": [
+      {
+        "evidence": [
+          "e11"
+        ],
+        "note": "Example Scoped OAuth scope. Each REST endpoint's API reference lists the scope it needs.",
+        "scope": "incidents.read",
+        "sensitivity": "unknown"
+      },
+      {
+        "evidence": [
+          "e11"
+        ],
+        "note": "Example Scoped OAuth scope.",
+        "scope": "services.read",
+        "sensitivity": "unknown"
+      },
+      {
+        "evidence": [
+          "e5"
+        ],
+        "note": "Classic User OAuth scopes, covering all resources the user can reach.",
+        "scope": "read / write",
+        "sensitivity": "unknown"
+      }
+    ],
+    "steps": [
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e7"
+        ],
+        "id": "s1",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "prepare",
+        "points": [
+          "Use a developer account or a customer account.",
+          "Base role must be Manager, Global Admin or Account Owner.",
+          "The app is tied to this subdomain and user."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Get a PagerDuty account with a suitable role",
+        "type": "account",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "PagerDuty → Sign up",
+          "url": "https://developer.pagerduty.com"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.5,
+          "min": 0.25
+        },
+        "evidence": [
+          "e7"
+        ],
+        "id": "s2",
+        "items": [],
+        "output": null,
+        "owner": "agent",
+        "phase": "register",
+        "points": [
+          "Go to Integrations > Developer Tools > App Registration > New App.",
+          "Enter the name and description.",
+          "Leave App Type as Private for testing."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Create the app in App Registration",
+        "type": "register_form",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "PagerDuty → Integrations → Developer Tools → App Registration",
+          "url": "https://docs.pagerduty.com/developer/integration-developer"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e7",
+          "e9",
+          "a4"
+        ],
+        "id": "s3",
+        "items": [],
+        "output": "client_id and client_secret",
+        "owner": "agent",
+        "phase": "configure",
+        "points": [
+          "On the app's Edit App page, click Add on the OAuth card.",
+          "Choose Scoped OAuth.",
+          "Enter your app's OAuth callback URL, then pick the scopes."
+        ],
+        "scopes": [
+          "incidents.read",
+          "services.read"
+        ],
+        "stage": "dev",
+        "title": "Add Scoped OAuth, callback URL and scopes",
+        "type": "configure",
+        "values": [
+          {
+            "label": "Redirect URI",
+            "value": "your app's OAuth callback URL"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "PagerDuty → App Registration → Edit App → Functionality",
+          "url": "https://docs.pagerduty.com/developer/oauth-functionality"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 3.5,
+          "min": 1.5
+        },
+        "evidence": [
+          "e3",
+          "e6",
+          "e8",
+          "e9",
+          "e10",
+          "a2",
+          "a3"
+        ],
+        "id": "s4",
+        "items": [],
+        "output": null,
+        "owner": "agent_ok",
+        "phase": "test",
+        "points": [
+          "Send the user to the authorize URL with code_challenge (S256).",
+          "Exchange the code at the token URL with client_secret and code_verifier.",
+          "Store the client secret only with the developer's OK.",
+          "Refresh user tokens before the 30-day refresh expiry."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Run the authorization code flow with PKCE",
+        "type": "token_flow_pkce",
+        "values": [
+          {
+            "label": "Authorize URL",
+            "value": "https://identity.pagerduty.com/oauth/authorize"
+          },
+          {
+            "label": "Token URL",
+            "value": "https://identity.pagerduty.com/oauth/token"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "PagerDuty OAuth docs",
+          "url": "https://docs.pagerduty.com/developer/oauth-functionality"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 12,
+          "min": 3
+        },
+        "evidence": [
+          "e2"
+        ],
+        "id": "s5",
+        "items": [
+          "App documentation",
+          "Support contact and website links",
+          "Testing instructions"
+        ],
+        "output": null,
+        "owner": "agent",
+        "phase": "review",
+        "points": [
+          "Draft the listing documentation using PagerDuty's documentation template.",
+          "Write the support contact and testing instructions."
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Prepare the Distribution Form materials",
+        "type": "review_materials",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "PagerDuty → Edit App → App Type → Distribution Form",
+          "url": "https://docs.pagerduty.com/developer/publish-an-app"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.5,
+          "min": 0.25
+        },
+        "evidence": [
+          "e2"
+        ],
+        "id": "s6",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "review",
+        "points": [
+          "Select Public, complete the Distribution Form, then Save and confirm.",
+          "The app can't be edited after submission. Email apps@pagerduty.com to reopen it."
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Set App Type to Public and submit for review",
+        "type": "submit",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "PagerDuty → Edit App → App Type",
+          "url": "https://docs.pagerduty.com/developer/publish-an-app"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0,
+          "min": 0
+        },
+        "evidence": [
+          "e2"
+        ],
+        "id": "s7",
+        "items": [],
+        "output": null,
+        "owner": "provider",
+        "phase": "review",
+        "points": [
+          "PagerDuty aims to respond within 5 business days.",
+          "Reviewers may ask for changes."
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Wait for PagerDuty review",
+        "type": "provider",
+        "values": [],
+        "wait": {
+          "max": 7,
+          "min": 5
+        },
+        "where": null
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 1,
+          "min": 0.25
+        },
+        "evidence": [
+          "e4"
+        ],
+        "id": "s8",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "launch",
+        "points": [
+          "Give each admin the install link.",
+          "Users can authorize only after the install."
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Have customer admins install the app",
+        "type": "other",
+        "values": [
+          {
+            "label": "Install link",
+            "value": "https://app.pagerduty.com/oauth_apps/[app_id]"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "PagerDuty → OAuth Apps install page",
+          "url": "https://docs.pagerduty.com/developer/publish-an-app"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 1,
+          "min": 0.5
+        },
+        "evidence": [
+          "e12"
+        ],
+        "id": "s9",
+        "items": [],
+        "output": null,
+        "owner": "agent",
+        "phase": "test",
+        "points": [
+          "GET https://api.pagerduty.com/users/me with Authorization: Bearer <access_token>.",
+          "Success is a 200 with the user's JSON. A 401 means the token expired. A 403 means a missing scope."
+        ],
+        "scopes": [
+          "users.read"
+        ],
+        "stage": "both",
+        "title": "Verify the token with a read-only call",
+        "type": "test",
+        "values": [
+          {
+            "label": "Header",
+            "value": "Authorization: Bearer <access_token>"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "PagerDuty REST API reference",
+          "url": "https://docs.pagerduty.com/developer/private-apps"
+        }
+      }
+    ],
+    "time": {
+      "breakdown": [
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "1",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.5,
+          "min": 0.25,
+          "note": null,
+          "step": "2",
+          "type": "App registration form",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "3",
+          "type": "Redirect URI and scopes",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 3.5,
+          "min": 1.5,
+          "note": null,
+          "step": "4",
+          "type": "Authorize and token exchange with PKCE",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [],
+          "max": 12,
+          "min": 3,
+          "note": "3 items",
+          "step": "5",
+          "type": "Review materials (per item)",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [],
+          "max": 0.5,
+          "min": 0.25,
+          "note": null,
+          "step": "6",
+          "type": "Submit for review",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [
+            "e2"
+          ],
+          "max": 0,
+          "min": 0,
+          "note": null,
+          "step": "7",
+          "type": "The provider does it (you wait)",
+          "wait": {
+            "max": 7,
+            "min": 5
+          },
+          "waitSource": "provider-stated"
+        },
+        {
+          "clock": "production",
+          "evidence": [],
+          "max": 1,
+          "min": 0.25,
+          "note": null,
+          "step": "8",
+          "type": "Any other step",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 1,
+          "min": 0.5,
+          "note": null,
+          "step": "9",
+          "type": "Test with your own account",
+          "wait": null,
+          "waitSource": null
+        }
+      ],
+      "devReady": {
+        "computed": true,
+        "effort": {
+          "max": 5.5,
+          "min": 2.75
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "none"
+      },
+      "production": {
+        "computed": true,
+        "effort": {
+          "max": 19,
+          "min": 6.25
+        },
+        "evidence": [
+          "e2"
+        ],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 7,
+          "min": 5
+        },
+        "waitKind": "range"
+      }
+    },
+    "uncertainties": [
+      {
+        "stepId": "s4",
+        "text": "Authorization code lifetime is not stated on the pages read."
+      },
+      {
+        "stepId": "s3",
+        "text": "Exact redirect URI rules (exact match, HTTPS, localhost, count limit) not found."
+      },
+      {
+        "stepId": "s4",
+        "text": "Rate limits for OAuth/token endpoints are not stated on the pages read."
+      },
+      {
+        "stepId": "s4",
+        "text": "Whether a refresh returns a new refresh token is not stated."
+      },
+      {
+        "stepId": "s9",
+        "text": "Region-specific hosts for the EU service region were not confirmed. The REST API host is assumed to be api.pagerduty.com."
+      },
+      {
+        "stepId": null,
+        "text": "Discovery metadata was not found at identity.pagerduty.com, so no dynamic registration."
+      },
+      {
+        "stepId": "s1",
+        "text": "Whether a paid plan is needed to publish is not stated. A changelog snippet says Scoped OAuth is available on all plans."
+      },
+      {
+        "stepId": "s3",
+        "text": "Scope sensitivity levels and consent warnings for unpublished apps are not documented in what was read."
+      },
+      {
+        "stepId": "s2",
+        "text": "Step 2's link docs.pagerduty.com/developer/integration-developer is a docs page, not the registration form; find the portal page where you create the app."
+      }
+    ],
+    "verdict": {
+      "confidence": "medium",
+      "points": [
+        {
+          "evidence": [
+            "e1"
+          ],
+          "text": "Scoped OAuth works on other accounts only after publishing",
+          "why": "Docs: an unpublished Scoped OAuth app works only on the account that created it."
+        },
+        {
+          "evidence": [
+            "e2"
+          ],
+          "text": "PagerDuty aims to review within 5 business days",
+          "why": "The review covers testing, documentation and listing details. Reviewer feedback can add rounds."
+        },
+        {
+          "evidence": [
+            "e4"
+          ],
+          "text": "An admin on each customer account must install the app",
+          "why": "Users there can't authorize until an admin installs it from the app's install link."
+        },
+        {
+          "evidence": [
+            "e5"
+          ],
+          "text": "Classic User OAuth skips review but is legacy and broad",
+          "why": "Classic works across accounts once registered, but its scopes are only read or write."
+        }
+      ],
+      "summary": "Register an app manually; Scoped OAuth apps need PagerDuty review (about 5 business days) and an admin install before other accounts can connect.",
+      "tier": "review_gated",
+      "unconfirmed": false
+    }
+  },
+  "meta": {
+    "at": "2026-10-29T20:13:14.422Z",
+    "downgraded": 0,
+    "notes": [],
+    "pipelineVersion": "v2"
+  },
+  "name": "PagerDuty",
+  "pipelineVersion": "v2",
+  "query": "PagerDuty",
+  "run": {
+    "failedSearches": 0,
+    "okPages": 4,
+    "okSearches": 3,
+    "probes": [
+      {
+        "at": "2026-10-29T20:12:14.159Z",
+        "data": {
+          "attempts": [
+            {
+              "note": "no JSON metadata",
+              "path": "/.well-known/oauth-authorization-server",
+              "title": "The page you were looking for doesn't exist (404)"
+            },
+            {
+              "note": "no JSON metadata",
+              "path": "/.well-known/openid-configuration",
+              "title": "The page you were looking for doesn't exist (404)"
+            }
+          ]
+        },
+        "id": "p1",
+        "kind": "oauth_discovery",
+        "outcome": "negative",
+        "summary": "No OAuth/OIDC discovery metadata on identity.pagerduty.com. Not conclusive: many providers don't publish it.",
+        "target": "identity.pagerduty.com"
+      },
+      {
+        "at": "2026-10-29T20:12:25.840Z",
+        "data": {
+          "landedOn": "https://identity.pagerduty.com/oauth/authorize?client_id=setup-guide-probe-invalid-client&response_type=code&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&state=probe",
+          "snippet": "Bad request The request could not be processed. Client is invalid or unknown. Error identifier:720cvS52",
+          "title": "400 - Bad request"
+        },
+        "id": "p2",
+        "kind": "authorize_endpoint",
+        "outcome": "positive",
+        "summary": "Endpoint answered, landing on identity.pagerduty.com/oauth/authorize: it is live and handles an unknown client.",
+        "target": "https://identity.pagerduty.com/oauth/authorize?client_id=invalid&response_type=code&redirect_uri=https://example.com/cb"
+      },
+      {
+        "at": "2026-10-29T20:13:05.061Z",
+        "data": {
+          "fields": null,
+          "kind": "docs",
+          "landedOn": "https://docs.pagerduty.com/developer/integration-developer",
+          "signal": null,
+          "snippet": null,
+          "title": "Integration Developer | PagerDuty Docs"
+        },
+        "id": "p3",
+        "kind": "attempt_portal",
+        "outcome": "positive",
+        "summary": "Opened the registration page without signing in: docs",
+        "target": "https://docs.pagerduty.com/developer/integration-developer"
+      },
+      {
+        "at": "2026-10-29T20:13:05.920Z",
+        "data": {
+          "fields": null,
+          "kind": "docs",
+          "landedOn": "https://docs.pagerduty.com/developer/publish-an-app",
+          "signal": null,
+          "snippet": "For AI agents and assistants: visit https://docs.pagerduty.com/llms.txt for the index. DEVELOPER Home / Developer / Publish an App Publish an App Walks through submitting a built app for PagerDuty rev",
+          "title": "Publish an App | PagerDuty Docs"
+        },
+        "id": "p4",
+        "kind": "attempt_review",
+        "outcome": "positive",
+        "summary": "Opened the link and checked where it lands: docs",
+        "target": "https://docs.pagerduty.com/developer/publish-an-app"
+      },
+      {
+        "at": "2026-10-29T20:13:10.595Z",
+        "data": {
+          "fields": null,
+          "kind": "client_rejected",
+          "landedOn": "https://identity.pagerduty.com/oauth/authorize?client_id=setup-guide-probe-invalid-client&response_type=code&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&state=probe&scope=incidents.read+services.read+users.read",
+          "signal": null,
+          "snippet": "Bad request The request could not be processed. Client is invalid or unknown. Error identifier:Of57BG6O",
+          "title": "400 - Bad request"
+        },
+        "id": "p5",
+        "kind": "attempt_authorize",
+        "outcome": "positive",
+        "summary": "Opened it with a made-up client and those scopes: client rejected",
+        "target": "https://identity.pagerduty.com/oauth/authorize"
+      },
+      {
+        "at": "2026-10-29T20:13:12.009Z",
+        "data": {
+          "fields": null,
+          "kind": "oauth_error",
+          "landedOn": "https://identity.pagerduty.com/oauth/token",
+          "signal": null,
+          "snippet": "{\"error\":{\"code\":2100,\"message\":\"Not Found\",\"errors\":[\"The requested resource could not be found.\"]}}",
+          "title": "URL: https://identity.pagerduty.com/oauth/token"
+        },
+        "id": "p6",
+        "kind": "attempt_token",
+        "outcome": "positive",
+        "summary": "Loaded it with a plain page request (no token request was sent): oauth error",
+        "target": "https://identity.pagerduty.com/oauth/token"
+      },
+      {
+        "at": "2026-10-29T20:13:14.419Z",
+        "data": {
+          "fields": null,
+          "kind": "docs",
+          "landedOn": "https://docs.pagerduty.com/developer/oauth-functionality",
+          "signal": null,
+          "snippet": "For AI agents and assistants: visit https://docs.pagerduty.com/llms.txt for the index. DEVELOPER Home / Developer / OAuth Functionality OAuth Functionality Compares the Classic User OAuth and Scoped O",
+          "title": "OAuth Functionality | PagerDuty Docs"
+        },
+        "id": "p7",
+        "kind": "attempt_docs",
+        "outcome": "positive",
+        "summary": "Opened the link and checked where it lands: docs",
+        "target": "https://docs.pagerduty.com/developer/oauth-functionality"
+      }
+    ],
+    "queries": 3,
+    "readLog": [
+      {
+        "chars": 19235,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "OAuth Functionality | PagerDuty Docs",
+        "url": "https://docs.pagerduty.com/developer/oauth-functionality",
+        "via": null
+      },
+      {
+        "chars": 6889,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Private Apps | PagerDuty Docs",
+        "url": "https://docs.pagerduty.com/developer/private-apps",
+        "via": null
+      },
+      {
+        "chars": 4565,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Publish an App | PagerDuty Docs",
+        "url": "https://docs.pagerduty.com/developer/publish-an-app",
+        "via": null
+      },
+      {
+        "chars": 3587,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "developer-docs/docs/app-integration-development/04-Register-an-App.md at main · PagerDuty/developer-docs · GitHub",
+        "url": "https://github.com/PagerDuty/developer-docs/blob/main/docs/app-integration-development/04-Register-an-App.md",
+        "via": null
+      },
+      {
+        "error": "the browser wouldn't show this page (it redirected to another site or was blocked)",
+        "ok": false,
+        "url": "https://support.pagerduty.com/main/lang-ja/docs/scoped-oauth-apps"
+      }
+    ],
+    "searchLog": [
+      {
+        "ok": true,
+        "query": "PagerDuty OAuth app registration scoped OAuth developer docs"
+      },
+      {
+        "ok": true,
+        "query": "PagerDuty app marketplace listing review publish integration"
+      },
+      {
+        "ok": true,
+        "query": "PagerDuty OAuth token refresh authorization code"
+      }
+    ]
+  },
+  "savedAt": "2026-10-29T20:13:14.422Z",
+  "slug": "pagerduty",
+  "summary": "Register an app manually; Scoped OAuth apps need PagerDuty review (about 5 business days) and an admin install before other accounts can connect.",
+  "tier": "review_gated",
+  "tierLabel": "Review-gated"
+}

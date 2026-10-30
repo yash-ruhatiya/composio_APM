@@ -1,0 +1,948 @@
+{
+  "confidence": "medium",
+  "guide": {
+    "access": {
+      "alternative": "Personal Access Token (PAT) for your own account only. It is not suitable for connecting many users.",
+      "oauthForThirdParties": "yes",
+      "reason": "Asana lets third-party apps use OAuth 2.0. You register an app in the developer console. Discovery found no dynamic registration endpoint.",
+      "registration": "manual"
+    },
+    "app": {
+      "developerPortal": "https://app.asana.com/0/my-apps",
+      "name": "Asana",
+      "slug": "asana",
+      "website": "https://asana.com"
+    },
+    "attemptNote": null,
+    "attemptPick": "Stage 2 picked the 4 weakest claims it can check by opening a page (1 inferred, 3 sourced); claims already tested were skipped.",
+    "attempts": [
+      {
+        "change": "Added tested evidence a1 (probe p3)",
+        "claim": "Step 2: you register the app at app.asana.com/0/my-apps",
+        "expected": "A sign-in, sign-up or app registration form; form asks for redirect",
+        "n": 1,
+        "probeId": "p3",
+        "result": "A sign-in page: you sign in before this step",
+        "signIn": true,
+        "status": "Confirmed",
+        "stepId": "s2",
+        "tried": "Opened the registration page without signing in",
+        "weak": "Inferred"
+      },
+      {
+        "change": "Added tested evidence a2 (probe p4)",
+        "claim": "Review page goes to developers.asana.com/docs/publish-your-app",
+        "expected": "The provider's app review / go-live page",
+        "n": 2,
+        "probeId": "p4",
+        "result": "Loads \"Publish your app\" and covers review or going live",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": null,
+        "tried": "Opened the link and checked where it lands",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Added tested evidence a3 (probe p5)",
+        "claim": "The authorize URL app.asana.com/-/oauth_authorize is live and takes the documented scopes (default)",
+        "expected": "A live endpoint that rejects the made-up client and raises no scope error",
+        "n": 3,
+        "probeId": "p5",
+        "result": "Live; it asks the user to sign in before showing consent, so the scopes weren't visible",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": "s2",
+        "tried": "Opened it with a made-up client and those scopes",
+        "weak": "Sourced"
+      },
+      {
+        "change": "No change",
+        "claim": "The token endpoint is app.asana.com/-/oauth_token",
+        "expected": "A live OAuth endpoint (it answers a plain request with an error)",
+        "n": 4,
+        "probeId": "p6",
+        "result": "Loaded, but didn't look like a token endpoint's reply",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s2",
+        "tried": "Loaded it with a plain page request (no token request was sent)",
+        "weak": "Sourced"
+      },
+      {
+        "change": "You do step 1; an agent can pick up after it",
+        "claim": "Where the agent stopped",
+        "n": 5,
+        "result": "A step only you can do (account, legal terms, payment, verification or a decision)",
+        "status": "You take over",
+        "stepId": "s1",
+        "stop": true,
+        "tried": "Step 1: Sign in to Asana and open the developer console"
+      }
+    ],
+    "blockers": [
+      {
+        "evidence": [
+          "e5"
+        ],
+        "likelihood": "possible",
+        "stepId": "s6",
+        "title": "Directory review delays",
+        "whatToDo": "Follow the listing guidelines before submitting. Apps with app components take longer."
+      }
+    ],
+    "evidence": [
+      {
+        "claim": "Asana publishes OAuth server metadata with authorize and token endpoints and no registration endpoint.",
+        "id": "e1",
+        "note": "Discovery at app.asana.com/.well-known/oauth-authorization-server",
+        "probeId": "p1",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "The authorize endpoint is live and sends an unknown client to the Asana login page.",
+        "id": "e2",
+        "note": null,
+        "probeId": "p2",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "Review is not required to obtain a token. It is only for App Directory publishing.",
+        "id": "e3",
+        "note": null,
+        "probeId": null,
+        "quote": "Submitting your app for review is not required to obtain a token.",
+        "sourceUrl": "https://developers.asana.com/docs/publish-your-app",
+        "status": "sourced"
+      },
+      {
+        "claim": "Create the app in the developer console at app.asana.com/0/my-apps.",
+        "id": "e4",
+        "note": "From a search snippet on a third-party site (help.unleash.so). The Make docs say the same.",
+        "probeId": null,
+        "quote": null,
+        "sourceUrl": null,
+        "status": "inferred"
+      },
+      {
+        "claim": "Asana aims for an initial response on directory submissions within one week.",
+        "id": "e5",
+        "note": null,
+        "probeId": null,
+        "quote": "We aim to provide an initial response on app submissions within one week.",
+        "sourceUrl": "https://developers.asana.com/docs/publish-your-app",
+        "status": "sourced"
+      },
+      {
+        "claim": "Access tokens last 3600 seconds, and the refresh token can be reused.",
+        "id": "e6",
+        "note": "From Asana forum search snippets, not read as a page.",
+        "probeId": null,
+        "quote": null,
+        "sourceUrl": null,
+        "status": "inferred"
+      },
+      {
+        "claim": "The authorize and token URLs are https://app.asana.com/-/oauth_authorize and https://app.asana.com/-/oauth_token.",
+        "id": "e7",
+        "note": null,
+        "probeId": null,
+        "quote": "Auth URL: https://app.asana.com/-/oauth_authorize",
+        "sourceUrl": "https://developers.asana.com/docs/getting-started-with-asana-oauth",
+        "status": "sourced"
+      },
+      {
+        "claim": "Asana OAuth does not support token requests from a browser. The console has a Manage Distribution setting for workspaces. Example scopes include tasks:read.",
+        "id": "e8",
+        "note": null,
+        "probeId": null,
+        "quote": "Asana OAuth currently does not support making token requests from a browser for security reasons.",
+        "sourceUrl": "https://developers.asana.com/docs/getting-started-with-asana-oauth",
+        "status": "sourced"
+      },
+      {
+        "claim": "A new access token is obtained by POSTing to the token endpoint with grant_type refresh_token and the refresh token.",
+        "id": "e9",
+        "note": "From a search snippet of developers.asana.com/docs/oauth. I could not read that page, so this is not confirmed from a page I read.",
+        "probeId": null,
+        "quote": null,
+        "sourceUrl": null,
+        "status": "inferred"
+      },
+      {
+        "claim": "app.asana.com/0/my-apps asks the developer to sign in first",
+        "id": "a1",
+        "note": "Stage 2 attempt",
+        "probeId": "p3",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "developers.asana.com/docs/publish-your-app is the provider's review / go-live page",
+        "id": "a2",
+        "note": "Stage 2 attempt",
+        "probeId": "p4",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "The authorize URL app.asana.com/-/oauth_authorize is live and shows a sign-in page",
+        "id": "a3",
+        "note": "Stage 2 attempt",
+        "probeId": "p5",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      }
+    ],
+    "followUp": {
+      "error": null,
+      "open": [
+        "Token page https://developers.asana.com/docs/oauth: The read timed out, so I got no usable content. I searched for the token and refresh flow. I then read the OAuth code samples page (https://developers.asana.com/docs/getting-started-with-asana-oauth) and an Asana example README on GitHub. Neither covers token lifetime, refresh or PKCE details."
+      ],
+      "problems": [
+        "Token page https://developers.asana.com/docs/oauth: The read timed out, so I got no usable content. I searched 'Asana OAuth token refresh authorization code'."
+      ],
+      "tried": [
+        "https://developers.asana.com/docs/getting-started-with-asana-oauth",
+        "https://github.com/Asana/devrel-examples/blob/master/javascript/pkce_oauth/README.md"
+      ]
+    },
+    "mandatoryPages": {
+      "review": {
+        "checked": true,
+        "evidence": [
+          "e3",
+          "e5"
+        ],
+        "note": null,
+        "status": "read",
+        "unreadable": null,
+        "url": "https://developers.asana.com/docs/publish-your-app"
+      },
+      "token": {
+        "checked": true,
+        "evidence": [
+          "e8"
+        ],
+        "note": "The read timed out, so I got no usable content. I searched for the token and refresh flow. I then read the OAuth code samples page (https://developers.asana.com/docs/getting-started-with-asana-oauth) and an Asana example README on GitHub. Neither covers token lifetime, refresh or PKCE details.",
+        "status": "failed",
+        "unreadable": null,
+        "url": "https://developers.asana.com/docs/oauth"
+      }
+    },
+    "oauth": {
+      "authorizeUrl": "https://app.asana.com/-/oauth_authorize",
+      "evidence": [
+        "e1",
+        "e2",
+        "e7"
+      ],
+      "tokenUrl": "https://app.asana.com/-/oauth_token"
+    },
+    "prodNeedsCheck": false,
+    "requirements": [
+      {
+        "appliesWhen": null,
+        "detail": "You need an Asana account to open the developer console and agree to the Asana API Terms when creating the app.",
+        "evidence": [
+          "e4"
+        ],
+        "kind": "prerequisite",
+        "label": "Asana account",
+        "stepId": null
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Add your app's OAuth callback URL under the app's OAuth section. Exact-match and HTTPS rules were not confirmed from the docs.",
+        "evidence": [
+          "e3"
+        ],
+        "kind": "technical",
+        "label": "Authorization code flow with HTTPS callback",
+        "stepId": "s2"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Asana's code samples page says OAuth does not support token requests from a browser for security reasons. Make the token exchange from your backend.",
+        "evidence": [
+          "e8"
+        ],
+        "kind": "technical",
+        "label": "Token requests must come from a server, not a browser",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "A forum post reports access tokens expire after 3600 seconds. Store the refresh token and use it to get new access tokens. This is not from the official docs pages I read.",
+        "evidence": [
+          "e6",
+          "e9"
+        ],
+        "kind": "technical",
+        "label": "Access token lifetime about 1 hour; refresh token reusable",
+        "stepId": "s4"
+      }
+    ],
+    "scopes": [
+      {
+        "evidence": [
+          "e8"
+        ],
+        "note": "Asana has an OAuth scopes page. I could not read it, so the full scope list and sensitivity are unconfirmed. The code samples page gives examples of scope names: tasks:read, tasks:write and projects:read.",
+        "scope": "default",
+        "sensitivity": "unknown"
+      }
+    ],
+    "steps": [
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e4"
+        ],
+        "id": "s1",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "prepare",
+        "points": [
+          "Sign in with the Asana account that will own the app",
+          "Open My apps in the developer console"
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Sign in to Asana and open the developer console",
+        "type": "account",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "Asana → Developer console → My apps",
+          "url": "https://app.asana.com/0/my-apps"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.5,
+          "min": 0.25
+        },
+        "evidence": [
+          "e1",
+          "e4",
+          "e8",
+          "a1",
+          "a3"
+        ],
+        "id": "s2",
+        "items": [],
+        "output": "Client ID and client secret",
+        "owner": "agent",
+        "phase": "register",
+        "points": [
+          "Click Create new app",
+          "Enter a name and pick a use case",
+          "Accept the Asana API Terms",
+          "Add your app's OAuth callback URL in the OAuth section",
+          "Copy the client ID and secret",
+          "Under Manage Distribution, allow the workspaces that will use the app (Specific workspaces or Any workspace)"
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Create the OAuth app",
+        "type": "register_form",
+        "values": [
+          {
+            "label": "Redirect URI",
+            "value": "your app's OAuth callback URL"
+          },
+          {
+            "label": "Authorize URL",
+            "value": "https://app.asana.com/-/oauth_authorize"
+          },
+          {
+            "label": "Token URL",
+            "value": "https://app.asana.com/-/oauth_token"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "Developer console → Create new app → OAuth",
+          "url": "https://app.asana.com/0/my-apps"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [],
+        "id": "s3",
+        "items": [],
+        "output": null,
+        "owner": "agent_ok",
+        "phase": "configure",
+        "points": [
+          "Paste the client ID and secret into your app's config",
+          "Keep the secret server-side"
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Store client credentials in your agent's backend",
+        "type": "configure",
+        "values": [],
+        "wait": null,
+        "where": null
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 3,
+          "min": 1
+        },
+        "evidence": [
+          "e1",
+          "e2",
+          "e6",
+          "e8",
+          "e9"
+        ],
+        "id": "s4",
+        "items": [],
+        "output": "Access and refresh tokens",
+        "owner": "agent",
+        "phase": "test",
+        "points": [
+          "Send the user to the authorize URL with response_type=code",
+          "Exchange the code at the token URL from your server, not from a browser",
+          "Use the refresh token with grant_type=refresh_token to get new access tokens"
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Run the authorization code flow",
+        "type": "token_flow",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Asana OAuth docs",
+          "url": "https://developers.asana.com/docs/oauth"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 12,
+          "min": 3
+        },
+        "evidence": [
+          "e3",
+          "e5"
+        ],
+        "id": "s5",
+        "items": [
+          "Setup instructions",
+          "Screencast video link",
+          "Listing copy and support details"
+        ],
+        "output": null,
+        "owner": "you",
+        "phase": "review",
+        "points": [
+          "Only needed if you want a public listing",
+          "Follow the app listing guidelines",
+          "Prepare setup instructions and a screencast link"
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Optional: prepare the App Directory listing",
+        "type": "review_materials",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Developer console → Submit for review",
+          "url": "https://developers.asana.com/docs/publish-your-app"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0,
+          "min": 0
+        },
+        "evidence": [
+          "e5"
+        ],
+        "id": "s6",
+        "items": [],
+        "output": null,
+        "owner": "provider",
+        "phase": "review",
+        "points": [
+          "Asana aims to give an initial response within one week",
+          "You get an email when the app is ready to publish"
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Submit for review and wait",
+        "type": "provider",
+        "values": [],
+        "wait": {
+          "max": 7,
+          "min": 1
+        },
+        "where": null
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 1,
+          "min": 0.5
+        },
+        "evidence": [],
+        "id": "s7",
+        "items": [],
+        "output": null,
+        "owner": "agent",
+        "phase": "test",
+        "points": [
+          "Call GET https://app.asana.com/api/1.0/users/me with the bearer token",
+          "Success is HTTP 200 with the user's gid and name"
+        ],
+        "scopes": [],
+        "stage": "both",
+        "title": "Verify the token with a read-only call",
+        "type": "test",
+        "values": [
+          {
+            "label": "Header",
+            "value": "Authorization: Bearer <access_token>"
+          }
+        ],
+        "wait": null,
+        "where": null
+      }
+    ],
+    "time": {
+      "breakdown": [
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "0",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "1",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.5,
+          "min": 0.25,
+          "note": null,
+          "step": "2",
+          "type": "App registration form",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "3",
+          "type": "Redirect URI and scopes",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 3,
+          "min": 1,
+          "note": null,
+          "step": "4",
+          "type": "Authorize and token exchange",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [],
+          "max": 12,
+          "min": 3,
+          "note": "3 items",
+          "step": "5",
+          "type": "Review materials (per item)",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [
+            "e5"
+          ],
+          "max": 0,
+          "min": 0,
+          "note": null,
+          "step": "6",
+          "type": "The provider does it (you wait)",
+          "wait": {
+            "max": 7,
+            "min": 1
+          },
+          "waitSource": "provider-stated"
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 1,
+          "min": 0.5,
+          "note": null,
+          "step": "7",
+          "type": "Test with your own account",
+          "wait": null,
+          "waitSource": null
+        }
+      ],
+      "devReady": {
+        "computed": true,
+        "effort": {
+          "max": 5.25,
+          "min": 2.5
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "none"
+      },
+      "production": {
+        "computed": true,
+        "effort": {
+          "max": 17.25,
+          "min": 5.5
+        },
+        "evidence": [
+          "e5"
+        ],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 7,
+          "min": 1
+        },
+        "waitKind": "range"
+      }
+    },
+    "uncertainties": [
+      {
+        "stepId": "s4",
+        "text": "I could not read the OAuth page, so these are unconfirmed: authorization code lifetime, client authentication method, redirect URI rules and exact refresh response behavior. Search snippets suggest refresh_token grants and PKCE (code_challenge) exist, but I did not read them on a page."
+      },
+      {
+        "stepId": "s4",
+        "text": "PKCE support is only suggested by search snippets and an Asana forum thread. It is not confirmed from a page I read."
+      },
+      {
+        "stepId": null,
+        "text": "Rate limits and any region or data-center-specific hosts were not confirmed."
+      },
+      {
+        "stepId": null,
+        "text": "I did not confirm whether unpublished apps have user caps or consent warnings. Manage Distribution lets you choose specific workspaces or any workspace, but its limits are unknown."
+      },
+      {
+        "stepId": "s2",
+        "text": "I could not read the scopes page, so the full list of scope names and their sensitivity is unknown."
+      },
+      {
+        "stepId": null,
+        "text": "I did not confirm whether a paid plan or admin approval of the app is needed in an organization."
+      },
+      {
+        "stepId": null,
+        "text": "Token page not read; token lifetimes, refresh and redirect rules unconfirmed. (The read timed out, so I got no usable content. I searched for the token and refresh flow. I then read the OAuth code samples page (https://developers.asana.com/docs/getting-started-with-asana-oauth) and an Asana example README on GitHub. Neither covers token lifetime, refresh or PKCE details.)"
+      },
+      {
+        "stepId": null,
+        "text": "Token page https://developers.asana.com/docs/oauth still couldn't be read after a follow-up round that tried: https://developers.asana.com/docs/getting-started-with-asana-oauth, https://github.com/Asana/devrel-examples/blob/master/javascript/pkce_oauth/README.md. Claims from it need checking."
+      }
+    ],
+    "verdict": {
+      "confidence": "medium",
+      "points": [
+        {
+          "evidence": [
+            "e1",
+            "e4"
+          ],
+          "text": "Manual registration in the developer console",
+          "why": "Discovery shows the authorize and token endpoints on app.asana.com but no registration_endpoint. Search results describe creating the app at app.asana.com/0/my-apps."
+        },
+        {
+          "evidence": [
+            "e3"
+          ],
+          "text": "Review is not required to get a token",
+          "why": "Asana's publish page says submitting for review is not required to obtain a token. It is only needed for App Directory listing."
+        },
+        {
+          "evidence": [
+            "e5"
+          ],
+          "text": "Directory review: first response aimed within one week",
+          "why": "Asana aims to give an initial response within a week. Apps built with app components take longer."
+        },
+        {
+          "evidence": [
+            "e3",
+            "e8"
+          ],
+          "text": "Whether unlisted apps have user or workspace limits is unconfirmed",
+          "why": "I could not read the OAuth page. The code samples page shows a Manage Distribution setting in the developer console. It lets you allow Specific workspaces or Any workspace. I did not confirm any user caps or warnings for unpublished apps."
+        }
+      ],
+      "summary": "Register an OAuth app in Asana's developer console and use it right away. App Directory review is only needed to be listed.",
+      "tier": "self_serve",
+      "unconfirmed": false
+    }
+  },
+  "meta": {
+    "at": "2026-10-29T19:35:19.544Z",
+    "downgraded": 0,
+    "notes": [
+      "follow-up round for: Token page https://developers.asana.com/docs/oauth: The read timed out, so I got no usable content. I searched 'Asana OAuth token refresh authorization code'."
+    ],
+    "pipelineVersion": "v2"
+  },
+  "name": "Asana",
+  "pipelineVersion": "v2",
+  "query": "Asana",
+  "run": {
+    "failedSearches": 0,
+    "okPages": 4,
+    "okSearches": 5,
+    "probes": [
+      {
+        "at": "2026-10-29T19:30:46.750Z",
+        "data": {
+          "authorization_endpoint": "https://app.asana.com/-/oauth_authorize",
+          "issuer": "https://app.asana.com",
+          "path": "/.well-known/oauth-authorization-server",
+          "registration_endpoint": null,
+          "scopes_supported": null,
+          "token_endpoint": "https://app.asana.com/-/oauth_token"
+        },
+        "id": "p1",
+        "kind": "oauth_discovery",
+        "outcome": "positive",
+        "summary": "Metadata found at /.well-known/oauth-authorization-server. No registration_endpoint (no DCR advertised).",
+        "target": "https://app.asana.com/.well-known/oauth-authorization-server"
+      },
+      {
+        "at": "2026-10-29T19:31:09.944Z",
+        "data": {
+          "landedOn": "https://app.asana.com/-/oauth_authorize?client_id=setup-guide-probe-invalid-client&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&response_type=code&state=probe",
+          "snippet": "Welcome to Asana To get started, please sign in Google Microsoft or Email address Continue Asana.com Support Integrations Forum Developers & API Resources Guide Templates Pricing Terms Privacy This site is protected by reCAPTCHA and the Asana Privacy Statement and Terms of Service apply.",
+          "title": "Log in - Asana"
+        },
+        "id": "p2",
+        "kind": "authorize_endpoint",
+        "outcome": "positive",
+        "summary": "Endpoint answered, landing on app.asana.com/-/oauth_authorize: it is live and handles an unknown client.",
+        "target": "https://app.asana.com/-/oauth_authorize?client_id=invalid&redirect_uri=https%3A%2F%2Fexample.com%2Fcb&response_type=code&state=x"
+      },
+      {
+        "at": "2026-10-29T19:35:06.480Z",
+        "data": {
+          "fields": null,
+          "kind": "login",
+          "landedOn": "https://app.asana.com/-/login?u=%2F0%2Fmy-apps",
+          "signal": null,
+          "snippet": null,
+          "title": "Log in - Asana"
+        },
+        "id": "p3",
+        "kind": "attempt_portal",
+        "outcome": "positive",
+        "summary": "Opened the registration page without signing in: login",
+        "target": "https://app.asana.com/0/my-apps"
+      },
+      {
+        "at": "2026-10-29T19:35:08.407Z",
+        "data": {
+          "fields": null,
+          "kind": "docs",
+          "landedOn": "https://developers.asana.com/docs/publish-your-app",
+          "signal": null,
+          "snippet": "OVERVIEW Build an app with Asana Object hierarchy Common use cases GET STARTED API explorer Developer sandbox Quick start guide FAQ FEATURE GUIDES Authentication Personal access token OAuth OAuth Code",
+          "title": "Publish your app"
+        },
+        "id": "p4",
+        "kind": "attempt_review",
+        "outcome": "positive",
+        "summary": "Opened the link and checked where it lands: docs",
+        "target": "https://developers.asana.com/docs/publish-your-app"
+      },
+      {
+        "at": "2026-10-29T19:35:14.296Z",
+        "data": {
+          "fields": null,
+          "kind": "login",
+          "landedOn": "https://app.asana.com/-/oauth_authorize?client_id=setup-guide-probe-invalid-client&response_type=code&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&state=probe&scope=default",
+          "signal": null,
+          "snippet": "Welcome to Asana To get started, please sign in Google Microsoft or Email address Continue Asana.com Support Integrations Forum Developers & API Resources Guide Templates Pricing Terms Privacy This si",
+          "title": "Log in - Asana"
+        },
+        "id": "p5",
+        "kind": "attempt_authorize",
+        "outcome": "positive",
+        "summary": "Opened it with a made-up client and those scopes: login",
+        "target": "https://app.asana.com/-/oauth_authorize"
+      },
+      {
+        "at": "2026-10-29T19:35:19.541Z",
+        "data": {
+          "fields": null,
+          "kind": "loaded",
+          "landedOn": "https://app.asana.com/-/oauth_token",
+          "signal": null,
+          "snippet": "Error No route found",
+          "title": "Error"
+        },
+        "id": "p6",
+        "kind": "attempt_token",
+        "outcome": "positive",
+        "summary": "Loaded it with a plain page request (no token request was sent): loaded",
+        "target": "https://app.asana.com/-/oauth_token"
+      }
+    ],
+    "queries": 5,
+    "readLog": [
+      {
+        "chars": 25197,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "OAuth",
+        "url": "https://developers.asana.com/docs/oauth",
+        "via": null
+      },
+      {
+        "error": "Stopped",
+        "ok": false,
+        "url": "https://developers.asana.com/docs/publish-your-app"
+      },
+      {
+        "dup": true,
+        "ok": true,
+        "url": "https://developers.asana.com/docs/oauth"
+      },
+      {
+        "error": "Stopped",
+        "ok": false,
+        "url": "https://developers.asana.com/docs/app-listing-guidelines"
+      },
+      {
+        "error": "Stopped",
+        "ok": false,
+        "url": "https://developers.asana.com/docs/oauth-scopes"
+      },
+      {
+        "chars": 9787,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Publish your app",
+        "url": "https://developers.asana.com/docs/publish-your-app",
+        "via": null
+      },
+      {
+        "chars": 3469,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "OAuth Code Samples / Libraries",
+        "url": "https://developers.asana.com/docs/getting-started-with-asana-oauth",
+        "via": null
+      },
+      {
+        "chars": 3990,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "devrel-examples/javascript/pkce_oauth/README.md at master · Asana/devrel-examples · GitHub",
+        "url": "https://github.com/Asana/devrel-examples/blob/master/javascript/pkce_oauth/README.md",
+        "via": null
+      }
+    ],
+    "searchLog": [
+      {
+        "ok": true,
+        "query": "Asana OAuth app developer documentation create app"
+      },
+      {
+        "ok": true,
+        "query": "Asana app directory submit app review requirements"
+      },
+      {
+        "ok": true,
+        "query": "Asana OAuth token refresh authorization code"
+      },
+      {
+        "ok": true,
+        "query": "Asana API reference OAuth token endpoint refresh_token grant_type developers.asana.com"
+      },
+      {
+        "ok": true,
+        "query": "Asana OAuth PKCE code_challenge authorization code developers.asana.com"
+      }
+    ]
+  },
+  "savedAt": "2026-10-29T19:35:19.544Z",
+  "slug": "asana",
+  "summary": "Register an OAuth app in Asana's developer console and use it right away. App Directory review is only needed to be listed.",
+  "tier": "self_serve",
+  "tierLabel": "Self-serve"
+}

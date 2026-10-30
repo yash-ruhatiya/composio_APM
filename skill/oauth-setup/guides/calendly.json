@@ -1,0 +1,830 @@
+{
+  "confidence": "medium",
+  "guide": {
+    "access": {
+      "alternative": null,
+      "oauthForThirdParties": "yes",
+      "reason": "Calendly lets you create OAuth apps in Developer tools to access Calendly data on behalf of other users.",
+      "registration": "manual"
+    },
+    "app": {
+      "developerPortal": "https://developer.calendly.com",
+      "name": "Calendly",
+      "slug": "calendly",
+      "website": "https://calendly.com"
+    },
+    "attemptNote": null,
+    "attemptPick": "Stage 2 picked the 4 weakest claims it can check by opening a page (4 sourced); claims already tested were skipped.",
+    "attempts": [
+      {
+        "change": "Added an open question",
+        "claim": "Step 2: you register the app at developer.calendly.com/docs/authentication/creating-an-oauth-app",
+        "expected": "A sign-in, sign-up or app registration form; form asks for redirect",
+        "n": 1,
+        "probeId": "p3",
+        "result": "Docs page, not the form (\"Creating an OAuth app | Calendly | Developer Documentation\")",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s2",
+        "tried": "Opened the registration page without signing in",
+        "weak": "Sourced"
+      },
+      {
+        "change": "No change",
+        "claim": "authorize at auth.calendly.com/oauth/authorize",
+        "expected": "—",
+        "n": 2,
+        "result": "Couldn't open: The result was withheld: the page left https://auth.calendly.com or closed, the user declined, or Claude's browser is no longer available. Use read_page to see the page before navigating again.",
+        "status": "Unverified",
+        "stepId": "s4",
+        "tried": "Opened it",
+        "weak": "Sourced"
+      },
+      {
+        "change": "No change",
+        "claim": "The token endpoint is auth.calendly.com/oauth/token",
+        "expected": "A live OAuth endpoint (it answers a plain request with an error)",
+        "n": 3,
+        "probeId": "p4",
+        "result": "Loaded, but didn't look like a token endpoint's reply",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s4",
+        "tried": "Loaded it with a plain page request (no token request was sent)",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Updated step 1's link to developer.calendly.com/docs/getting-started/overview",
+        "claim": "Step 1 link goes to developer.calendly.com",
+        "expected": "Where you do \"Calendly → Profile → Developer\": a sign-in, sign-up, form or a page about it",
+        "n": 4,
+        "probeId": "p5",
+        "result": "Moved to developer.calendly.com/docs/getting-started/overview",
+        "signIn": false,
+        "status": "Corrected",
+        "stepId": "s1",
+        "tried": "Opened the link and checked where it lands",
+        "weak": "Sourced"
+      },
+      {
+        "change": "You do step 1; an agent can pick up after it",
+        "claim": "Where the agent stopped",
+        "n": 5,
+        "result": "A step only you can do (account, legal terms, payment, verification or a decision)",
+        "status": "You take over",
+        "stepId": "s1",
+        "stop": true,
+        "tried": "Step 1: Sign in to Calendly Developer tools"
+      }
+    ],
+    "blockers": [
+      {
+        "evidence": [
+          "e5"
+        ],
+        "likelihood": "common",
+        "stepId": "s4",
+        "title": "Refresh token reuse breaks connections",
+        "whatToDo": "Persist the new refresh token atomically and don't refresh in parallel. On invalid_grant, ask the user to reconnect."
+      },
+      {
+        "evidence": [
+          "e6"
+        ],
+        "likelihood": "possible",
+        "stepId": "s5",
+        "title": "Production redirect must be HTTPS",
+        "whatToDo": "Use an https callback URL in the Production app."
+      }
+    ],
+    "evidence": [
+      {
+        "claim": "OAuth apps are created in Developer tools, with Sandbox and Production environments; a second Production app is recommended for real customer data",
+        "id": "e1",
+        "note": null,
+        "probeId": null,
+        "quote": "Create a second app for Production when you are ready to use real customer data.",
+        "sourceUrl": "https://developer.calendly.com/docs/authentication/creating-an-oauth-app",
+        "status": "sourced"
+      },
+      {
+        "claim": "Token endpoint is https://auth.calendly.com/oauth/token with Basic client authentication for server apps",
+        "id": "e2",
+        "note": null,
+        "probeId": null,
+        "quote": "Send a POST request to Get Access Token at https://auth.calendly.com/oauth/token.",
+        "sourceUrl": "https://developer.calendly.com/docs/authentication/creating-an-oauth-app",
+        "status": "sourced"
+      },
+      {
+        "claim": "PKCE S256 is required",
+        "id": "e3",
+        "note": null,
+        "probeId": null,
+        "quote": "Every OAuth app must use Proof Key for Code Exchange (PKCE) with the S256 method.",
+        "sourceUrl": "https://developer.calendly.com/docs/authentication/creating-an-oauth-app",
+        "status": "sourced"
+      },
+      {
+        "claim": "Access tokens last 2 hours; refresh tokens don't expire until used; token request rate limit",
+        "id": "e4",
+        "note": null,
+        "probeId": null,
+        "quote": "Access Tokens expire after 2 hours.",
+        "sourceUrl": "https://developer.calendly.com/api-docs/calendly-o-auth/o-auth/post-oauth-refresh-token",
+        "status": "sourced"
+      },
+      {
+        "claim": "Refresh tokens are single-use and rotate",
+        "id": "e5",
+        "note": null,
+        "probeId": null,
+        "quote": "Each successful response from POST /oauth/token will still return a new access token and a new refresh token.",
+        "sourceUrl": "https://developer.calendly.com/docs/authentication/refresh-token-rotation-guide",
+        "status": "sourced"
+      },
+      {
+        "claim": "Redirect URI rules differ between Sandbox and Production",
+        "id": "e6",
+        "note": "Sandbox allows https and http on localhost. Production allows https only.",
+        "probeId": null,
+        "quote": "Enter exactly one URI.",
+        "sourceUrl": "https://developer.calendly.com/docs/authentication/creating-an-oauth-app",
+        "status": "sourced"
+      },
+      {
+        "claim": "Get current user endpoint is used to test the access token",
+        "id": "e7",
+        "note": "The developer account page says to test with the Get current user endpoint. The path /users/me is from general knowledge.",
+        "probeId": null,
+        "quote": null,
+        "sourceUrl": null,
+        "status": "inferred"
+      },
+      {
+        "claim": "Step 1's page now lives at developer.calendly.com/docs/getting-started/overview",
+        "id": "a1",
+        "note": "Stage 2 attempt",
+        "probeId": "p5",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      }
+    ],
+    "followUp": null,
+    "mandatoryPages": {
+      "review": {
+        "checked": true,
+        "evidence": [
+          "e1"
+        ],
+        "note": "Searched 'Calendly developer production OAuth app review go live' and the docs. Found no review or publishing page; docs only describe Sandbox vs Production app types.",
+        "status": "not_found",
+        "unreadable": null,
+        "url": null
+      },
+      "token": {
+        "checked": true,
+        "evidence": [
+          "e2",
+          "e4",
+          "e5"
+        ],
+        "note": "Also read the refresh token rotation guide.",
+        "status": "read",
+        "unreadable": null,
+        "url": "https://developer.calendly.com/api-docs/calendly-o-auth/o-auth/post-oauth-refresh-token"
+      }
+    },
+    "oauth": {
+      "authorizeUrl": "https://auth.calendly.com/oauth/authorize",
+      "evidence": [
+        "e1",
+        "e2"
+      ],
+      "tokenUrl": "https://auth.calendly.com/oauth/token"
+    },
+    "prodNeedsCheck": false,
+    "requirements": [
+      {
+        "appliesWhen": null,
+        "detail": "You need a Calendly account (or sign-up) to open Developer tools.",
+        "evidence": [
+          "e1"
+        ],
+        "kind": "prerequisite",
+        "label": "Calendly account",
+        "stepId": "s1"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Every authorization request must include code_challenge and code_challenge_method=S256.",
+        "evidence": [
+          "e3"
+        ],
+        "kind": "technical",
+        "label": "PKCE S256",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Enter exactly one URI per app. Sandbox allows https and http on localhost. Production allows https only.",
+        "evidence": [
+          "e6"
+        ],
+        "kind": "technical",
+        "label": "Redirect URI rules",
+        "stepId": "s2"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Server apps send client_id and client_secret with HTTP Basic auth. Always include client_id in the body.",
+        "evidence": [
+          "e2"
+        ],
+        "kind": "technical",
+        "label": "Client authentication at token endpoint",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Store the new refresh_token from every refresh response and discard the old one.",
+        "evidence": [
+          "e5"
+        ],
+        "kind": "technical",
+        "label": "Refresh token rotation",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Only 8 OAuth tokens per user can be requested within 1 minute.",
+        "evidence": [
+          "e4"
+        ],
+        "kind": "technical",
+        "label": "Token rate limit",
+        "stepId": "s4"
+      }
+    ],
+    "scopes": [
+      {
+        "evidence": [
+          "e1"
+        ],
+        "note": "At least one scope is required. The scope list page was not read.",
+        "scope": "(select in the app form)",
+        "sensitivity": "unknown"
+      }
+    ],
+    "steps": [
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e1",
+          "a1"
+        ],
+        "id": "s1",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "prepare",
+        "points": [
+          "Log in to Calendly or sign up.",
+          "Profile menu → Developer.",
+          "Older accounts may still use developer.calendly.com."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Sign in to Calendly Developer tools",
+        "type": "account",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "Calendly → Profile → Developer",
+          "url": "https://developer.calendly.com/docs/getting-started/overview"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.5,
+          "min": 0.25
+        },
+        "evidence": [
+          "e1",
+          "e6"
+        ],
+        "id": "s2",
+        "items": [],
+        "output": "Client ID, client secret, webhook signing key",
+        "owner": "agent",
+        "phase": "register",
+        "points": [
+          "OAuth apps tab → Create OAuth app.",
+          "App name: letters, numbers, hyphens and spaces only.",
+          "Environment: Sandbox. Enter exactly one redirect URI.",
+          "Select at least one scope, then Create."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Create a Sandbox OAuth app",
+        "type": "register_form",
+        "values": [
+          {
+            "label": "Redirect URI",
+            "value": "your app's OAuth callback URL"
+          },
+          {
+            "label": "Environment type",
+            "value": "Sandbox"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Developer tools → OAuth apps → Create OAuth app",
+          "url": "https://developer.calendly.com/docs/authentication/creating-an-oauth-app"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e1"
+        ],
+        "id": "s3",
+        "items": [],
+        "output": null,
+        "owner": "agent_ok",
+        "phase": "configure",
+        "points": [
+          "Copy all three values on the creation screen.",
+          "The secret and signing key can't be viewed again.",
+          "Paste them into your agent's secret store, with your OK."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Save credentials in your app",
+        "type": "configure",
+        "values": [],
+        "wait": null,
+        "where": null
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 3.5,
+          "min": 1.5
+        },
+        "evidence": [
+          "e2",
+          "e3",
+          "e5"
+        ],
+        "id": "s4",
+        "items": [],
+        "output": null,
+        "owner": "agent",
+        "phase": "test",
+        "points": [
+          "Redirect the user to the authorize URL with a code_challenge.",
+          "POST the code to the token URL with code_verifier.",
+          "Use HTTP Basic client auth for server apps.",
+          "Overwrite the stored refresh token on every refresh."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Implement authorize and token exchange with PKCE",
+        "type": "token_flow_pkce",
+        "values": [
+          {
+            "label": "Authorize URL",
+            "value": "https://auth.calendly.com/oauth/authorize"
+          },
+          {
+            "label": "Token URL",
+            "value": "https://auth.calendly.com/oauth/token"
+          },
+          {
+            "label": "code_challenge_method",
+            "value": "S256"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Calendly API reference → Get Access Token",
+          "url": "https://developer.calendly.com/api-docs/calendly-o-auth/o-auth/post-oauth-refresh-token"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.5,
+          "min": 0.25
+        },
+        "evidence": [
+          "e1",
+          "e6"
+        ],
+        "id": "s5",
+        "items": [],
+        "output": null,
+        "owner": "agent_ok",
+        "phase": "launch",
+        "points": [
+          "Create a second app with Environment type Production.",
+          "The redirect URI must be https; localhost is not allowed.",
+          "Swap the production client ID and secret into your app."
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Create a Production OAuth app",
+        "type": "register_form",
+        "values": [
+          {
+            "label": "Environment type",
+            "value": "Production"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Developer tools → OAuth apps → Create OAuth app",
+          "url": "https://developer.calendly.com/docs/authentication/creating-an-oauth-app"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 1,
+          "min": 0.5
+        },
+        "evidence": [
+          "e7"
+        ],
+        "id": "s6",
+        "items": [],
+        "output": null,
+        "owner": "agent",
+        "phase": "test",
+        "points": [
+          "GET https://api.calendly.com/users/me with Authorization: Bearer <access_token>.",
+          "Success is HTTP 200 with the user's resource and organization URIs."
+        ],
+        "scopes": [],
+        "stage": "both",
+        "title": "Verify the token with Get current user",
+        "type": "test",
+        "values": [
+          {
+            "label": "Endpoint",
+            "value": "https://api.calendly.com/users/me"
+          }
+        ],
+        "wait": null,
+        "where": null
+      }
+    ],
+    "time": {
+      "breakdown": [
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "1",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.5,
+          "min": 0.25,
+          "note": null,
+          "step": "2",
+          "type": "App registration form",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "3",
+          "type": "Redirect URI and scopes",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 3.5,
+          "min": 1.5,
+          "note": null,
+          "step": "4",
+          "type": "Authorize and token exchange with PKCE",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [],
+          "max": 0.5,
+          "min": 0.25,
+          "note": null,
+          "step": "5",
+          "type": "App registration form",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 1,
+          "min": 0.5,
+          "note": null,
+          "step": "6",
+          "type": "Test with your own account",
+          "wait": null,
+          "waitSource": null
+        }
+      ],
+      "devReady": {
+        "computed": true,
+        "effort": {
+          "max": 5.5,
+          "min": 2.75
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "none"
+      },
+      "production": {
+        "computed": true,
+        "effort": {
+          "max": 6,
+          "min": 3
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "none"
+      }
+    },
+    "uncertainties": [
+      {
+        "stepId": "s5",
+        "text": "No app review or go-live page was found. Searched 'Calendly OAuth app review go live'. Review may exist but isn't documented in the pages read."
+      },
+      {
+        "stepId": "s4",
+        "text": "Authorization code lifetime not stated on pages read."
+      },
+      {
+        "stepId": "s2",
+        "text": "Scopes page was not read; scope names and sensitivity are unknown."
+      },
+      {
+        "stepId": null,
+        "text": "Region or data-center-specific hosts were not stated on the pages read."
+      },
+      {
+        "stepId": "s1",
+        "text": "Whether a paid Calendly plan is needed for API or OAuth access was not confirmed."
+      },
+      {
+        "stepId": "s4",
+        "text": "Discovery probe on auth.calendly.com found no metadata, and the authorize probe was blocked, so the endpoints are untested."
+      },
+      {
+        "stepId": null,
+        "text": "Calendly's separate MCP server reportedly supports dynamic registration. I didn't verify this, and it isn't the third-party OAuth route used here."
+      },
+      {
+        "stepId": null,
+        "text": "Review page not read; review time and requirements unconfirmed. (Searched 'Calendly developer production OAuth app review go live' and the docs. Found no review or publishing page; docs only describe Sandbox vs Production app types.)"
+      },
+      {
+        "stepId": "s2",
+        "text": "Step 2's link developer.calendly.com/docs/authentication/creating-an-oauth-app is a docs page, not the registration form; find the portal page where you create the app."
+      }
+    ],
+    "verdict": {
+      "confidence": "medium",
+      "points": [
+        {
+          "evidence": [
+            "e1"
+          ],
+          "text": "Create the app in Calendly Developer tools; no approval step is documented.",
+          "why": "The docs say to create a Sandbox app for development and a second Production app for real customer data. They mention no review."
+        },
+        {
+          "evidence": [
+            "e3"
+          ],
+          "text": "PKCE with S256 is mandatory.",
+          "why": "Authorization requests without a code challenge fail."
+        },
+        {
+          "evidence": [
+            "e4",
+            "e5"
+          ],
+          "text": "Refresh tokens are single-use and rotate.",
+          "why": "Access tokens last 2 hours. Each refresh returns a new refresh token, and reusing an old one fails with invalid_grant."
+        }
+      ],
+      "summary": "Register a Calendly OAuth app yourself and choose the Production environment for real users. The docs I read describe no review step.",
+      "tier": "self_serve",
+      "unconfirmed": false
+    }
+  },
+  "meta": {
+    "at": "2026-10-29T20:01:36.114Z",
+    "downgraded": 0,
+    "notes": [],
+    "pipelineVersion": "v2"
+  },
+  "name": "Calendly",
+  "pipelineVersion": "v2",
+  "query": "Calendly",
+  "run": {
+    "failedSearches": 0,
+    "okPages": 4,
+    "okSearches": 3,
+    "probes": [
+      {
+        "at": "2026-10-29T20:00:32.995Z",
+        "data": {
+          "attempts": [
+            {
+              "note": "no JSON metadata",
+              "path": "/.well-known/oauth-authorization-server",
+              "title": "URL: https://auth.calendly.com/.well-known/oauth-authorization-server"
+            },
+            {
+              "note": "no JSON metadata",
+              "path": "/.well-known/openid-configuration",
+              "title": "URL: https://auth.calendly.com/.well-known/openid-configuration"
+            }
+          ]
+        },
+        "id": "p1",
+        "kind": "oauth_discovery",
+        "outcome": "negative",
+        "summary": "No OAuth/OIDC discovery metadata on auth.calendly.com. Not conclusive: many providers don't publish it.",
+        "target": "auth.calendly.com"
+      },
+      {
+        "at": "2026-10-29T20:00:45.758Z",
+        "data": {},
+        "id": "p2",
+        "kind": "authorize_endpoint",
+        "outcome": "error",
+        "summary": "Probe failed: the browser wouldn't show this page (it redirected to another site or was blocked)",
+        "target": "https://auth.calendly.com/oauth/authorize?client_id=invalid&response_type=code&redirect_uri=https://example.com/callback"
+      },
+      {
+        "at": "2026-10-29T20:01:24.768Z",
+        "data": {
+          "fields": null,
+          "kind": "docs",
+          "landedOn": "https://developer.calendly.com/docs/authentication/creating-an-oauth-app",
+          "signal": null,
+          "snippet": null,
+          "title": "Creating an OAuth app | Calendly | Developer Documentation"
+        },
+        "id": "p3",
+        "kind": "attempt_portal",
+        "outcome": "positive",
+        "summary": "Opened the registration page without signing in: docs",
+        "target": "https://developer.calendly.com/docs/authentication/creating-an-oauth-app"
+      },
+      {
+        "at": "2026-10-29T20:01:32.565Z",
+        "data": {
+          "fields": null,
+          "kind": "loaded",
+          "landedOn": "https://auth.calendly.com/oauth/token",
+          "signal": null,
+          "snippet": "powered by Calendly The page you are looking for could not be found Please make sure that you've typed in the URL correctly",
+          "title": "Calendly"
+        },
+        "id": "p4",
+        "kind": "attempt_token",
+        "outcome": "positive",
+        "summary": "Loaded it with a plain page request (no token request was sent): loaded",
+        "target": "https://auth.calendly.com/oauth/token"
+      },
+      {
+        "at": "2026-10-29T20:01:36.111Z",
+        "data": {
+          "fields": null,
+          "kind": "moved",
+          "landedOn": "https://developer.calendly.com/docs/getting-started/overview",
+          "signal": null,
+          "snippet": "Getting started Build with Calendly Explore our documentation to start building custom integrations REST API Integrate with the Calendly API Programmatically book meetings and read and write Schedulin",
+          "title": "Build with Calendly | Calendly | Developer Documentation"
+        },
+        "id": "p5",
+        "kind": "attempt_action",
+        "outcome": "positive",
+        "summary": "Opened the link and checked where it lands: moved",
+        "target": "https://developer.calendly.com"
+      }
+    ],
+    "queries": 3,
+    "readLog": [
+      {
+        "chars": 3876,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Creating an OAuth app | Calendly | Developer Documentation",
+        "url": "https://developer.calendly.com/docs/authentication/creating-an-oauth-app",
+        "via": null
+      },
+      {
+        "chars": 3228,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Get Access Token | Calendly | Developer Documentation",
+        "url": "https://developer.calendly.com/api-docs/calendly-o-auth/o-auth/post-oauth-refresh-token",
+        "via": null
+      },
+      {
+        "chars": 7321,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "How to handle single-use refresh tokens | Calendly | Developer Documentation",
+        "url": "https://developer.calendly.com/docs/authentication/refresh-token-rotation-guide",
+        "via": null
+      },
+      {
+        "chars": 3058,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Page not found",
+        "url": "https://developer.calendly.com/create-a-developer-account",
+        "via": "https://developer.calendly.com/page-data/create-a-developer-account/page-data.json"
+      }
+    ],
+    "searchLog": [
+      {
+        "ok": true,
+        "query": "Calendly developer OAuth create OAuth application"
+      },
+      {
+        "ok": true,
+        "query": "Calendly developer production OAuth app review go live"
+      },
+      {
+        "ok": true,
+        "query": "Calendly OAuth access token refresh token expiry"
+      }
+    ]
+  },
+  "savedAt": "2026-10-29T20:01:36.114Z",
+  "slug": "calendly",
+  "summary": "Register a Calendly OAuth app yourself and choose the Production environment for real users. The docs I read describe no review step.",
+  "tier": "self_serve",
+  "tierLabel": "Self-serve"
+}

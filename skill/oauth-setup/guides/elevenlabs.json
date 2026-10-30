@@ -1,0 +1,727 @@
+{
+  "confidence": "low",
+  "guide": {
+    "access": {
+      "alternative": "Each user creates an API key (Developers → API Keys) and your agent sends it in the xi-api-key header.",
+      "oauthForThirdParties": "unknown",
+      "reason": "An OAuth server exists, but the docs I read give no way for third-party apps to get a client ID. The documented route for outside services is the user's API key.",
+      "registration": "none"
+    },
+    "app": {
+      "developerPortal": "https://elevenlabs.io/app/developers",
+      "name": "ElevenLabs",
+      "slug": "elevenlabs",
+      "website": "https://elevenlabs.io"
+    },
+    "attemptNote": null,
+    "attemptPick": "Stage 2 picked the 3 weakest claims it can check by opening a page (1 unverified, 2 sourced); claims already tested were skipped.",
+    "attempts": [
+      {
+        "change": "No change",
+        "claim": "The documented authorize URL",
+        "expected": "The authorize URL from the provider's docs",
+        "n": 1,
+        "result": "Couldn't check: the guide doesn't name it",
+        "status": "Unverified",
+        "stepId": null,
+        "tried": "—",
+        "weak": null
+      },
+      {
+        "change": "No change",
+        "claim": "The documented token URL",
+        "expected": "The token URL from the provider's docs",
+        "n": 2,
+        "result": "Couldn't check: the guide doesn't name it",
+        "status": "Unverified",
+        "stepId": null,
+        "tried": "—",
+        "weak": null
+      },
+      {
+        "change": "No change",
+        "claim": "portal at elevenlabs.io/app/developers",
+        "expected": "—",
+        "n": 3,
+        "result": "Couldn't open: Claude's browser needs a click or key press in the artifact first.",
+        "status": "Unverified",
+        "stepId": null,
+        "tried": "Opened it",
+        "weak": "Unverified"
+      },
+      {
+        "change": "No change",
+        "claim": "Step 1 link at help.elevenlabs.io/hc/en-us",
+        "expected": "—",
+        "n": 4,
+        "result": "Couldn't open: The page changed; retry.",
+        "status": "Unverified",
+        "stepId": "s1",
+        "tried": "Opened it",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Added tested evidence a1 (probe p4)",
+        "claim": "Step 3 link goes to elevenlabs.io/docs/api-reference/authentication",
+        "expected": "A docs page about \"ElevenLabs API authentication\"",
+        "n": 5,
+        "probeId": "p4",
+        "result": "Loads \"API Authentication | ElevenLabs Documentation\"",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": "s3",
+        "tried": "Opened the link and checked where it lands",
+        "weak": "Sourced"
+      },
+      {
+        "change": "You do step 1; an agent can pick up after it",
+        "claim": "Where the agent stopped",
+        "n": 6,
+        "result": "A step only you can do (account, legal terms, payment, verification or a decision)",
+        "status": "You take over",
+        "stepId": "s1",
+        "stop": true,
+        "tried": "Step 1: Decide between the API key route and asking ElevenLabs about OAuth"
+      }
+    ],
+    "blockers": [
+      {
+        "evidence": [
+          "e1",
+          "e3"
+        ],
+        "likelihood": "common",
+        "stepId": "s1",
+        "title": "No documented third-party OAuth client registration",
+        "whatToDo": "Use API keys, or contact ElevenLabs to ask whether a partner OAuth client is available."
+      },
+      {
+        "evidence": [
+          "e6"
+        ],
+        "likelihood": "possible",
+        "stepId": "s2",
+        "title": "Personal API keys need a Full Seat",
+        "whatToDo": "Users on other seats may need a workspace admin to issue a service account key."
+      }
+    ],
+    "evidence": [
+      {
+        "claim": "An OAuth server exists with authorize and token endpoints, no registration_endpoint, and scopes such as convai_read and text_to_speech.",
+        "id": "e1",
+        "note": "Discovery on api.elevenlabs.io.",
+        "probeId": "p1",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "The API uses API keys sent in the xi-api-key header. Keys can be restricted by scope, credit and IP.",
+        "id": "e2",
+        "note": null,
+        "probeId": null,
+        "quote": "All API requests should include your API key in an xi-api-key HTTP header",
+        "sourceUrl": "https://elevenlabs.io/docs/api-reference/authentication",
+        "status": "sourced"
+      },
+      {
+        "claim": "OAuth is described for assistants connecting to the hosted ElevenLabs MCP server, with no developer registration mentioned.",
+        "id": "e3",
+        "note": null,
+        "probeId": null,
+        "quote": "Install from the ChatGPT plugins directory in one click and sign in with your ElevenLabs account. One time OAuth, no API keys, revocable anytime.",
+        "sourceUrl": "https://elevenlabs.io/mcp",
+        "status": "sourced"
+      },
+      {
+        "claim": "The help center says to use your API key to link your account with external services.",
+        "id": "e4",
+        "note": null,
+        "probeId": null,
+        "quote": "To link your ElevenLabs account with an external service, you will need to use your API key.",
+        "sourceUrl": "https://elevenlabs.io/docs/help-center/account/general/how-can-i-use-eleven-labs-with-third-party-services",
+        "status": "sourced"
+      },
+      {
+        "claim": "No review page was found in searches.",
+        "id": "e5",
+        "note": "Based on search results only.",
+        "probeId": null,
+        "quote": null,
+        "sourceUrl": null,
+        "status": "inferred"
+      },
+      {
+        "claim": "Personal API keys need a Full Seat.",
+        "id": "e6",
+        "note": null,
+        "probeId": null,
+        "quote": "Creating personal API keys requires a Full Seat.",
+        "sourceUrl": "https://elevenlabs.io/docs/overview/administration/workspaces/api-keys",
+        "status": "sourced"
+      },
+      {
+        "claim": "elevenlabs.io/docs/api-reference/authentication loads (API Authentication | ElevenLabs Documentation)",
+        "id": "a1",
+        "note": "Stage 2 attempt",
+        "probeId": "p4",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      }
+    ],
+    "followUp": null,
+    "mandatoryPages": {
+      "review": {
+        "checked": true,
+        "evidence": [],
+        "note": "Searched ElevenLabs OAuth third-party apps, OAuth app client registration, and app review. Found no review or publishing page.",
+        "status": "not_found",
+        "unreadable": null,
+        "url": null
+      },
+      "token": {
+        "checked": true,
+        "evidence": [
+          "e1"
+        ],
+        "note": "Searched OAuth app client registration and the API authentication docs. Found no OAuth token page, only the discovery metadata.",
+        "status": "not_found",
+        "unreadable": null,
+        "url": null
+      }
+    },
+    "oauth": {
+      "authorizeUrl": null,
+      "evidence": [
+        "e1"
+      ],
+      "tokenUrl": null
+    },
+    "prodNeedsCheck": false,
+    "requirements": [
+      {
+        "appliesWhen": "API key route",
+        "detail": "Each user needs an account and a Full Seat to create personal API keys.",
+        "evidence": [
+          "e6"
+        ],
+        "kind": "prerequisite",
+        "label": "ElevenLabs account",
+        "stepId": null
+      },
+      {
+        "appliesWhen": null,
+        "detail": "The API key is a secret and must not be exposed in client-side code.",
+        "evidence": [
+          "e2"
+        ],
+        "kind": "technical",
+        "label": "Keep keys server-side",
+        "stepId": "s2"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Send the key as the xi-api-key HTTP header on every request.",
+        "evidence": [
+          "e2"
+        ],
+        "kind": "technical",
+        "label": "xi-api-key header",
+        "stepId": "s3"
+      }
+    ],
+    "scopes": [
+      {
+        "evidence": [
+          "e1"
+        ],
+        "note": "Listed in the OAuth discovery metadata. Not documented for third-party use.",
+        "scope": "text_to_speech",
+        "sensitivity": "unknown"
+      },
+      {
+        "evidence": [
+          "e1"
+        ],
+        "note": "Listed in the OAuth discovery metadata.",
+        "scope": "convai_read",
+        "sensitivity": "unknown"
+      },
+      {
+        "evidence": [
+          "e1"
+        ],
+        "note": "Listed in the OAuth discovery metadata.",
+        "scope": "convai_write",
+        "sensitivity": "unknown"
+      },
+      {
+        "evidence": [
+          "e1"
+        ],
+        "note": "Listed in the OAuth discovery metadata.",
+        "scope": "speech_history_read",
+        "sensitivity": "unknown"
+      }
+    ],
+    "steps": [
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 1,
+          "min": 0.25
+        },
+        "evidence": [
+          "e1",
+          "e4"
+        ],
+        "id": "s1",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "decide",
+        "points": [
+          "Use the API key route; it is the documented one",
+          "Ask ElevenLabs support or sales if you need real OAuth client credentials"
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Decide between the API key route and asking ElevenLabs about OAuth",
+        "type": "other",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "ElevenLabs Help Center",
+          "url": "https://help.elevenlabs.io/hc/en-us"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e2",
+          "e4",
+          "e6"
+        ],
+        "id": "s2",
+        "items": [],
+        "output": "API key",
+        "owner": "you",
+        "phase": "prepare",
+        "points": [
+          "Sign in and open Developers → API Keys, then create a key",
+          "Restrict the key to the endpoints you need and set a credit limit",
+          "Give the key to the agent only with your OK"
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Create an API key for the test account",
+        "type": "account",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "ElevenLabs → Developers → API Keys",
+          "url": "https://elevenlabs.io/app/developers"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e2",
+          "a1"
+        ],
+        "id": "s3",
+        "items": [],
+        "output": null,
+        "owner": "agent_ok",
+        "phase": "configure",
+        "points": [
+          "Store the key encrypted on the server",
+          "Send it as the xi-api-key header",
+          "Ask users to paste their own key"
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Configure your agent to store and send the key",
+        "type": "configure",
+        "values": [
+          {
+            "label": "Header",
+            "value": "xi-api-key: <API_KEY>"
+          },
+          {
+            "label": "Base URL",
+            "value": "https://api.elevenlabs.io"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "ElevenLabs API authentication",
+          "url": "https://elevenlabs.io/docs/api-reference/authentication"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 1,
+          "min": 0.5
+        },
+        "evidence": [
+          "e2"
+        ],
+        "id": "s4",
+        "items": [],
+        "output": null,
+        "owner": "agent",
+        "phase": "test",
+        "points": [
+          "GET https://api.elevenlabs.io/v1/models with the xi-api-key header",
+          "Success is HTTP 200 with a JSON list of models",
+          "A 401 or 403 means the key is invalid or lacks permission"
+        ],
+        "scopes": [],
+        "stage": "both",
+        "title": "Test the key with a read-only call",
+        "type": "test",
+        "values": [
+          {
+            "label": "Test call",
+            "value": "GET https://api.elevenlabs.io/v1/models"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "ElevenLabs API authentication",
+          "url": "https://elevenlabs.io/docs/api-reference/authentication"
+        }
+      }
+    ],
+    "time": {
+      "breakdown": [
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "0",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 1,
+          "min": 0.25,
+          "note": null,
+          "step": "1",
+          "type": "Any other step",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "2",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "3",
+          "type": "Redirect URI and scopes",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 1,
+          "min": 0.5,
+          "note": null,
+          "step": "4",
+          "type": "Test with your own account",
+          "wait": null,
+          "waitSource": null
+        }
+      ],
+      "devReady": {
+        "computed": true,
+        "effort": {
+          "max": 2.75,
+          "min": 1.5
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "none"
+      },
+      "production": {
+        "computed": true,
+        "effort": {
+          "max": 2.75,
+          "min": 1.5
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "none"
+      }
+    },
+    "uncertainties": [
+      {
+        "stepId": null,
+        "text": "How third parties obtain an OAuth client_id for elevenlabs.io/app/oauth/authorize is unknown. I found no docs on it."
+      },
+      {
+        "stepId": null,
+        "text": "The authorize endpoint probe failed, so I did not test it."
+      },
+      {
+        "stepId": null,
+        "text": "No app review or go-live page found. I searched app review, publishing and OAuth app registration. Review is not confirmed absent."
+      },
+      {
+        "stepId": null,
+        "text": "Not stated on pages I read: authorization code lifetime, access and refresh token lifetimes, refresh behavior, client authentication method, redirect URI rules, rate limits, and region hosts. The discovery metadata shows the US issuer api.us.elevenlabs.io, while the API key base URL is api.elevenlabs.io."
+      },
+      {
+        "stepId": null,
+        "text": "The MCP OAuth flow may use Client ID Metadata Documents, per a third-party issue report. This is unconfirmed by ElevenLabs docs."
+      },
+      {
+        "stepId": null,
+        "text": "The provider's documented authorize URL wasn't found, so it couldn't be tested."
+      },
+      {
+        "stepId": null,
+        "text": "Review page not read; review time and requirements unconfirmed. (Searched ElevenLabs OAuth third-party apps, OAuth app client registration, and app review. Found no review or publishing page.)"
+      },
+      {
+        "stepId": null,
+        "text": "Token page not read; token lifetimes, refresh and redirect rules unconfirmed. (Searched OAuth app client registration and the API authentication docs. Found no OAuth token page, only the discovery metadata.)"
+      }
+    ],
+    "verdict": {
+      "confidence": "low",
+      "points": [
+        {
+          "evidence": [
+            "e1",
+            "e3"
+          ],
+          "text": "OAuth server exists, but no documented way for third parties to register",
+          "why": "Discovery shows authorize and token endpoints with no registration_endpoint. The MCP page describes OAuth only for assistants connecting to its hosted MCP server."
+        },
+        {
+          "evidence": [
+            "e2",
+            "e4"
+          ],
+          "text": "Docs tell third-party services to use the user's API key",
+          "why": "The help page says linking an external service requires the user's API key. Keys can be scope-restricted and credit-limited."
+        },
+        {
+          "evidence": [
+            "e5"
+          ],
+          "text": "No review process found",
+          "why": "I found no app review or publishing page. That fits the API-key route, where nothing is reviewed."
+        }
+      ],
+      "summary": "ElevenLabs documents no third-party OAuth client registration, so the confirmed route is a user-supplied API key; an OAuth server exists but its client onboarding is unclear.",
+      "tier": "self_serve",
+      "unconfirmed": true
+    }
+  },
+  "meta": {
+    "at": "2026-10-29T20:05:40.210Z",
+    "downgraded": 0,
+    "notes": [
+      "probe p1 found another OAuth server at api.us.elevenlabs.io; it isn't the documented one, so it doesn't count for or against the guide",
+      "the guide doesn't name the documented authorize URL",
+      "\"Self-serve\" but OAuth for third-party apps is \"unknown\"; shown as OAuth unconfirmed with low confidence"
+    ],
+    "pipelineVersion": "v2"
+  },
+  "name": "ElevenLabs",
+  "pipelineVersion": "v2",
+  "query": "ElevenLabs",
+  "run": {
+    "failedSearches": 0,
+    "okPages": 4,
+    "okSearches": 4,
+    "probes": [
+      {
+        "at": "2026-10-29T20:04:33.669Z",
+        "data": {
+          "authorization_endpoint": "https://elevenlabs.io/app/oauth/authorize",
+          "issuer": "https://api.us.elevenlabs.io",
+          "path": "/.well-known/oauth-authorization-server",
+          "registration_endpoint": null,
+          "scopes_supported": [
+            "convai_read",
+            "convai_write",
+            "text_to_speech",
+            "speech_history_read",
+            "flows",
+            "image_video_generation",
+            "voice_generation"
+          ],
+          "token_endpoint": "https://api.us.elevenlabs.io/v1/oauth/token"
+        },
+        "id": "p1",
+        "kind": "oauth_discovery",
+        "outcome": "positive",
+        "summary": "Metadata found at /.well-known/oauth-authorization-server. No registration_endpoint (no DCR advertised).",
+        "target": "https://api.elevenlabs.io/.well-known/oauth-authorization-server"
+      },
+      {
+        "at": "2026-10-29T20:04:45.982Z",
+        "data": {
+          "attempts": [
+            {
+              "note": "no JSON metadata",
+              "path": "/.well-known/oauth-authorization-server",
+              "title": "ElevenLabs"
+            },
+            {
+              "note": "no JSON metadata",
+              "path": "/.well-known/openid-configuration",
+              "title": "ElevenLabs"
+            }
+          ]
+        },
+        "id": "p2",
+        "kind": "oauth_discovery",
+        "outcome": "negative",
+        "summary": "No OAuth/OIDC discovery metadata on elevenlabs.io. Not conclusive: many providers don't publish it.",
+        "target": "elevenlabs.io"
+      },
+      {
+        "at": "2026-10-29T20:04:59.292Z",
+        "data": {},
+        "id": "p3",
+        "kind": "authorize_endpoint",
+        "outcome": "error",
+        "summary": "Probe failed: Claude's browser needs a click or key press in the artifact first.",
+        "target": "https://elevenlabs.io/app/oauth/authorize?client_id=invalid&response_type=code&redirect_uri=https://example.com/cb"
+      },
+      {
+        "at": "2026-10-29T20:05:40.208Z",
+        "data": {
+          "fields": null,
+          "kind": "docs",
+          "landedOn": "https://elevenlabs.io/docs/api-reference/authentication",
+          "signal": null,
+          "snippet": "API reference API Authentication Learn how to authenticate your ElevenLabs API requests API Keys Skip the key. Let your coding agent set it up. Paste this into Claude Code, Cursor or Codex. It signs y",
+          "title": "API Authentication | ElevenLabs Documentation"
+        },
+        "id": "p4",
+        "kind": "attempt_docs",
+        "outcome": "positive",
+        "summary": "Opened the link and checked where it lands: docs",
+        "target": "https://elevenlabs.io/docs/api-reference/authentication"
+      }
+    ],
+    "queries": 4,
+    "readLog": [
+      {
+        "chars": 2304,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "API Authentication | ElevenLabs Documentation",
+        "url": "https://elevenlabs.io/docs/api-reference/authentication",
+        "via": null
+      },
+      {
+        "chars": 5009,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "ElevenLabs Agents & Creative MCP - connect your assistant",
+        "url": "https://elevenlabs.io/mcp",
+        "via": null
+      },
+      {
+        "chars": 5965,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "API Keys | ElevenLabs Documentation",
+        "url": "https://elevenlabs.io/docs/overview/administration/workspaces/api-keys",
+        "via": null
+      },
+      {
+        "chars": 1020,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "How can I use ElevenLabs with third-party services? | ElevenLabs Documentation",
+        "url": "https://elevenlabs.io/docs/help-center/account/general/how-can-i-use-eleven-labs-with-third-party-services",
+        "via": "https://elevenlabs.io/docs/help-center/account/general/how-can-i-use-eleven-labs-with-third-party-services.md"
+      }
+    ],
+    "searchLog": [
+      {
+        "ok": true,
+        "query": "ElevenLabs OAuth third-party apps connect user accounts"
+      },
+      {
+        "ok": true,
+        "query": "ElevenLabs API authentication API key xi-api-key docs"
+      },
+      {
+        "ok": true,
+        "query": "ElevenLabs OAuth app client registration"
+      },
+      {
+        "ok": true,
+        "query": "ElevenLabs \"OAuth\" developers register application client_id redirect_uri elevenlabs.io/app/oauth/authorize"
+      }
+    ]
+  },
+  "savedAt": "2026-10-29T20:05:40.210Z",
+  "slug": "elevenlabs",
+  "summary": "ElevenLabs documents no third-party OAuth client registration, so the confirmed route is a user-supplied API key; an OAuth server exists but its client onboarding is unclear.",
+  "tier": "self_serve",
+  "tierLabel": "OAuth unconfirmed"
+}

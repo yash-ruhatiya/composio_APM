@@ -1,0 +1,1212 @@
+{
+  "confidence": "medium",
+  "guide": {
+    "access": {
+      "alternative": null,
+      "oauthForThirdParties": "yes",
+      "reason": "Ramp documents the Authorization Code grant for third-party apps. Publishing to other Ramp businesses needs a partner application and production access approval.",
+      "registration": "manual"
+    },
+    "app": {
+      "developerPortal": "https://app.ramp.com/s/ramp-developer",
+      "name": "Ramp",
+      "slug": "ramp",
+      "website": "https://ramp.com"
+    },
+    "attemptNote": null,
+    "attemptPick": "Stage 2 picked the 6 weakest claims it can check by opening a page (6 sourced); claims already tested were skipped.",
+    "attempts": [
+      {
+        "change": "Added an open question",
+        "claim": "Step 2: you register the app at support.ramp.com/accessing-the-developer-api",
+        "expected": "A partner application or contact page (the guide says access is partner-gated)",
+        "n": 1,
+        "probeId": "p3",
+        "result": "Docs page, not the form (\"Ramp Developer API overview — Ramp Help Center\")",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s2",
+        "tried": "Opened the registration page without signing in",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Flagged the link as broken",
+        "claim": "Review page goes to support.ramp.com/integrations/set-up-workflow-and-productivity-integrations/accessing-the-developer-api",
+        "expected": "The provider's app review / go-live page",
+        "n": 2,
+        "probeId": "p4",
+        "result": "Not found",
+        "signIn": false,
+        "status": "Corrected",
+        "stepId": null,
+        "tried": "Opened the link and checked where it lands",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Added tested evidence a1 (probe p5)",
+        "claim": "The authorize URL app.ramp.com/v1/authorize is live and takes the documented scopes (transactions:read, business:read, cards:read_vault)",
+        "expected": "A live endpoint that rejects the made-up client and raises no scope error",
+        "n": 3,
+        "probeId": "p5",
+        "result": "Live; it asks the user to sign in before showing consent, so the scopes weren't visible",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": "s7",
+        "tried": "Opened it with a made-up client and those scopes",
+        "weak": "Sourced"
+      },
+      {
+        "change": "No change: a not-found here doesn't prove the URL is wrong",
+        "claim": "The token endpoint is api.ramp.com/developer/v1/token",
+        "expected": "A live OAuth endpoint (it answers a plain request with an error)",
+        "n": 4,
+        "probeId": "p6",
+        "result": "Not found for a plain page request; endpoints that only take POST often answer this way",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s7",
+        "tried": "Loaded it with a plain page request (no token request was sent)",
+        "weak": "Sourced"
+      },
+      {
+        "change": "No change",
+        "claim": "Step 1 link goes to docs.ramp.com/developer-api/v1/sandbox-access",
+        "expected": "A docs page about \"Ramp docs → Sandbox access\"",
+        "n": 5,
+        "probeId": "p7",
+        "result": "Only site navigation loaded (\"Ramp API Documentation\")",
+        "signIn": false,
+        "status": "Unverified",
+        "stepId": "s1",
+        "tried": "Opened the link and checked where it lands",
+        "weak": "Sourced"
+      },
+      {
+        "change": "Added tested evidence a2 (probe p8)",
+        "claim": "Step 5 link goes to ramp.com/technology-partnerships",
+        "expected": "Where you do \"Ramp → Technology Partner Program\": a sign-in, sign-up, form or a page about it",
+        "n": 6,
+        "probeId": "p8",
+        "result": "Loads \"Technology Partner Program | Ramp\"",
+        "signIn": false,
+        "status": "Confirmed",
+        "stepId": "s5",
+        "tried": "Opened the link and checked where it lands",
+        "weak": "Sourced"
+      },
+      {
+        "change": "You do step 1; an agent can pick up after it",
+        "claim": "Where the agent stopped",
+        "n": 7,
+        "result": "A step only you can do (account, legal terms, payment, verification or a decision)",
+        "status": "You take over",
+        "stepId": "s1",
+        "stop": true,
+        "tried": "Step 1: Request sandbox access"
+      }
+    ],
+    "blockers": [
+      {
+        "evidence": [
+          "e5"
+        ],
+        "likelihood": "common",
+        "stepId": "s5",
+        "title": "Partner approval required to publish",
+        "whatToDo": "Apply to the partner program early and email partnerships@ramp.com if no invite arrives."
+      },
+      {
+        "evidence": [
+          "e6"
+        ],
+        "likelihood": "common",
+        "stepId": "s9",
+        "title": "Customer admin must approve the app",
+        "whatToDo": "Tell customers that an Admin or Business Owner must connect the app."
+      },
+      {
+        "evidence": [
+          "e14",
+          "e7"
+        ],
+        "likelihood": "possible",
+        "stepId": "s2",
+        "title": "Restricted or partner-only scopes",
+        "whatToDo": "Submit a Developer API support ticket for scopes you can't see."
+      }
+    ],
+    "evidence": [
+      {
+        "claim": "Authorize URL for production",
+        "id": "e1",
+        "note": null,
+        "probeId": null,
+        "quote": "https://app.ramp.com/v1/authorize for production",
+        "sourceUrl": "https://docs.ramp.com/developer-api/v1/authorization",
+        "status": "sourced"
+      },
+      {
+        "claim": "Token endpoint is /developer/v1/token on api.ramp.com",
+        "id": "e2",
+        "note": null,
+        "probeId": null,
+        "quote": "curl --location --request POST \"https://api.ramp.com/developer/v1/token\"",
+        "sourceUrl": "https://docs.ramp.com/developer-api/v1/api/authorization",
+        "status": "sourced"
+      },
+      {
+        "claim": "Authorize endpoint on app.ramp.com is live",
+        "id": "e3",
+        "note": "Page content is script-rendered, so rejection behaviour wasn't visible. Discovery at app.ramp.com (p1) lists no registration_endpoint.",
+        "probeId": "p2",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "Sandbox is requested by form, ready in about a minute, with separate base URL and app",
+        "id": "e4",
+        "note": null,
+        "probeId": null,
+        "quote": "Your sandbox should be ready in about one minute.",
+        "sourceUrl": "https://support.ramp.com/integrations/set-up-workflow-and-productivity-integrations/accessing-the-developer-api/",
+        "status": "sourced"
+      },
+      {
+        "claim": "Publishing for other businesses needs two approvals",
+        "id": "e5",
+        "note": null,
+        "probeId": null,
+        "quote": "Publishing an app for other Ramp businesses takes two approvals: a partner application",
+        "sourceUrl": "https://support.ramp.com/integrations/set-up-workflow-and-productivity-integrations/accessing-the-developer-api/",
+        "status": "sourced"
+      },
+      {
+        "claim": "Admin or Business Owner must approve",
+        "id": "e6",
+        "note": null,
+        "probeId": null,
+        "quote": "an Admin or Business Owner must approve.",
+        "sourceUrl": "https://docs.ramp.com/developer-api/v1/authorization",
+        "status": "sourced"
+      },
+      {
+        "claim": "Admin access required to create a developer app",
+        "id": "e7",
+        "note": null,
+        "probeId": null,
+        "quote": "Admin access is required.",
+        "sourceUrl": "https://support.ramp.com/integrations/set-up-workflow-and-productivity-integrations/accessing-the-developer-api/",
+        "status": "sourced"
+      },
+      {
+        "claim": "Redirect URI must exactly match",
+        "id": "e8",
+        "note": null,
+        "probeId": null,
+        "quote": "Must exactly match a redirect URI configured for your app, including the path.",
+        "sourceUrl": "https://docs.ramp.com/developer-api/v1/authorization",
+        "status": "sourced"
+      },
+      {
+        "claim": "Client auth via HTTP Basic",
+        "id": "e9",
+        "note": null,
+        "probeId": null,
+        "quote": "Authorization header formed from base-64 encoded client credentials",
+        "sourceUrl": "https://docs.ramp.com/developer-api/v1/api/authorization",
+        "status": "sourced"
+      },
+      {
+        "claim": "Auth codes expire after 5 minutes",
+        "id": "e10",
+        "note": null,
+        "probeId": null,
+        "quote": "Codes expire after 5 minutes.",
+        "sourceUrl": "https://docs.ramp.com/developer-api/v1/authorization",
+        "status": "sourced"
+      },
+      {
+        "claim": "Access token default lifetime 1 hour",
+        "id": "e11",
+        "note": null,
+        "probeId": null,
+        "quote": "Authorization Code and Refresh Token access tokens default to 1 hour (3,600 seconds)",
+        "sourceUrl": "https://docs.ramp.com/developer-api/v1/authorization",
+        "status": "sourced"
+      },
+      {
+        "claim": "Refresh Token grant must be enabled on the app",
+        "id": "e12",
+        "note": null,
+        "probeId": null,
+        "quote": "To get refresh tokens, enable the Refresh Token grant type for your app.",
+        "sourceUrl": "https://docs.ramp.com/developer-api/v1/authorization",
+        "status": "sourced"
+      },
+      {
+        "claim": "Sandbox and production need separate apps; sandbox authorize host is demo.ramp.com",
+        "id": "e13",
+        "note": null,
+        "probeId": null,
+        "quote": "Sandbox and production need separate apps.",
+        "sourceUrl": "https://docs.ramp.com/developer-api/v1/authorization",
+        "status": "sourced"
+      },
+      {
+        "claim": "cards:read_vault is only for approved integrators; scopes follow resource:permission",
+        "id": "e14",
+        "note": null,
+        "probeId": null,
+        "quote": "cards:read_vault is available only to approved integrators",
+        "sourceUrl": "https://docs.ramp.com/developer-api/v1/authorization",
+        "status": "sourced"
+      },
+      {
+        "claim": "Discovery lists openid and offline_access scopes",
+        "id": "e15",
+        "note": null,
+        "probeId": "p1",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "Ramp technology partner program has an Integration Partner application",
+        "id": "e16",
+        "note": null,
+        "probeId": null,
+        "quote": "Build an integration, get listed in our directory, and reach businesses actively looking for your category.",
+        "sourceUrl": "https://ramp.com/technology-partnerships",
+        "status": "sourced"
+      },
+      {
+        "claim": "The authorize URL app.ramp.com/v1/authorize is live and shows a sign-in page",
+        "id": "a1",
+        "note": "Stage 2 attempt",
+        "probeId": "p5",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      },
+      {
+        "claim": "ramp.com/technology-partnerships loads (Technology Partner Program | Ramp)",
+        "id": "a2",
+        "note": "Stage 2 attempt",
+        "probeId": "p8",
+        "quote": null,
+        "sourceUrl": null,
+        "status": "tested"
+      }
+    ],
+    "followUp": null,
+    "mandatoryPages": {
+      "review": {
+        "checked": true,
+        "evidence": [
+          "e5"
+        ],
+        "note": "Describes the two-approval publishing process. No durations are stated.",
+        "status": "read",
+        "unreadable": null,
+        "url": "https://support.ramp.com/integrations/set-up-workflow-and-productivity-integrations/accessing-the-developer-api/"
+      },
+      "token": {
+        "checked": true,
+        "evidence": [
+          "e9",
+          "e10",
+          "e11"
+        ],
+        "note": "Also read the API reference page for the token endpoint.",
+        "status": "read",
+        "unreadable": null,
+        "url": "https://docs.ramp.com/developer-api/v1/authorization"
+      }
+    },
+    "oauth": {
+      "authorizeUrl": "https://app.ramp.com/v1/authorize",
+      "evidence": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "tokenUrl": "https://api.ramp.com/developer/v1/token"
+    },
+    "prodNeedsCheck": false,
+    "requirements": [
+      {
+        "appliesWhen": "Serving other Ramp businesses",
+        "detail": "Needed to get Developer console access and publish for other Ramp businesses.",
+        "evidence": [
+          "e5"
+        ],
+        "kind": "prerequisite",
+        "label": "Partner application approved",
+        "stepId": "s5"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Admin access is required to create a developer app.",
+        "evidence": [
+          "e7"
+        ],
+        "kind": "prerequisite",
+        "label": "Ramp admin account",
+        "stepId": null
+      },
+      {
+        "appliesWhen": null,
+        "detail": "redirect_uri must exactly match a configured URI, including the path.",
+        "evidence": [
+          "e8"
+        ],
+        "kind": "technical",
+        "label": "Exact redirect URI match",
+        "stepId": "s3"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "The token endpoint takes client ID and secret as HTTP Basic auth, with a form-encoded body.",
+        "evidence": [
+          "e9"
+        ],
+        "kind": "technical",
+        "label": "Client auth via HTTP Basic",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Exchange the code immediately.",
+        "evidence": [
+          "e10"
+        ],
+        "kind": "technical",
+        "label": "Auth code lifetime 5 minutes",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Authorization Code and refresh-token access tokens default to 3600 seconds. Use expires_in from the response.",
+        "evidence": [
+          "e11"
+        ],
+        "kind": "technical",
+        "label": "Access token lifetime 1 hour by default",
+        "stepId": "s4"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Refresh tokens are only issued if the grant type is enabled on the app.",
+        "evidence": [
+          "e12"
+        ],
+        "kind": "technical",
+        "label": "Enable the Refresh Token grant type",
+        "stepId": "s2"
+      },
+      {
+        "appliesWhen": null,
+        "detail": "Sandbox authorize is demo.ramp.com and its API is demo-api.ramp.com. Production uses app.ramp.com and api.ramp.com. Tokens only work in the environment that issued them.",
+        "evidence": [
+          "e4",
+          "e13"
+        ],
+        "kind": "technical",
+        "label": "Separate sandbox and production apps and hosts",
+        "stepId": "s1"
+      }
+    ],
+    "scopes": [
+      {
+        "evidence": [
+          "e14"
+        ],
+        "note": "Example scope. Scopes follow the resource:permission pattern.",
+        "scope": "transactions:read",
+        "sensitivity": "standard"
+      },
+      {
+        "evidence": [
+          "e8"
+        ],
+        "note": "Example scope from the docs.",
+        "scope": "business:read",
+        "sensitivity": "standard"
+      },
+      {
+        "evidence": [
+          "e14"
+        ],
+        "note": "Only for approved integrators.",
+        "scope": "cards:read_vault",
+        "sensitivity": "restricted"
+      },
+      {
+        "evidence": [
+          "e15"
+        ],
+        "note": "OpenID scope shown in discovery.",
+        "scope": "offline_access",
+        "sensitivity": "unknown"
+      }
+    ],
+    "steps": [
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e4",
+          "e13"
+        ],
+        "id": "s1",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "prepare",
+        "points": [
+          "Submit the sandbox access form.",
+          "Sandbox is ready in about a minute."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Request sandbox access",
+        "type": "account",
+        "values": [
+          {
+            "label": "Sandbox API base",
+            "value": "https://demo-api.ramp.com"
+          },
+          {
+            "label": "Sandbox authorize URL",
+            "value": "https://demo.ramp.com/v1/authorize"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Ramp docs → Sandbox access",
+          "url": "https://docs.ramp.com/developer-api/v1/sandbox-access"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.5,
+          "min": 0.25
+        },
+        "evidence": [
+          "e7",
+          "e12"
+        ],
+        "id": "s2",
+        "items": [],
+        "output": "Client ID and secret",
+        "owner": "agent",
+        "phase": "register",
+        "points": [
+          "Create the app in the sandbox Developer apps settings.",
+          "Under Scopes, click Configure allowed scopes.",
+          "Enable the Authorization Code and Refresh Token grant types.",
+          "Save the client ID and secret."
+        ],
+        "scopes": [
+          "transactions:read",
+          "business:read"
+        ],
+        "stage": "dev",
+        "title": "Create sandbox developer app",
+        "type": "register_form",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Ramp → Settings → Developer",
+          "url": "https://support.ramp.com/accessing-the-developer-api"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.25,
+          "min": 0.25
+        },
+        "evidence": [
+          "e8"
+        ],
+        "id": "s3",
+        "items": [],
+        "output": null,
+        "owner": "agent",
+        "phase": "configure",
+        "points": [
+          "Add your app's OAuth callback URL to the app's redirect URIs.",
+          "It must match exactly, including the path."
+        ],
+        "scopes": [],
+        "stage": "dev",
+        "title": "Set your app's OAuth callback URL",
+        "type": "configure",
+        "values": [
+          {
+            "label": "Redirect URI",
+            "value": "your app's OAuth callback URL"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "Ramp → Developer app settings",
+          "url": null
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 3,
+          "min": 1
+        },
+        "evidence": [
+          "e8",
+          "e9",
+          "e10",
+          "e11"
+        ],
+        "id": "s4",
+        "items": [],
+        "output": null,
+        "owner": "agent_ok",
+        "phase": "test",
+        "points": [
+          "Redirect the user to the authorize URL with state.",
+          "Exchange the code within 5 minutes using HTTP Basic auth.",
+          "Store the refresh token securely.",
+          "Paste the secret only with your OK."
+        ],
+        "scopes": [
+          "transactions:read",
+          "business:read"
+        ],
+        "stage": "dev",
+        "title": "Run the authorization code flow in sandbox",
+        "type": "token_flow",
+        "values": [
+          {
+            "label": "Token URL (sandbox)",
+            "value": "https://demo-api.ramp.com/developer/v1/token"
+          },
+          {
+            "label": "Auth header",
+            "value": "Authorization: Basic base64(client_id:client_secret)"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Ramp docs → Authorization",
+          "url": "https://docs.ramp.com/developer-api/v1/authorization"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.5,
+          "min": 0.25
+        },
+        "evidence": [
+          "e5",
+          "e16",
+          "a2"
+        ],
+        "id": "s5",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "review",
+        "points": [
+          "First-time partners submit the application from the partner integration guide.",
+          "Ramp emails an invite to the Work email on approval.",
+          "Don't resubmit if one is already pending."
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Submit partner application",
+        "type": "submit",
+        "values": [],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "Ramp → Technology Partner Program",
+          "url": "https://ramp.com/technology-partnerships"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0,
+          "min": 0
+        },
+        "evidence": [
+          "e5"
+        ],
+        "id": "s6",
+        "items": [],
+        "output": null,
+        "owner": "provider",
+        "phase": "review",
+        "points": [
+          "Ramp approves the partner application and sends an invite to the Developer console."
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Wait for partner approval",
+        "type": "provider",
+        "values": [],
+        "wait": null,
+        "where": null
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0.5,
+          "min": 0.25
+        },
+        "evidence": [
+          "e5",
+          "a1"
+        ],
+        "id": "s7",
+        "items": [],
+        "output": null,
+        "owner": "you",
+        "phase": "review",
+        "points": [
+          "Create the production app in the Developer console, not the Developer apps settings.",
+          "On the Production access tab, click Apply and complete the application."
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Apply for production access",
+        "type": "submit",
+        "values": [
+          {
+            "label": "Production authorize URL",
+            "value": "https://app.ramp.com/v1/authorize"
+          },
+          {
+            "label": "Production token URL",
+            "value": "https://api.ramp.com/developer/v1/token"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "action",
+          "label": "Ramp Developer console",
+          "url": "https://app.ramp.com/s/ramp-developer"
+        }
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 0,
+          "min": 0
+        },
+        "evidence": [
+          "e5"
+        ],
+        "id": "s8",
+        "items": [],
+        "output": null,
+        "owner": "provider",
+        "phase": "review",
+        "points": [
+          "After approval you can onboard production customers through OAuth."
+        ],
+        "scopes": [],
+        "stage": "production",
+        "title": "Wait for production access approval",
+        "type": "provider",
+        "values": [],
+        "wait": null,
+        "where": null
+      },
+      {
+        "adjust": null,
+        "detail": "",
+        "effort": {
+          "max": 1,
+          "min": 0.5
+        },
+        "evidence": [
+          "e6"
+        ],
+        "id": "s9",
+        "items": [],
+        "output": null,
+        "owner": "agent",
+        "phase": "launch",
+        "points": [
+          "Complete OAuth with a customer admin.",
+          "Call GET /developer/v1/business with the access token. A 200 response with business details means success."
+        ],
+        "scopes": [
+          "business:read"
+        ],
+        "stage": "production",
+        "title": "Verify the production connection",
+        "type": "test",
+        "values": [
+          {
+            "label": "Production API base",
+            "value": "https://api.ramp.com"
+          }
+        ],
+        "wait": null,
+        "where": {
+          "kind": "docs",
+          "label": "Ramp API docs",
+          "url": "https://docs.ramp.com/developer-api/v1"
+        }
+      }
+    ],
+    "time": {
+      "breakdown": [
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "0",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "1",
+          "type": "Account or plan setup",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.5,
+          "min": 0.25,
+          "note": null,
+          "step": "2",
+          "type": "App registration form",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 0.25,
+          "min": 0.25,
+          "note": null,
+          "step": "3",
+          "type": "Redirect URI and scopes",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "devReady",
+          "evidence": [],
+          "max": 3,
+          "min": 1,
+          "note": null,
+          "step": "4",
+          "type": "Authorize and token exchange",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [],
+          "max": 0.5,
+          "min": 0.25,
+          "note": null,
+          "step": "5",
+          "type": "Submit for review",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [
+            "e5"
+          ],
+          "max": 0,
+          "min": 0,
+          "note": null,
+          "step": "6",
+          "type": "The provider does it (you wait)",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [],
+          "max": 0.5,
+          "min": 0.25,
+          "note": null,
+          "step": "7",
+          "type": "Submit for review",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [
+            "e5"
+          ],
+          "max": 0,
+          "min": 0,
+          "note": null,
+          "step": "8",
+          "type": "The provider does it (you wait)",
+          "wait": null,
+          "waitSource": null
+        },
+        {
+          "clock": "production",
+          "evidence": [],
+          "max": 1,
+          "min": 0.5,
+          "note": null,
+          "step": "9",
+          "type": "Test with your own account",
+          "wait": null,
+          "waitSource": null
+        }
+      ],
+      "devReady": {
+        "computed": true,
+        "effort": {
+          "max": 4.25,
+          "min": 2
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "none"
+      },
+      "production": {
+        "computed": true,
+        "effort": {
+          "max": 6.25,
+          "min": 3
+        },
+        "evidence": [],
+        "label": "",
+        "unknown": false,
+        "wait": {
+          "max": 0,
+          "min": 0
+        },
+        "waitKind": "unknown"
+      }
+    },
+    "uncertainties": [
+      {
+        "stepId": "s6",
+        "text": "Review and approval durations for the partner and production access applications are not published."
+      },
+      {
+        "stepId": "s4",
+        "text": "The pages I read don't say whether PKCE is required or supported on the standard token endpoint. Discovery shows a separate bank-feeds PKCE token endpoint."
+      },
+      {
+        "stepId": "s4",
+        "text": "Refresh token lifetime and whether a refresh returns a new refresh token are not stated."
+      },
+      {
+        "stepId": null,
+        "text": "Rate limits are not stated on the pages I read."
+      },
+      {
+        "stepId": "s4",
+        "text": "The authorize endpoint probe loaded a script-rendered page, so I don't know how it rejects an unknown client."
+      },
+      {
+        "stepId": "s7",
+        "text": "The exact production access requirements are not documented on the pages I read, such as security review or contract."
+      },
+      {
+        "stepId": "s2",
+        "text": "Whether the sandbox app can fully test the flow without partner approval is unconfirmed, though the help center says sandbox is for testing apps for other businesses."
+      },
+      {
+        "stepId": "s2",
+        "text": "Step 2's link support.ramp.com/accessing-the-developer-api is a docs page, not the registration form; find the portal page where you create the app."
+      },
+      {
+        "stepId": null,
+        "text": "The link support.ramp.com/integrations/set-up-workflow-and-productivity-integrations/accessing-the-developer-api was not found in stage 2; find the current page."
+      }
+    ],
+    "verdict": {
+      "confidence": "medium",
+      "points": [
+        {
+          "evidence": [
+            "e4"
+          ],
+          "text": "Sandbox is self-serve and ready in about a minute.",
+          "why": "The help center says sandbox access is requested by form and is ready in about one minute. You must create a separate sandbox app."
+        },
+        {
+          "evidence": [
+            "e5"
+          ],
+          "text": "Publishing to other businesses needs two Ramp approvals.",
+          "why": "First a partner application (gives Developer console access), then a production access application for the app."
+        },
+        {
+          "evidence": [
+            "e5"
+          ],
+          "text": "Approval wait times are not published.",
+          "why": "None of the pages I read state a review duration."
+        },
+        {
+          "evidence": [
+            "e6"
+          ],
+          "text": "Admin approval is needed on each customer's side.",
+          "why": "An Admin or Business Owner must approve apps that access the whole business."
+        }
+      ],
+      "summary": "Ramp supports OAuth for third-party apps, but serving other Ramp businesses needs partner approval and a production access application.",
+      "tier": "partner_gated",
+      "unconfirmed": false
+    }
+  },
+  "meta": {
+    "at": "2026-10-29T20:15:19.957Z",
+    "downgraded": 0,
+    "notes": [],
+    "pipelineVersion": "v2"
+  },
+  "name": "Ramp",
+  "pipelineVersion": "v2",
+  "query": "ramp.com",
+  "run": {
+    "failedSearches": 0,
+    "okPages": 4,
+    "okSearches": 3,
+    "probes": [
+      {
+        "at": "2026-10-29T20:13:45.175Z",
+        "data": {
+          "authorization_endpoint": "https://app.ramp.com/v1/authorize",
+          "issuer": null,
+          "path": "/.well-known/openid-configuration",
+          "registration_endpoint": null,
+          "scopes_supported": [
+            "openid",
+            "offline_access"
+          ],
+          "token_endpoint": "https://api.ramp.com/developer/v1/token/bank-feeds/pkce"
+        },
+        "id": "p1",
+        "kind": "oauth_discovery",
+        "outcome": "positive",
+        "summary": "Metadata found at /.well-known/openid-configuration. No registration_endpoint (no DCR advertised).",
+        "target": "https://app.ramp.com/.well-known/openid-configuration"
+      },
+      {
+        "at": "2026-10-29T20:14:02.952Z",
+        "data": {
+          "landedOn": "https://app.ramp.com/v1/authorize?client_id=setup-guide-probe-invalid-client&response_type=code&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&scope=transactions%3Aread&state=probe",
+          "snippet": "",
+          "title": "Ramp — The corporate card that helps you spend less"
+        },
+        "id": "p2",
+        "kind": "authorize_endpoint",
+        "outcome": "positive",
+        "summary": "Endpoint answered with a page titled \"Ramp — The corporate card that helps you spend less\" at app.ramp.com/v1/authorize; its content loads by script, so how it rejects an unknown client wasn't visible.",
+        "target": "https://app.ramp.com/v1/authorize?client_id=invalid&response_type=code&redirect_uri=https://example.com/cb&scope=transactions:read"
+      },
+      {
+        "at": "2026-10-29T20:14:55.302Z",
+        "data": {
+          "fields": null,
+          "kind": "docs",
+          "landedOn": "https://support.ramp.com/accessing-the-developer-api",
+          "signal": null,
+          "snippet": null,
+          "title": "Ramp Developer API overview — Ramp Help Center"
+        },
+        "id": "p3",
+        "kind": "attempt_portal",
+        "outcome": "positive",
+        "summary": "Opened the registration page without signing in: docs",
+        "target": "https://support.ramp.com/accessing-the-developer-api"
+      },
+      {
+        "at": "2026-10-29T20:14:59.941Z",
+        "data": {
+          "fields": null,
+          "kind": "missing",
+          "landedOn": "https://support.ramp.com/integrations/set-up-workflow-and-productivity-integrations/accessing-the-developer-api/",
+          "signal": null,
+          "snippet": "We couldn't find this content. Not all those who wander are lost, but you might be! Take me home",
+          "title": "Page Not Found"
+        },
+        "id": "p4",
+        "kind": "attempt_review",
+        "outcome": "negative",
+        "summary": "Opened the link and checked where it lands: missing",
+        "target": "https://support.ramp.com/integrations/set-up-workflow-and-productivity-integrations/accessing-the-developer-api/"
+      },
+      {
+        "at": "2026-10-29T20:15:06.042Z",
+        "data": {
+          "fields": null,
+          "kind": "login",
+          "landedOn": "https://app.ramp.com/sign-in?client_id=setup-guide-probe-invalid-client&response_type=code&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&state=probe&scope=transactions%3Aread+business%3Aread+cards%3Aread_vault",
+          "signal": null,
+          "snippet": "Welcome to Ramp Email address * (required) Continue Looking to get started with Ramp for your business? Sign up↗",
+          "title": "Ramp Login Page: Time is money. Save both."
+        },
+        "id": "p5",
+        "kind": "attempt_authorize",
+        "outcome": "positive",
+        "summary": "Opened it with a made-up client and those scopes: login",
+        "target": "https://app.ramp.com/v1/authorize"
+      },
+      {
+        "at": "2026-10-29T20:15:11.513Z",
+        "data": {
+          "fields": null,
+          "kind": "missing",
+          "landedOn": "https://api.ramp.com/developer/v1/token",
+          "signal": null,
+          "snippet": "Not Found The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.",
+          "title": "404 Not Found"
+        },
+        "id": "p6",
+        "kind": "attempt_token",
+        "outcome": "negative",
+        "summary": "Loaded it with a plain page request (no token request was sent): missing",
+        "target": "https://api.ramp.com/developer/v1/token"
+      },
+      {
+        "at": "2026-10-29T20:15:16.452Z",
+        "data": {
+          "fields": null,
+          "kind": "navigation",
+          "landedOn": "https://docs.ramp.com/developer-api/v1/sandbox-access",
+          "signal": null,
+          "snippet": "Developer Docs Get Sandbox Access Copy Markdown Was this guide useful?",
+          "title": "Ramp API Documentation"
+        },
+        "id": "p7",
+        "kind": "attempt_docs",
+        "outcome": "positive",
+        "summary": "Opened the link and checked where it lands: navigation",
+        "target": "https://docs.ramp.com/developer-api/v1/sandbox-access"
+      },
+      {
+        "at": "2026-10-29T20:15:19.955Z",
+        "data": {
+          "fields": null,
+          "kind": "page",
+          "landedOn": "https://ramp.com/technology-partnerships",
+          "signal": null,
+          "snippet": "The companies shaping the future of finance are building on Ramp Join an ecosystem trusted by 85,000+ businesses — and grow alongside them. Become a Partner Partnering with trusted companies PARTNER P",
+          "title": "Technology Partner Program | Ramp"
+        },
+        "id": "p8",
+        "kind": "attempt_action",
+        "outcome": "positive",
+        "summary": "Opened the link and checked where it lands: page",
+        "target": "https://ramp.com/technology-partnerships"
+      }
+    ],
+    "queries": 3,
+    "readLog": [
+      {
+        "chars": 14503,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Authorization — Ramp API docs",
+        "url": "https://docs.ramp.com/developer-api/v1/authorization",
+        "via": null
+      },
+      {
+        "chars": 5301,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Ramp API docs",
+        "url": "https://docs.ramp.com/developer-api/v1/api/authorization",
+        "via": null
+      },
+      {
+        "chars": 3315,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Technology Partner Program | Ramp",
+        "url": "https://ramp.com/technology-partnerships",
+        "via": null
+      },
+      {
+        "chars": 10247,
+        "landed": null,
+        "loginWall": false,
+        "ok": true,
+        "quality": "content",
+        "title": "Page Not Found",
+        "url": "https://support.ramp.com/integrations/set-up-workflow-and-productivity-integrations/accessing-the-developer-api/",
+        "via": "https://support.ramp.com/accessing-the-developer-api.md"
+      }
+    ],
+    "searchLog": [
+      {
+        "ok": true,
+        "query": "Ramp developer API OAuth app authorization code scopes"
+      },
+      {
+        "ok": true,
+        "query": "Ramp developer docs OAuth token refresh"
+      },
+      {
+        "ok": true,
+        "query": "Ramp developer app go live review partner"
+      }
+    ]
+  },
+  "savedAt": "2026-10-29T20:15:19.957Z",
+  "slug": "ramp",
+  "summary": "Ramp supports OAuth for third-party apps, but serving other Ramp businesses needs partner approval and a production access application.",
+  "tier": "partner_gated",
+  "tierLabel": "Partner-gated"
+}

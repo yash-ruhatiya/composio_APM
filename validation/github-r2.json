@@ -1,0 +1,110 @@
+{
+  "app": "GitHub",
+  "artifactVersion": 40,
+  "checkedAt": "2026-10-29T19:00:12.180Z",
+  "guideSavedAt": "2026-10-29T17:12:36.444Z",
+  "note": "11 claims: 9 confirmed, 1 corrected, 1 unverified; the org-restriction gap is now fixed, but the guide still misstates callback matching by saying a single callback URL has wildcard matching on by default, when the docs limit that to apps that had one before August 3, 2026.",
+  "pipelineVersion": "v2",
+  "round": 2,
+  "rows": [
+    {
+      "changed": "same",
+      "claim": "Where to register the app",
+      "composio": "Same path, personal account or organization",
+      "ours": "Settings → Developer settings → OAuth apps → New OAuth App; personal account or an organization you administer",
+      "provider": "Same path; you can create it under your account or any organization you administer",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "same",
+      "claim": "How many callback URLs an OAuth app takes",
+      "composio": "One Authorization callback URL field",
+      "ours": "Up to 10, added with Add callback URL",
+      "provider": "\"You can enter up to 10 callback URLs.\" Composio's guide is out of date here",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "partly fixed; misstates who has wildcard on and omits exact-match rule",
+      "claim": "How the callback URL is matched",
+      "composio": "GitHub and the app must agree on the exact redirect destination",
+      "ours": "A single callback URL has wildcard matching on by default; turn it off unless needed. Exact rules otherwise unconfirmed",
+      "provider": "Wildcard matching is a per-callback-URL setting. Only apps that had a single callback URL before August 3, 2026 have it on; it is not stated as a default for new apps. With it off, the redirect URL must exactly match the callback URL. Disable it unless you absolutely need it",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps",
+      "verdict": "corrected"
+    },
+    {
+      "changed": "same",
+      "claim": "Access tokens expire by default",
+      "composio": "Not mentioned",
+      "ours": "Expire user access tokens on by default: 8-hour access token, 6-month refresh token; keep it on and handle refresh",
+      "provider": "\"Expire user access tokens is enabled by default.\" Access token expires after eight hours, refresh token after six months without use",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "same",
+      "claim": "offline_access scope gives an expiring token and refresh token",
+      "composio": "Not mentioned",
+      "ours": "Yes: add offline_access to get an expiring token plus a refresh token",
+      "provider": "Requesting offline_access opts an individual sign-in into an expiring token and a refresh token",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "same (S256 detail dropped)",
+      "claim": "PKCE support",
+      "composio": "Not mentioned",
+      "ours": "PKCE (code_challenge) strongly recommended; sent on the authorize request. S256 method not stated",
+      "provider": "code_challenge is strongly recommended; method must be S256, plain is not supported",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "same",
+      "claim": "Limit on OAuth apps per owner",
+      "composio": "Not mentioned",
+      "ours": "A user or organization can own up to 100 OAuth apps",
+      "provider": "\"A user or organization can own up to 100 OAuth apps.\"",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "same",
+      "claim": "App details are public",
+      "composio": "Don't put secrets or internal URLs in the visible fields",
+      "ours": "Use only public information in the app name and description",
+      "provider": "\"Only use information in your OAuth app that you consider public. Avoid using sensitive data, such as internal URLs\"",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "now correct",
+      "claim": "Organizations can block third-party OAuth apps",
+      "composio": "Not mentioned",
+      "ours": "Restrictions on by default for new organizations; members must request owner approval before the app reaches org data",
+      "provider": "\"When you create a new organization, OAuth app access restrictions are enabled by default.\" Members request owner approval; unapproved apps lose API access to private org resources",
+      "source": "https://docs.github.com/en/organizations/managing-oauth-access-to-your-organizations-data/about-oauth-app-access-restrictions",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "same",
+      "claim": "Device flow is optional",
+      "composio": "Enable it only for headless or constrained devices; the browser flow is usually enough",
+      "ours": "Tick Enable Device Flow only if you need it",
+      "provider": "Enable Device Flow only if the app will use the device flow to identify users",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+      "verdict": "confirmed"
+    },
+    {
+      "changed": "same",
+      "claim": "The client secret is shown only once",
+      "composio": "GitHub shows the client secret only once",
+      "ours": "Not covered (only says generate a client secret on the app page)",
+      "provider": "Not stated on the creating, authorizing or modifying-an-OAuth-app pages re-read in round 2, so the docs can't decide it",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+      "verdict": "unverified"
+    }
+  ]
+}

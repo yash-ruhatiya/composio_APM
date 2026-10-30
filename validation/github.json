@@ -1,0 +1,97 @@
+{
+  "app": "GitHub",
+  "checkedAt": "2026-10-28",
+  "note": "Our guide (saved 2026-10-28) compared with composio.dev/auth/github, then checked against GitHub's own docs. 11 claims: 8 confirmed, 2 corrected, 1 unverified. Our guide was right on every point the two guides disagreed on; its two gaps were filled from GitHub's docs.",
+  "pipelineVersion": "v1",
+  "round": 1,
+  "rows": [
+    {
+      "claim": "Where to register the app",
+      "composio": "Same path, personal account or organization",
+      "ours": "Settings → Developer settings → OAuth apps → New OAuth App, under a personal account or an organization",
+      "provider": "Same path; you can create it under your account or any organization you administer",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "How many callback URLs an OAuth app takes",
+      "composio": "One Authorization callback URL field",
+      "ours": "Up to 10",
+      "provider": "\"You can enter up to 10 callback URLs.\" Composio's guide is out of date here",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "How the callback URL is matched",
+      "composio": "GitHub and the app must agree on the exact redirect destination",
+      "ours": "Unknown: the matching rules weren't on the pages read",
+      "provider": "Wildcard matching is a per-app setting; apps that had a single callback URL before August 3, 2026 have it on. Enable it only if you control every subdomain and path",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Access tokens expire by default",
+      "composio": "Not mentioned",
+      "ours": "Expire user access tokens is on by default: 8-hour access token, refresh token expires after 6 months unused",
+      "provider": "\"Expire user access tokens is enabled by default.\" Access token expires after eight hours, refresh token after six months without use",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "offline_access scope gives an expiring token and refresh token",
+      "composio": "Not mentioned",
+      "ours": "Yes",
+      "provider": "Requesting offline_access opts an individual sign-in into an expiring token and a refresh token",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "PKCE support",
+      "composio": "Not mentioned",
+      "ours": "Supported with code_challenge, S256",
+      "provider": "code_challenge is strongly recommended; method must be S256, plain is not supported",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "Limit on OAuth apps per owner",
+      "composio": "Not mentioned",
+      "ours": "Up to 100 per user or organization",
+      "provider": "\"A user or organization can own up to 100 OAuth apps.\"",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "App details are public",
+      "composio": "Don't put secrets or internal URLs in the visible fields",
+      "ours": "Name, homepage and description are shown to users; use only public information",
+      "provider": "\"Only use information in your OAuth app that you consider public. Avoid using sensitive data, such as internal URLs\"",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "Organizations can block third-party OAuth apps",
+      "composio": "Not mentioned",
+      "ours": "Inferred: the docs page returned 404 during the run (the agent used a misspelled URL)",
+      "provider": "With OAuth app access restrictions on, members must request approval from an organization owner before authorizing an OAuth app",
+      "source": "https://docs.github.com/en/organizations/managing-oauth-access-to-your-organizations-data/about-oauth-app-access-restrictions",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Device flow is optional",
+      "composio": "Enable it only for headless or constrained devices; the browser flow is usually enough",
+      "ours": "Tick Enable Device Flow only if you need it",
+      "provider": "Enable Device Flow only if the app will use the device flow to identify users",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "The client secret is shown only once",
+      "composio": "GitHub shows the client secret only once",
+      "ours": "Not stated",
+      "provider": "Not stated on the registration or authorization pages checked",
+      "source": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app",
+      "verdict": "unverified"
+    }
+  ]
+}

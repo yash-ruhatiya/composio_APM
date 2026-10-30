@@ -1,0 +1,105 @@
+{
+  "app": "Gong",
+  "checkedAt": "2026-10-28",
+  "note": "12 claims: 5 confirmed, 6 corrected, 1 unverified. Gong's own doc settles what our guide left open: refresh tokens exist, access tokens last 1 day by default, tokens come from /oauth2/generate-customer-token, and API calls go to the per-customer api_base_url_for_customer (not the fixed api.gong.io Composio tells users to enter).",
+  "pipelineVersion": "v1",
+  "round": 1,
+  "rows": [
+    {
+      "claim": "Who can create the integration",
+      "composio": "Any user with Admin Centre access.",
+      "ours": "A Gong tech admin creates and authorizes it; plan not stated.",
+      "provider": "\"Who can use this: Tech admin. Available on: Any Gong plan.\"",
+      "source": "https://help.gong.io/docs/create-an-app-for-gong",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "A Gong developer instance is needed first",
+      "composio": "Not mentioned.",
+      "ours": "Request a developer instance via Gong's form; it can take up to five working days.",
+      "provider": "\"Step 1: Request a developer instance... This can take up to five working days.\"",
+      "source": "https://help.gong.io/docs/create-an-app-for-gong",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "Where to register the app",
+      "composio": "Admin Centre → Ecosystem → API → Integrations tab → Create Integration.",
+      "ours": "Admin center → Settings → Ecosystem → API → Integrations → CREATE INTEGRATION.",
+      "provider": "\"From the left sidebar, click Admin center. In the Settings tab, click API in the Ecosystem card. In the Integrations tab, click CREATE INTEGRATION.\"",
+      "source": "https://help.gong.io/docs/create-an-app-for-gong",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "Authorization context is permanent and personal access is limited",
+      "composio": "Not mentioned.",
+      "ours": "Shared vs Personal can't be edited later; Personal works only for api:ai-ask:read, api:ai-briefer:read and mcp scopes.",
+      "provider": "\"this setting can't be edited once the integration is set up\"; Personal access supported for api:ai-ask:read, api:ai-briefer:read, all mcp scopes.",
+      "source": "https://help.gong.io/docs/create-an-app-for-gong",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "Redirect URI matching rules",
+      "composio": "Must match exactly, no trailing slash.",
+      "ours": "Not mentioned; listed as an open question.",
+      "provider": "redirect_uri \"must match one of the redirect URIs you specified when registering your integration\"; token-call redirect_uri must match the authorize one.",
+      "source": "https://help.gong.io/docs/create-an-app-for-gong",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Scope needed for the GET /v2/users test call",
+      "composio": "Lists api:users:read among common scopes.",
+      "ours": "api:users:read is a guess; endpoint came from a third-party snippet.",
+      "provider": "\"When accessed through a Bearer token authorization method, this endpoint requires the scope 'api:users:read'.\"",
+      "source": "https://gong.app.gong.io/settings/api/documentation",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Token exchange endpoint and client auth",
+      "composio": "Not mentioned.",
+      "ours": "Not mentioned; guide only says to exchange the code.",
+      "provider": "POST https://app.gong.io/oauth2/generate-customer-token, form-encoded, with HTTP Basic Base64(client_id:client_secret).",
+      "source": "https://help.gong.io/docs/create-an-app-for-gong",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Token lifetime and refresh",
+      "composio": "Not mentioned.",
+      "ours": "Refresh token support not confirmed.",
+      "provider": "Access token \"by default is valid for 1 day\" (validity_duration overrides); refresh via grant_type=refresh_token; auth code valid 10 minutes.",
+      "source": "https://help.gong.io/docs/create-an-app-for-gong",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Per-customer API base URL returned with the token",
+      "composio": "Enter https://api.gong.io as the base URL for most tenants.",
+      "ours": "Token response includes api_base_url_for_customer (inferred from a third-party doc).",
+      "provider": "\"The api_base_url_for_customer is different for each customer and should be saved as part of the customer's context.\"",
+      "source": "https://help.gong.io/docs/create-an-app-for-gong",
+      "verdict": "corrected"
+    },
+    {
+      "claim": "Public availability goes through the Gong Collective",
+      "composio": "Not mentioned.",
+      "ours": "Publish to the Gong Collective before other organizations can install the app.",
+      "provider": "\"Publish the app in the Gong Collective. Your customers can then install the app on their instance of Gong.\"",
+      "source": "https://help.gong.io/docs/create-an-app-for-gong",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "Collective review time and criteria",
+      "composio": "Not mentioned.",
+      "ours": "Gong reviews listings; no review time is published.",
+      "provider": "The Gong pages reached describe publishing but give no review steps, criteria or timeline.",
+      "source": "https://help.gong.io/docs/how-to-use-the-gong-developers-hub",
+      "verdict": "unverified"
+    },
+    {
+      "claim": "API rate limits",
+      "composio": "Not mentioned.",
+      "ours": "Not mentioned.",
+      "provider": "\"By default Gong limits your company's access to the service to 3 API calls per second, and 10,000 API calls per day.\"",
+      "source": "https://gong.app.gong.io/settings/api/documentation",
+      "verdict": "corrected"
+    }
+  ]
+}
