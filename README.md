@@ -40,6 +40,8 @@ Guides you generate are saved to your copy's library, next to the bundled ones.
 the validation results:
 https://drive.google.com/file/d/1UwdRcItrc1qaeXnOBG8hAIS0hITKWI7I/view?usp=sharing
 
+**Source repository:** https://github.com/yash-ruhatiya/composio_APM
+
 ## What's in this folder
 
 | Path | What it is |
@@ -155,6 +157,10 @@ against the provider's own docs or a setup attempt. Results live in the page's
 | Ramp | 2 / 8 / 2 | 7 / 3 / 2 |
 | PagerDuty | 7 / 5 / 0 | 8 / 4 / 0 |
 | **Total** | **26 / 28 / 5** | **41 / 14 / 4** |
+
+The bundled guides for these 5 apps were regenerated after round 2, later the same
+day. Round 2 scored the earlier versions (each result records `guideSavedAt`), so
+its numbers describe those versions, not the bundled ones.
 
 ## Testing the page locally
 
